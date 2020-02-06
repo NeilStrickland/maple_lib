@@ -1,0 +1,12 @@
+`random_element/preord`
+`list_elements/preord`
+`count_elements/preord`
+`list_elements/trees`
+`count_elements/trees`
+`list_elements/full_trees`
+`count_elements/full_trees`
+`list_elements/stasheff_trees`
+`count_elements/stasheff_trees`
+`random_element/height_functions`
+operad structure for WFbar
+augmentation WFbar -> Fbar

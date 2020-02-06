@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Worksheet>
+<Version major="2016" minor="2"/>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">restart:
+lib_dir := cat(getenv(&quot;HOME&quot;),&quot;/Maple/lib&quot;):
+lib_checks_dir := cat(getenv(&quot;HOME&quot;),&quot;/Maple/lib_checks&quot;):
+read_quietly := true:
+read(cat(lib_dir,&quot;/_ALL.mpl&quot;)):
+read(cat(lib_checks_dir,&quot;/check.mpl&quot;)):
+assert_verbosely := true:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;RR&quot;);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;CC&quot;);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;RZ&quot;);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;R&quot;,[[5]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;C&quot;,[[5]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;CP&quot;,[[5]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;sphere&quot;,[[5]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;RZ_set&quot;);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;RP_points&quot;);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;RP_lines&quot;);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;RP_conics&quot;);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;RP_arcs&quot;);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;simplices&quot;,[[5], [3]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;real_functions&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;vector_functions&quot;,[[4], [{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;maps&quot;,[[{10, 20, 30, 40, 50}, {1, 2, 3}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;binops&quot;,[[{0, 1}, {1, 2, 3}, {1, 2, 3}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;epi&quot;,[[{10, 20, 30, 40, 50}, {1, 2, 3}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;subsets&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;nonempty_subsets&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;proper_nonempty_subsets&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;big_subsets&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;pairs&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;pair_subsets&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;triples&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;partitions&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;permutations&quot;,[[5]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;shuffles&quot;,[[3, 4]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;nat_partitions&quot;,[[8, 3]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;pos_partitions&quot;,[[8, 3]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;rel&quot;,[[{11, 22, 33, 44}, {1, 2, 3}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;autorel&quot;,[[{1, 2, 3}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;equiv&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;preord&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;partord&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;total_preord&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;ord&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;cycord&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;linord&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;posint_intervals&quot;);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;interval_partitions&quot;,[[5]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;graphs&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;paths&quot;,[[{11, 12, 13, 14, 15, 16, 17, 18, 19, 20}], [{[11, 12], [11, 15], [11, 16], [12, 11], [12, 15], [12, 16], [12, 17], [12, 19], [12, 20], [13, 14], [13, 16], [14, 13], [14, 15], [14, 16], [14, 19], [15, 11], [15, 12], [15, 14], [15, 16], [15, 18], [15, 19], [16, 11], [16, 12], [16, 13], [16, 14], [16, 15], [16, 18], [16, 19], [17, 12], [17, 19], [18, 15], [18, 16], [18, 20], [19, 12], [19, 14], [19, 15], [19, 16], [19, 17], [19, 20], [20, 12], [20, 18], [20, 19]}], [4]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;trails&quot;,[[{11, 12, 13, 14, 15, 16, 17, 18, 19, 20}], [{[11, 12], [11, 15], [11, 16], [12, 11], [12, 15], [12, 16], [12, 17], [12, 19], [12, 20], [13, 14], [13, 16], [14, 13], [14, 15], [14, 16], [14, 19], [15, 11], [15, 12], [15, 14], [15, 16], [15, 18], [15, 19], [16, 11], [16, 12], [16, 13], [16, 14], [16, 15], [16, 18], [16, 19], [17, 12], [17, 19], [18, 15], [18, 16], [18, 20], [19, 12], [19, 14], [19, 15], [19, 16], [19, 17], [19, 20], [20, 12], [20, 18], [20, 19]}], [4]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;digraphs&quot;,[[{11, 22, 33, 44}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;dipaths&quot;,[[{11, 12, 13, 14, 15, 16, 17, 18, 19, 20}], [{[11, 12], [11, 13], [11, 18], [12, 16], [12, 18], [13, 12], [13, 15], [13, 17], [13, 20], [14, 11], [14, 12], [14, 15], [14, 16], [14, 19], [14, 20], [15, 11], [15, 12], [15, 16], [15, 18], [15, 19], [16, 20], [17, 11], [17, 12], [17, 14], [17, 15], [17, 18], [18, 13], [18, 16], [18, 19], [18, 20], [19, 13], [20, 11], [20, 19]}], [4]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;ditrails&quot;,[[{11, 12, 13, 14, 15, 16, 17, 18, 19, 20}], [{[11, 12], [11, 13], [11, 18], [12, 16], [12, 18], [13, 12], [13, 15], [13, 17], [13, 20], [14, 11], [14, 12], [14, 15], [14, 16], [14, 19], [14, 20], [15, 11], [15, 12], [15, 16], [15, 18], [15, 19], [16, 20], [17, 11], [17, 12], [17, 14], [17, 15], [17, 18], [18, 13], [18, 16], [18, 19], [18, 20], [19, 13], [20, 11], [20, 19]}], [4]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;trees&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;full_trees&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;binary_trees&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;standard_stasheff_trees&quot;,[[6]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;binary_standard_stasheff_trees&quot;,[[6]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;stasheff_trees&quot;,[[{11, 22, 33, 44}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;standard_stasheff_star&quot;,[[5]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;stasheff_star&quot;,[[{11, 22, 33, 44}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;W&quot;,[[4], [{11, 22, 33, 44}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;prime_W&quot;,[[4], [{11, 22, 33, 44}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;SW&quot;,[[4], [{11, 22, 33, 44}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;W1&quot;,[[{11, 22, 33, 44}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;BW1&quot;,[[{11, 22, 33, 44}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;SWW&quot;,[[3], [{10, 20, 30, 40, 50}, {10, 30, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;single_cubes&quot;,[[3]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;cubes&quot;,[[3], [{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;one_cubes_prime&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;simplicial_interval&quot;,[[6]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;simplicial_maps&quot;,[[6, 5]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;simplicial_epi&quot;,[[5, 3]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;simplicial_mono&quot;,[[3, 5]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;simplex&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;simplex_interior&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;ord_simplex_interior&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;prime_simplex&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;prime_simplex_boundary&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;height_functions&quot;,[[{11, 12, 13, 14, 15, 16, 17, 18, 19, 20}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;tree_height_functions&quot;,[[{11, 12, 13, 14, 15, 16, 17, 18, 19, 20}], [{{11}, {12}, {13}, {14}, {15}, {16}, {17}, {18}, {19}, {20}, {12, 15}, {11, 12, 15}, {14, 18, 19}, {16, 17, 20}, {11, 12, 15, 16, 17, 20}, {11, 12, 13, 15, 16, 17, 20}, {11, 12, 13, 14, 15, 16, 17, 18, 19, 20}}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;F&quot;,[[3], [{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;Fbar&quot;,[[3], [{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;D/Fbar&quot;,[[3], [{11, 22, 33, 44}, {11, 22}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;E/Fbar&quot;,[[3], [{11, 22, 33, 44}, {11, 22}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;E&quot;,[[6]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;P&quot;,[[6]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;SEM&quot;,[[3], [{11, 22, 33, 44}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;ACP&quot;,[[3], [{11, 22, 33, 44}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;SCP&quot;,[[3], [{11, 22, 33, 44}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;ICP&quot;,[[3], [{11, 22, 33, 44}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;FFbar&quot;,[[3], [{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;X/F3&quot;,[[4]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;Y/F3&quot;,[[4]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;D_plus/F3&quot;,[[4]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;D_minus/F3&quot;,[[4]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;D_zero/F3&quot;,[[4]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;comm&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;itloc&quot;,[[{1, 2, 3}], [3]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;Phi0/itloc&quot;,[[{10, 20, 30, 40, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;M11/itloc&quot;,[[{10, 20, 30, 40, 50}], [{10, 30, 50}]]);</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">check_set_generic(&quot;M1/itloc&quot;,[[{1, 2, 3, 4, 5}], [[{1, 2}, {1, 3, 5}, {2, 5}, {}]]]);</Text-field>
+</Input>
+</Group>
+</Worksheet>

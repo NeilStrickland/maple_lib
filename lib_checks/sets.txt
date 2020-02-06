@@ -1,0 +1,33 @@
+CC
+C [N::posint = 5]
+CP [N::posint = 3]
+RR
+R [N::posint = 5]
+RZ
+RZ_set
+W [N::posint = 3,A::set = {10,20,30,40}]
+SW [N::posint = 3,A::set = {10,20,30,40}]
+SWW [N::posint = 3,A::set = {10,20,30,40,50},B::set = {10,30,50}]
+W1 [A::set = {11,22,33,44}]
+autorel [A::set = {11,22,33,44,55}]
+big_subsets [A::set]
+binary_standard_stasheff_trees [n::posint]
+binary_trees [A::set]
+binops [A::set,B::set,C::set]
+cubes [k::posint,A::set]
+cycord [A::set]
+linord [A::set]
+maps [A::set,B::set]
+epi [A::set,B::set]
+equiv [A::set]
+extended_stasheff_trees [n::posint,k::nonnegint]
+full_trees [A::set]
+hasse_diagrams [A::set]
+ranked_hasse_diagrams [A::set]
+height_functions [A::set]
+K/hurewicz [A::set,d::posint]
+L/hurewicz [A::set,d::posint]
+interval_partitions [n::posint]
+morse_matchings [A::set] #
+narayana_paths [len::posint,peaks::posint]
+nat_partitions 
