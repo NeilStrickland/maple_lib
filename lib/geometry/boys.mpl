@@ -102,3 +102,43 @@ make_boys_jacobian := proc()
          -~ x0, -~ rot(x0), -~ rot(rot(x0))]);
 end:
 
+# We now construct a map boys_embedding_alt() which is obtained by precomposing
+# boys_embedding() with a linear map and then postcomposing with an affine map.
+# This has the effect that boys_embedding_alt sends [1,1,1]/sqrt(3) to itself
+# and is equivariant for the third-twist about that axis.  Moreover, the
+# "corner points" for boys_embedding_alt are at the other points of the form
+# [+/- 1, +/- 1, +/- 1]/sqrt(3), where the three signs are not all the same.
+
+make_boys_embedding_alt := proc()
+ global boys_M0,boys_M1,boys_a1,boys_embedding_alt;
+ local u,a,x,M,M0,be0,F,F0,rels,sol;
+ 
+ if not(type(boys_corners,list(list))) then
+  make_boys_jacobian():
+ fi;
+
+ u := table():
+ u[ 0] := [ 1, 1, 1] /~ sqrt(3): 
+ u[ 1] := [ 1, 1,-1] /~ sqrt(3): 
+ u[ 2] := [ 1,-1, 1] /~ sqrt(3): 
+ u[ 3] := [-1, 1, 1] /~ sqrt(3): 
+
+ M := Matrix(3,3,[seq(a[i],i=1..9)]):
+
+ M0 := subs(solve(evalf(map(op,[seq(convert(M . Vector(u[i]),list) -~ boys_corners[i],i=1..3)]))),M):
+ boys_M0 := M0;
+ be0 := unapply(simplify(expand(evalf(boys_embedding(M0 . <x[1],x[2],x[3]>)))),x):
+
+ F := (y) -> convert(M . Vector(y),list) +~ [a[10],a[11],a[12]]:
+ rels := map(op,evalf([
+  F(be0(u[0])) -~ u[0], F(be0(u[1])) +~ u[1], F(be0(u[2])) +~ u[2], F(be0(u[3])) +~ u[3]
+ ])):
+ sol := solve(rels);
+ boys_M1 := subs(sol,M);
+ boys_a1 := subs(sol,[a[10],a[11],a[12]]);
+
+ boys_embedding_alt := (x) ->
+  evalf(convert(boys_M1 . Vector(boys_embedding(boys_M0 . <x[1],x[2],x[3]>)),list) +~
+   boys_a1);
+   
+end:
