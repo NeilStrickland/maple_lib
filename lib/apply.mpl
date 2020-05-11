@@ -1,18 +1,21 @@
-apply_linear := (f) -> proc(u)
- local c,v;
- 
- if u = 0 then
-  return 0;
- elif type(u,`+`) then
-  return map(apply_linear(f),u);
- elif type(u,`*`) then
-  c,v := selectremove(type,u,rational);
-  return c * f(v);
- elif type(u,rational) then
-  return u * f(1);
- else
-  return f(u);
- fi;
+apply_linear := proc(f,T := rational)
+ return
+   proc(u)
+    local c,v;
+
+    if u = 0 then
+     return 0;
+    elif type(u,`+`) then
+     return map(apply_linear(f,T),u);
+    elif type(u,`*`) then
+     c,v := selectremove(type,u,T);
+     return c * f(v);
+    elif type(u,T) then
+     return u * f(1);
+    else
+     return f(u);
+    fi;
+   end:
 end:
 
 apply_linear_mod := (f,m::posint) -> proc(u)
