@@ -15,3 +15,7 @@ end;
 `list_elements/ord` := (A::set) -> combinat[permute](sort([op(A)]));
 
 `count_elements/ord` := (A::set) -> nops(A)!;
+
+`rank_table/ord` := (A::set) -> proc(R)
+ table([seq(R[i] = i, i = 1 .. nops(R))]):
+end:
