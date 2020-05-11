@@ -22,11 +22,11 @@ end:
 `phi/angles/H` := (t) ->
  [cos(t[1])*cos(t[2]),cos(t[1])*sin(t[2]),sin(t[1])*cos(t[3]),sin(t[1])*sin(t[3])];
 
-hopf_map := (a) -> [
-  2*a[1]*a[3]+2*a[2]*a[4],
-  2*a[1]*a[4]-2*a[2]*a[3],
-  a[1]^2+a[2]^2-a[3]^2-a[4]^2
-] /~ add(a[i]^2,i=1..4);
+# This is essentially a |-> a * i * (conjugate of a)
+hopf_map := (a) -> 
+ [a[1]^2-a[2]^2-a[3]^2+a[4]^2,
+  2*a[1]*a[2]+2*a[3]*a[4],
+  2*a[1]*a[3]-2*a[2]*a[4]];
 
 `rotation_matrix/H` := (a) -> Matrix(
  [[a[1]^2-a[2]^2-a[3]^2+a[4]^2,
