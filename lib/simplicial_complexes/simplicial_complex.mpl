@@ -188,7 +188,7 @@ end:
 
 `dim/simplicial_complex` := proc(T)
  local d;
- d := `dim/raw_simplicial_complex`(T["maximal_simplices"]);
+ d := `dim/raw_simplicial_complex`(T["max_simplices"]);
  T["dim"] := d;
  return d;
 end:
@@ -225,6 +225,14 @@ end:
  else
   return false;
  fi;
+end:
+
+`has_normal/simplicial_complex` := proc(T)
+ if not(`has_embedding/simplicial_complex`(T)) then
+  return false;
+ fi;
+
+ return type(T["normal"],table);
 end:
 
 # Condensation replaces a raw simplicial complex by an equivalent one in
@@ -271,7 +279,46 @@ end;
   for i from 1 to n do
    T0["embedding"][i] := T["embedding"][V[i]];
   od;
+
+  if `has_normal/simplicial_complex`(T) then
+   T0["normal"] := table():
+   for i from 1 to n do
+    T0["normal"][i] := T["normal"][V[i]];
+   od;
+  fi;
  fi;
+
+ return eval(T0);
+end:
+
+`clone/simplicial_complex` := proc(T)
+ local T0,k,keys,i;
+
+ T0 := table():
+ keys := [
+  "vertices",
+  "edges",
+  "faces",
+  "max_simplices",
+  "all_simplices",
+  "dim",
+  "embedding_dim",
+  "embedding",
+  "normal"
+ ];
+
+ for k in keys do
+  if member([k],[indices(T)]) then
+   if type(T[k],table) then
+    T0[k] := table():
+    for i in [indices(T[k])] do
+     T0[k][op(i)] := T[k][op(i)];
+    od:
+   else
+    T0[k] := T[k];
+   fi;
+  fi;
+ od:
 
  return eval(T0);
 end:
@@ -670,6 +717,102 @@ end:
  return T0;
 end:
 
+`partial_triangular_subdivision/simplicial_complex` := proc(T,S)
+ local S0,Si,V,E,F,V0,E0,F0,nV,nS,e,e1,e2,e3,f,is_long,fin,
+  long_edges,p,p1,p2,p3,q,i,T0;
+
+ S0 := map(e -> sort([op(e)]),S);
+ S0 := sort([op(S0)]);
+
+ E := `edges/raw_simplicial_complex`(T["max_simplices"]);
+ F := `faces/raw_simplicial_complex`(T["max_simplices"]);
+ E := map(e -> sort([op(e)]),E);
+ E := sort([op(E)]);
+ F := map(f -> sort([op(f)]),F);
+ F := sort([op(F)]);
+
+ is_long := table():
+ for e in E do 
+  is_long[e] := false;
+ od:
+ for e in S0 do 
+  is_long[e] := true;
+ od:
+
+ fin := false;
+ long_edges := table():
+
+ while not fin do
+  fin := true;
+
+  for f in F do 
+   e1 := [f[1],f[2]];
+   e2 := [f[1],f[3]];
+   e3 := [f[2],f[3]];
+   long_edges[f] := select(e -> is_long[e],[e1,e2,e3]);
+   if nops(long_edges[f]) = 2 then 
+    fin := false;
+    is_long[e1] := true;
+    is_long[e2] := true;
+    is_long[e3] := true;
+   fi;
+  od:
+ od:
+
+ S0 := select(e -> is_long[e],E);
+ V := T["vertices"];
+ nV := nops(V):
+ nS := nops(S0):
+
+ Si := table():
+ for i from 1 to nS do 
+  Si[S0[i]] := nV + i;
+ od:
+
+ F0 := NULL;
+ for f in F do 
+  e1 := [f[1],f[2]];
+  e2 := [f[1],f[3]];
+  e3 := [f[2],f[3]];
+  if nops(long_edges[f]) = 0 then 
+  if nops(f) < 3 then print(["err0",f]); fi;
+   F0 := F0,f;
+  elif nops(long_edges[f]) = 1 then 
+   e := long_edges[f][1];
+   p := ({op(f)} minus {op(e)})[1];
+   q := Si[long_edges[f][1]];
+   if nops({e[1],p,q}) < 3 then print(["err1",f,e[1],p,q]); fi;
+   if nops({e[2],p,q}) < 3 then print(["err2",f,e[2],p,q]); fi;
+   F0 := F0,[e[1],p,q],[e[2],p,q];
+  elif nops(long_edges[f]) = 2 then 
+   print(["shouldn't happen",f]);
+  else 
+   p1 := Si[e1]; p2 := Si[e2]; p3 := Si[e3];
+   if nops({f[1],p1,p2}) < 3 then print(["err3",f,p1,p2,p3]); fi;
+   if nops({f[2],p1,p3}) < 3 then print(["err4",f,p1,p2,p3]); fi;
+   if nops({f[3],p2,p3}) < 3 then print(["err4",f,p1,p2,p3]); fi;
+   if nops({p1,p2,p3})   < 3 then print(["err5",p1,p2,p3]); fi;
+   F0 := F0, [f[1],p1,p2],[f[2],p1,p3],[f[3],p2,p3],[p1,p2,p3];
+  fi;
+ od:
+ V0 := [seq(i,i=1..nV+nS)];
+ F0 := sort([op(map(sort,{F0}))]);
+ T0 := table():
+ T0["vertices"] := V0;
+ T0["max_simplices"] := F0;
+ T0["embedding_dim"] := T["embedding_dim"]:
+ T0["embedding"] := table():
+ for i from 1 to nV do T0["embedding"][i] := T["embedding"][i]; od;
+ for i from 1 to nS do 
+  e := S0[i];
+  T0["embedding"][nV+i] := 0.5 *~ (T["embedding"][e[1]] +~ T["embedding"][e[2]]);
+ od;
+ `set_faces/simplicial_complex`(T0,true);
+ `set_edges/simplicial_complex`(T0,true);
+
+ return eval(T0);
+end:
+
 `star_subdivide/simplicial_complex` := proc(T,s)
  local n,V,K,K1,S0,S1,S2,s0,s1,s2,u,P,d,x,v;
 
@@ -753,6 +896,46 @@ end:
  return n+1;
 end:
 
+# Here P is expected to be a table indexed by points 
+# i in the 2-simplex for which 2^m * i is integral. 
+# The values are either NULL or vectors in R^3, and
+# the values at the vertices of the 2-simplex must 
+# be in R^3.  The third parameter r is supposed to
+# be a retraction of R^3 onto a subspace Z, and it
+# is expected that the non-NULL values of P should 
+# lie in that subspace.  The procedure fills in the 
+# values P[i] for all i so they lie in Z and are 
+# spaced out in a reasonably regular way.
+
+`midpoint_extend/simplicial_complex` := proc(P,m,r) 
+ local X0,p,q,i,j,k,x,y,u,N;
+
+ X0 := {[1,-1,0],[-1,1,0],[1,0,-1],[-1,0,1],[0,1,-1],[0,-1,1]};
+
+ for p from 0 to m do 
+  q := 2^p;
+  for i from 0 to q do 
+   for j from 0 to q - i do 
+    k := q - i - j;
+    x := [i,j,k];
+    if P[x /~ q] = NULL then
+     N := select(y -> min(op(x +~ y)) >= 0 and 
+                      min(op(x -~ y)) >= 0 and
+                      P[(x +~ y) /~ q] <> NULL and
+                      P[(x -~ y) /~ q] <> NULL,X0):
+     if N = {} then DEBUG(); fi;
+     u := [0,0,0]:
+     for y in N do u := u +~ P[(x +~ y)/~ q]; od:
+     u := evalf(u /~ nops(N));
+     u := r(u);
+     P[x /~ q] := u;
+    fi:
+   od:
+  od:
+ od:
+end:
+
+
 `normalise_embedding/simplicial_complex` := proc(T)
  local d,P,v,x;
  
@@ -767,6 +950,21 @@ end:
   x := evalf(x /~ sqrt(add(x[i]^2,i=1..d)));
   P[v] := x;
  od:
+end:
+
+`map_in_place/simplicial_complex` := proc(f,T)
+ local E,v;
+
+ E := eval(T["embedding"]);
+ for v in T["vertices"] do E[v] := f(E[v]); od:
+end:
+
+`map/simplicial_complex` := proc(f,T)
+ local T0;
+
+ T0 := eval(`clone/simplicial_complex`(T));
+ `map_in_place/simplicial_complex`(f,T0);
+ return eval(T0);
 end:
 
 `plot/raw_simplicial_complex` := proc(K,d,a)
@@ -784,7 +982,7 @@ end:
  return display(P,scaling=constrained,axes=none):
 end:
 
-`plot/simplicial_complex` := proc(T)
+`plot/simplicial_complex` := proc(T,a_)
  local V,E,F,a;
  
  `set_edges/simplicial_complex`(T);
@@ -792,7 +990,7 @@ end:
  V := T["vertices"];
  E := T["edges"];
  F := T["faces"];
- a := T["embedding"];
+ a := `if`(nargs > 1, a_, T["embedding"]);
  T["plot"] := display(
   seq(point(a[v]),v in V),
   seq(line(a[e[1]],a[e[2]]),e in E),
@@ -801,12 +999,12 @@ end:
  return T["plot"];
 end:
 
-`surface_plot/simplicial_complex` := proc(T)
+`surface_plot/simplicial_complex` := proc(T,a_)
  local V,E,F,a;
  
  `set_faces/simplicial_complex`(T);
  F := T["faces"];
- a := T["embedding"];
+ a := `if`(nargs > 1, a_, T["embedding"]);
  T["surface_plot"] := display(
   seq(polygon([a[f[1]],a[f[2]],a[f[3]]],style=patchnogrid),f in F),
   scaling=constrained,axes=none):
@@ -825,9 +1023,11 @@ end:
  fi;
 end:
 
-`set_javascript/simplicial_complex` := proc(T)
- local V,F,F1,P,N,V_string,N_string,F_string,T_string,f,f1,n1,n2;
- 
+`set_javascript/simplicial_complex` := proc(T,format_)
+ local format,format3,V,F,F1,P,N,V_string,N_string,F_string,T_string,f,f1,n1,n2;
+
+ format := `if`(nargs > 1,format_,"%f");
+ format3 := sprintf("[%s,%s,%s]",format,format,format);
  if not(`has_embedding/simplicial_complex`(T)) then
   error "Complex has no embedding data";
  fi;
@@ -843,12 +1043,12 @@ end:
  F := sort([op(map(f -> sort([op(f)]),F))]);
  
  V_string :=
-  cat("[",StringTools[Join]([seq(sprintf("%A",P[v]),v in V)],","),"]");
+  cat("[",StringTools[Join]([seq(sprintf(format3,op(evalf(P[v]))),v in V)],","),"]");
 
  if type(T["normal"],table) then
   N := eval(T["normal"]);
   N_string := 
-   cat("[",StringTools[Join]([seq(sprintf("%A",N[v]),v in V)],","),"]");
+   cat("[",StringTools[Join]([seq(sprintf(format3,op(evalf(N[v]))),v in V)],","),"]");
   F1 := NULL;
   for f in F do
    n1 := cross_product(P[f[2]] -~ P[f[1]],P[f[3]] -~ P[f[1]]);
@@ -864,13 +1064,13 @@ end:
   F_string := 
    cat("[",StringTools[Join]([seq(sprintf("%A",f),f in F1)],","),"]");
   T_string :=
-   sprintf("object_data = {\npositions:\n%s,\nnormals:\n%s,indices:\n%s }",
+   sprintf("{\npositions:\n%s,\nnormals:\n%s,indices:\n%s }",
            V_string,N_string,F_string);
  else
   F_string := 
    cat("[",StringTools[Join]([seq(sprintf("%A",f),f in F)],","),"]");
   T_string :=
-   sprintf("object_data = {\npositions:\n%s,indices:\n%s }",
+   sprintf("{\npositions:\n%s,indices:\n%s }",
            V_string,F_string);
  fi;
 
