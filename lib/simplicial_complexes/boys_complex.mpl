@@ -2,8 +2,19 @@ make_boys_complex := proc()
  local T,U,F,p,f,i,L,w,n,P,vb,vn;
  global boys_complex,boys_complex_alt;
  
- T := copy(octahedron_complex):
- for i from 1 to 6 do T["embedding"][i] := boys_corners[i]; od:
+ T := table([
+  "vertices" = [1,2,3,4,5,6],
+  "edges"  = [[1,2],[1,3],[1,5],[1,6],[2,3],[2,4],[2,6],[3,4],[3,5],[4,5],[4,6],[5,6]],
+  "faces"  = [[1,2,3],[1,2,6],[1,5,3],[1,5,6],[4,2,3],[4,2,6],[4,5,3],[4,5,6]],
+  "embedding" = table(),
+  "embedding_dim" = 3
+ ]);
+
+ T["max_simplices"] := T["faces"];
+ 
+ for i from 1 to 6 do
+  T["embedding"][i]   :=    boys_corners[i];
+ od:
  
  T := eval(`triangular_subdivision/simplicial_complex`(T)):
  T := eval(`condense/simplicial_complex`(T)):
