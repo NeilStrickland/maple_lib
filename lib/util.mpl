@@ -1,3 +1,5 @@
+sgn := (s) -> signum(mul(mul(s[j] - s[i],j=i+1..nops(s)),i=1..nops(s))):
+
 ######################################################################
 
 is_table_on := (A::set) -> proc(x)
@@ -280,8 +282,8 @@ end:
 
 trim := proc(u,epsilon := 10.^(-90))
  local c,v;
- if type(u,`+`) or type(u,list) or type(u,set) then
-  return map(trim,u);
+ if type(u,`+`) or type(u,list) or type(u,set) or type(u,Matrix) or type(u,Vector) then
+  return map(trim,u,epsilon);
  elif type (u,`*`) then
   c,v := selectremove(type,u,complex(numeric));
   if abs(Re(c)) < epsilon then c := Im(c) * I; fi;
