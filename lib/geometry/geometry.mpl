@@ -58,6 +58,29 @@ sphere_arc := proc(a,b)
  return spacecurve(d *~ cos(t) +~ c *~ sin(t),t = -theta..theta,args[3..-1]); 
 end:
 
+spherical_angle := proc(a,b,c)
+ local dp,ab,ac;
+ dp := `dot/R`(3);
+ ab := b -~ dp(b,a) *~ a;
+ ac := c -~ dp(c,a) *~ a;
+ return arccos(dp(ab,ac) /~ sqrt(dp(ab,ab) * dp(ac,ac))); 
+end:
+
+spherical_triangle_area := proc(a,b,c)
+ return spherical_angle(a,b,c) + 
+        spherical_angle(b,c,a) + 
+        spherical_angle(c,a,b) - Pi;
+end:
+
+spherical_triangle_area_alt := proc(a,b,c)
+ local dp,f,x,y,z,F;
+ dp := `dot/R`(3);
+ f := (c) -> sqrt(1-c)/(sqrt(2) + sqrt(1+c));
+ x,y,z := f(dp(b,c)),f(dp(c,a)),f(dp(a,b));
+ F := (p,q,r) -> (p + q + r - p*q*r)/(1 - p*q - q*r - r*p);
+ return 4 * arctan(sqrt(F( x, y, z) * F(-x, y, z) * F( x,-y, z) * F( x, y,-z)));
+end:
+
 simplex_outline := proc(d)
  local e,i,opts;
  if d <> 2 and d <> 3 then
