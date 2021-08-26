@@ -44,7 +44,7 @@ end;
 ######################################################################
 
 `op/cycord` := (A::set) -> proc(C)
- local n;
+ local n,i;
  n := nops(A);
  return [seq(C[n-i],i=0..n-1)];
 end;

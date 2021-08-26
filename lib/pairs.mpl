@@ -24,7 +24,7 @@ end;
 end;
 
 `list_elements/pairs` := proc(A::set)
- local n;
+ local n,i,j;
 
  n := nops(A);
 

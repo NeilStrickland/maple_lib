@@ -6,7 +6,7 @@ with(GroupTheory):
 
 CP2_complex := proc()
  local T,V,F,p,a,b,d,s,S,om,ob,rt,
-  id_S,o_S,inv_S,act_S,eq_S,eq_X,v,ix_v;
+  id_S,o_S,inv_S,act_S,eq_S,eq_X,v,ix_v,i;
 
  T := table():
 
@@ -123,6 +123,7 @@ CP2_complex := proc()
  end:
 
  eq_X := proc(u,v)
+  local i,j;
   `and`(seq(seq(evalb(simplify(u[i]*v[j]-u[j]*v[i])=0),j=i+1..3),i=1..2));
  end:
 

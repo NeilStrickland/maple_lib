@@ -4,8 +4,8 @@
 # only straight lines and conic curves and segments thereof.
 # This is supposed to make everything nicely computable.
 
-dp3 := (x,y) -> add(x[i]*y[i],i=1..3);
-nm3 := (x) -> sqrt(add(x[i]^2,i=1..3));
+dp3 := proc(x,y) local i; add(x[i]*y[i],i=1..3); end;
+nm3 := proc(x) local i; sqrt(add(x[i]^2,i=1..3)); end;
 xp3 := (u,v) -> [u[2]*v[3]-u[3]*v[2],
                  u[3]*v[1]-u[1]*v[3],
                  u[1]*v[2]-u[2]*v[1]];
@@ -34,6 +34,7 @@ end:
 `random_element/RP_points` := () -> `random_element/R`(3)();
 
 `dist/RP_points` := proc(x,y)
+ local i;
  1 - add(x[i]*y[i],i=1..3)^2/add(x[i]^2,i=1..3)
 end:
 
@@ -57,6 +58,7 @@ end:
 `random_element/RP_lines` := () -> `random_element/R`(3)();
 
 `dist/RP_lines` := proc(x,y)
+ local i;
  1 - add(x[i]*y[i],i=1..3)^2/add(x[i]^2,i=1..3)
 end:
 
@@ -87,7 +89,7 @@ end:
 
 ######################################################################
 
-`is_incident/RP` := (x,y) -> evalb(add(x[i]*y[i],i=1..3) = 0);
+`is_incident/RP` := proc(x,y) local i; evalb(add(x[i]*y[i],i=1..3) = 0); end;
 
 `point_join/RP` := (x,y) -> xp3(x,y);
 
@@ -135,6 +137,7 @@ end:
 
 
 `dist/RP_conics` := proc(q,r)
+ local i,j;
  sqrt(add(add((q[i]*r[j]-q[j]*r[i])^2,j=i+1..6),i=1..6)/
       (add(q[i]^2,i=1..6) * add(r[i]^2,i=1..6)));
 end:
@@ -185,7 +188,7 @@ end:
 end:
 
 `random_element/RP_arcs` := proc()
- local xxc;
+ local xxc,i,j;
  xxc := [[0$3]$3];
 
  while Determinant(Matrix(xxc)) = 0 do
@@ -196,7 +199,7 @@ end:
 end:
 
 `ratio/RP_arcs` := proc(xxc1,xxc2)
- local u,v,w;
+ local u,v,w,i;
  
  u := [seq(dp3(xxc1[i],xxc2[i]),i=1..3)];
  v := [seq(dp3(xxc1[i],xxc1[i]),i=1..3)];

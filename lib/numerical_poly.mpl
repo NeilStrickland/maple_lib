@@ -60,6 +60,8 @@ end:
 end:
 
 `Gamma_alt/numerical_poly` := proc(n::posint)
+ local k;
+ 
  if modp(n,2) <> 0 then return FAIL; fi;
 
  return mul(2*denom(bernoulli(2*k)/(2*k)),k=1..n/2);
@@ -93,7 +95,7 @@ end:
 ]):
 
 `find_split_matrix/stably_numerical_poly` := proc()
- local f,W,d,A,m,B,eqs,sol;
+ local f,W,d,A,m,B,eqs,sol,i,j;
  
  f := `f/stably_numerical_poly`;
  W := `f_witness/stably_numerical_poly`;
@@ -164,7 +166,7 @@ end:
 ######################################################################
 
 check_numerical_poly := proc()
- local u,v,i,j,k,ok,err;
+ local u,v,i,j,k,n,ok,err;
  
  _ASSERT(
   `b/numerical_poly`(0,u) = 1,

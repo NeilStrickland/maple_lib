@@ -31,7 +31,7 @@ end:
 `count_elements/RZ_set` := NULL:
 
 `random_element/RZ_set` := proc()
- local n,S,T;
+ local n,S,T,i;
  
  n := rand(0..5)();
  S := {};
@@ -43,7 +43,7 @@ end:
  return T;
 end:
 
-`length/RZ_set` := (T) -> add((-1)^i * T[i],i=1..nops(T));
+`length/RZ_set` := proc(T) local i; add((-1)^i * T[i],i=1..nops(T)); end:
 
 `bot/RZ_set`   := []:
 `empty/RZ_set` := []:
@@ -63,7 +63,7 @@ end:
 end:
 
 `add_interval/RZ_set` := proc(T,u,v)
- local n,i,j,a,b;
+ local n,i,j,k,a,b;
  if nops(T) = 0 then return [u,v]; fi;
  n := nops(T)/2;
  i := 0;
@@ -133,7 +133,7 @@ end:
 `dist/RZ_set` := proc(T,U) `length/RZ_set`(`symdiff/RZ_set`(T,U)); end:
 
 `shift/RZ_set` := (t) -> proc(T)
- local U,n,i;
+ local U,n,i,j;
  if T = [] then return []; fi;
  
  U := T +~ t;
@@ -173,7 +173,7 @@ end:
 end:
 
 `unroll/RZ_set` := proc(T,k::posint := 2)
- local n,i,j;
+ local n,i,j,t;
  n := nops(T)/2;
  if n=0 then return []; fi;
  if k = 1 then return T; fi;
@@ -188,7 +188,7 @@ end:
 end:
 
 `starts/RZ_set` := proc(T)
- local n;
+ local n,i;
  n := nops(T)/2;
 
  if n = 0 then return {}; fi;
@@ -201,7 +201,7 @@ end:
 end:
 
 `boundary/RZ_set` := proc(T)
- local n;
+ local n,i;
  n := nops(T)/2;
 
  if n = 0 then return {}; fi;
@@ -238,7 +238,7 @@ end:
 end:
 
 `centroid_C/RZ_set` := proc(T)
- local n,l,t;
+ local n,l,t,i;
  n := nops(T)/2;
  if n = 0 then error("T is empty"); fi;
  l := `length/RZ_set`(T);
@@ -252,6 +252,8 @@ end:
 end:
  
 `flat_plot/RZ_set` := proc(T,y)
+ local i;
+ 
  if T = [] then
   return NULL;
  else

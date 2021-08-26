@@ -62,7 +62,7 @@ end:
 make_icosahedron_complex():
 
 icosphere_complex := proc(n::nonnegint)
- local T,T0,E,v,x,i;
+ local T,T0,E,v,x,i,j;
  
  T := eval(icosahedron_complex);
 

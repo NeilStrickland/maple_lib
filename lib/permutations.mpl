@@ -18,9 +18,10 @@ end:
 
 `count_elements/permutations` := (n::nonnegint) -> n!;
 
-`id/permutations` := (n::nonnegint) -> [seq(i,i=1..n)];
+`id/permutations` := proc(n::nonnegint) local i; [seq(i,i=1..n)]; end:
 
 `o/permutations` := (n::nonnegint) -> proc()
+ local i;
  apply_assoc((s,t) -> [seq(s[t[i]],i=1..n)],
              [seq(i,i=1..n)])(args);
 end:
@@ -33,7 +34,7 @@ end:
 end:
 
 `length_set/permutations` := (n::nonnegint) -> proc(s)
- local L;
+ local L,i,j;
 
  L := [seq(seq([i,j],j=i+1..n),i=1..n-1)];
  L := select(ij -> s[ij[1]] > s[ij[2]],L);
@@ -47,8 +48,10 @@ end:
  nops(`length_set/permutations`(n)(s));
 end:
 
-`sgn/permutations` := (n::nonnegint) -> (s) ->
- signum(mul(mul(s[j]-s[i],j=i+1..n),i=1..n-1));
+`sgn/permutations` := (n::nonnegint) -> proc(s)
+ local i,j;
+ return signum(mul(mul(s[j]-s[i],j=i+1..n),i=1..n-1));
+end:
 
 `is_even/permutations` := (n::nonnegint) -> (s) ->
  evalb(`sgn/permutations`(n)(s) =  1);
@@ -57,21 +60,37 @@ end:
  evalb(`sgn/permutations`(n)(s) = -1);
 
 `switch/permutations` := (n::nonnegint) -> proc(i::posint)
+  local j;
   if i >= n then error("Should have 1 <= i < n"); fi;
 
   return [seq(j,j=1..i-1),i+1,i,seq(j,j=i+2..n)];
 end:
 
-# This algorithm does not always produce a reduced word.
-# To do that, we would need an algorithm that is more aligned
-# with the proof of completeness of the Coxeter relations.
+`t/permutations` := (n::nonnegint) -> proc(k::posint)
+ local i;
+ [seq(i,i=1..k-1),seq(i+1,i=k..n-1),k];
+end:
+
+`t_inv/permutations` := (n::nonnegint) -> proc(k::posint)
+ local i;
+ [seq(i,i=1..k-1),n,seq(i-1,i=k+1..n)];
+end:
+
+`t_word/permutations` := (n::nonnegint) -> proc(k::posint)
+ local i;
+ [seq(i,i=k..n-1)];
+end:
+
 `to_coxeter_word/permutations` := (n::nonnegint) -> proc(w)
- local i,v;
- i := n-1;
- while i > 0 and w[i] < w[i+1] do i := i - 1; od;
- if i = 0 then return []; fi;
- v := `o/permutations`(n)(w,`switch/permutations`(n)(i));
- return [op(`to_coxeter_word/permutations`(n)(v)),i];
+ local m,v;
+
+ if n <= 1 then return []; fi;
+
+ m := w[n];
+ v := `o/permutations`(n)(`t_inv/permutations`(n)(m),w);
+ v := [op(1..(n-1),v)];
+ return [op(`t_word/permutations`(n)(m)),
+         op(`to_coxeter_word/permutations`(n-1)(v))];
 end:
 
 `from_coxeter_word/permutations` := (n::nonnegint) -> proc(x)
@@ -81,13 +100,17 @@ end:
 # Here are two kinds of Coxeter words that reduce to the identity.
 # They are used in the proof of the completeness of the Coxeter relations.
 
-`long_coxeter_rel0/permutations` := (n) -> (l) -> 
-  [seq(i,i=l..n-1),seq(i,i=l..n-1),seq(i,i=n-2..l,-1),seq(i,i=n-1..l+1,-1)];
+`long_coxeter_rel0/permutations` := (n) -> proc(l)
+ local i;
+ [seq(i,i=l..n-1),seq(i,i=l..n-1),seq(i,i=n-2..l,-1),seq(i,i=n-1..l+1,-1)];
+end:
 
-`long_coxeter_rel1/permutations` := (n) -> (k,l) -> 
-  `if`(k <= l, 
+`long_coxeter_rel1/permutations` := (n) -> proc(k,l)
+ local i;
+ `if`(k <= l, 
        [seq(i,i=k..n-1),seq(i,i=l..n-1),seq(i,i=n-2..k,-1),seq(i,i=n-1..l+1,-1)],
-       [seq(i,i=k..n-1),seq(i,i=l..n-1),seq(i,i=n-2..k-1,-1),seq(i,i=n-1..l,-1)]):
+       [seq(i,i=k..n-1),seq(i,i=l..n-1),seq(i,i=n-2..k-1,-1),seq(i,i=n-1..l,-1)]);
+end:
 
 `coxeter_reduce_once/permutations` := (n) -> proc(x)
  local i,j,k,l,l0,l1,m,p,d,y,z,i0,p0,d0,z0,z1,z2;

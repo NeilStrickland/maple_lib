@@ -67,6 +67,7 @@ end:
 # size q.  There is an obvious way to make such a partition when A = {1,..,m*q}
 
 `steiner_system/congruence` := proc(q,m)
+ local i,j;
  [{seq(i,i=1..q*m)},
   {seq({seq(j,j=i*q+1..(i+1)*q)},i=0..m-1)},
   [1,q,m*q]];
@@ -75,7 +76,7 @@ end:
 # For any prime p, the lines in (Z/p)^2 give a (2,p)-Steiner system.
 
 `steiner_system/affine` := proc(p)
- local V,S;
+ local V,S,i,j,m,c;
  
  if not(isprime(p)) then
   return FAIL;

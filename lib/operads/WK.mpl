@@ -304,7 +304,7 @@ end;
 ######################################################################
 
 `phi/WK/K` := (A::set) -> proc(TTxl)
- local SS,TT,x,l,TT1,s,t,u,RR,R,T,f,parent,children,J,J1,JJ,n,m;
+ local SS,TT,x,l,TT1,s,t,u,RR,R,T,f,parent,children,J,J1,JJ,i,j,k,n,m;
 
  TT,x,l := op(TTxl);
 
@@ -356,7 +356,7 @@ end;
 ######################################################################
 
 `theta/K/WK` := (A::set) -> proc(Rt)
- local R,t,r,T,TT,RR,s,l,x,C,m,J,J1,i,j,children;
+ local R,t,r,T,TT,RR,s,l,x,C,m,J,J1,i,j,k,children;
 
  R,t := op(Rt);
 

@@ -43,7 +43,7 @@ newton_rewrite := proc(u,n,x,c,p_)
 end:
 
 orbit_sum := proc(m,n,x)
- local S,R,v,C,c;
+ local S,R,v,C,c,r,i;
  S := combinat[permute](n);
  R := map(s -> [seq(x[i]=x[s[i]],i=1..n)],S);
  v := add(subs(r,m),r in R);

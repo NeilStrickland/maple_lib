@@ -55,7 +55,7 @@ end:
 
 `is_element/edge_lex_labellings` := (A::set) -> (R) -> proc(l)
  global reason;
- local H,C,d,l0,cut,inc,cmp,R0,C0,C1,c0,c1,ab,a,b,u;
+ local H,C,d,l0,cut,inc,cmp,R0,C0,C1,c0,c1,ab,a,b,u,i;
 
  if `bottom_element/partord`(A)(R) = FAIL then
   reason := ["is_element/edge_lex_labellings","There is no bottom element",A,R];

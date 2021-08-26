@@ -7,7 +7,7 @@
 `codim/subspaces` := (p,d) -> U -> nops(U[2]);
 
 `span/subspaces` := (p,d) -> proc(U)
- local U0,r,c;
+ local U0,r,c,i;
 
  if U = [] then return [[],convert(IdentityMatrix(d),listlist)]; fi;
 
@@ -51,7 +51,7 @@ end:
 end:
 
 `random_element/subspaces` := (p,d) -> proc()
-  local r,U;
+  local r,U,i,j;
   r := rand(0..d)();
   U := [seq([seq(rand(0..p-1)(),j=1..d)],i=1..r)];
   return `span/subspaces`(p,d)(U);

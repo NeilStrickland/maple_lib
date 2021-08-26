@@ -20,7 +20,7 @@
 `eta/RZ` := (x) -> exp(2*Pi*I*x);
 
 `is_cyclic/RZ` := proc(x::list)
- local n,y,z;
+ local n,y,z,i;
  n := nops(x);
  if n <= 2 then return true; fi;
  y := simplify(x -~ x[1]);
@@ -30,7 +30,7 @@
 end:
 
 `is_strictly_cyclic/RZ` := proc(x::list)
- local n,y,z;
+ local n,y,z,i;
  n := nops(x);
  if n <= 2 then return true; fi;
  y := simplify(x -~ x[1]);

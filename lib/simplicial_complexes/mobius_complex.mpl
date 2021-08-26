@@ -1,5 +1,5 @@
 mobius_complex := proc()
- local T,V,E,F,R,r,v,a,mob,mob_arc;
+ local T,V,E,F,R,r,v,a,mob,mob_arc,i,e;
  
  V := [seq(seq([i,a],a=0..2),i=0..1)];
  F := [
@@ -43,7 +43,7 @@ mobius_complex := proc()
 end():
 
 flat_mobius_complex := proc(n::posint)
- local f,g,T,V,E,F,r,v,a;
+ local f,g,T,V,E,F,r,v,a,i;
 
  f := (i) -> modp(i+1,4*n+2);
  g := (i) -> modp(i+2*n+3/2+(-1)^i/2,4*n+2);

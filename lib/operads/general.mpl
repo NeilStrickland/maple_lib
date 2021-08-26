@@ -50,8 +50,10 @@ end;
 ######################################################################
 
 `check_gamma_axiom` := proc(A,B,C,p,q,U,V,W,is_el_CC,is_equal_CC,gamma_CC)
- local a,b,c,qp,Fp,Fq,Fqp,UV,VW,UVW0,UVW1,W0,p0;
- global reason,check_gamma_axiom_args;
+# local a,b,c,qp,Fp,Fq,Fqp,UV,VW,UVW0,UVW1,W0,p0;
+# global reason,check_gamma_axiom_args;
+ local a,b,c,qp,Fp,Fq,Fqp,UV,VW,W0,p0;
+ global UVW0,UVW1,reason,check_gamma_axiom_args;
 
  check_gamma_axiom_args := [args];
 
@@ -307,4 +309,42 @@ end:
   e[a] := eta({f[a]});
  od;
  return gamma(B,A)(f_inv)(x,e);
+end;
+
+######################################################################
+
+extend_gamma_linear := (g0) -> (A::set,B::set) -> (p) -> proc(y,x)
+ local c,y1,F,BL,M,b,t,z,m,mt,u,i;
+ 
+ if y = 0 then
+  return 0;
+ elif type(y,`+`) then
+  return map(t -> extend_gamma_linear(g0)(A,B)(p)(t,x),y);
+ fi;
+
+ if type(y,`*`) then
+  c,y1 := selectremove(type,y,integer);
+ else
+  c := 1;
+  y1 := y;
+ fi;
+
+ F := fibres(A,B)(p);
+
+ BL := sort([op(B)]);
+ M := [[1]];
+ for b in BL do
+  t := map(coeff_split,sum_terms(x[b]));
+  M := [seq(seq([m[1] * u[1],seq(m[i],i=2..nops(m)),u[2]],u in t),m in M)];
+ od:
+
+ z := 0;
+
+ for m in M do
+  mt := table([seq(BL[i]=m[i+1],i=1..nops(BL))]);
+  z := z + c * m[1] * g0(A,B)(p)(y1,mt);
+ od;
+
+ return z;
+
 end;

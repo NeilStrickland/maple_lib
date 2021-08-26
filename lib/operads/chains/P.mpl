@@ -29,7 +29,7 @@ end;
 end:
 
 `random_element/P` := (N::posint) -> proc(d::posint := 4)
- local r;
+ local r,i;
  r := rand(-d^2..d^2);
  add(r()/d * epsilon^i,i=0..N-1);
 end;

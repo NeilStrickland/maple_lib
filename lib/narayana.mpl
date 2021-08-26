@@ -197,7 +197,7 @@ end:
 end:
 
 check_narayana := proc()
- local x,y,d,m,F0,F1,F2,F3;
+ local x,y,d,j,n,m,F0,F1,F2,F3;
 
  _ASSERT(
   `and`(seq(seq(evalb(narayana_number(n,j) = narayana_number_basic(n,j)),j=0..20),n=1..20)),

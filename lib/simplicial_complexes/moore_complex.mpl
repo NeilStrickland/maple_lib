@@ -1,5 +1,5 @@
 moore_net_complex := proc(n::posint)
- local T,m;
+ local T,m,i;
 
  m := 3*n;
 
@@ -26,7 +26,7 @@ moore_net_complex := proc(n::posint)
 end:
 
 moore_complex := proc(n::posint)
- local T0,T,m;
+ local T0,T,m,i;
 
  m := 3*n;
 
@@ -42,7 +42,7 @@ moore_complex := proc(n::posint)
 end:
 
 punctured_moore_complex := proc(n::posint)
- local T,E,F,m,a,R0,R1,tor,tor_arc;
+ local T,E,F,m,a,R0,R1,tor,tor_arc,i,v;
 
  m := 3*n;
 

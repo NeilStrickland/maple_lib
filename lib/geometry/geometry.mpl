@@ -48,7 +48,7 @@ mobius_arc := (R,r) -> proc(t1,u1,t2,u2)
 end:
 
 sphere_arc := proc(a,b)
- local r,c,d,theta;
+ local r,c,d,theta,i;
  r := evalf(sqrt(add(a[i]^2,i=1..3)));
  c := b -~ a;
  d := b +~ a;
@@ -82,7 +82,7 @@ spherical_triangle_area_alt := proc(a,b,c)
 end:
 
 simplex_outline := proc(d)
- local e,i,opts;
+ local e,i,j,opts;
  if d <> 2 and d <> 3 then
   error("Simplex outline is only defined in dimensions 2 and 3");
  fi;
@@ -101,7 +101,7 @@ simplex_outline := proc(d)
 end:
 
 trefoil_embedding := (R,r) -> proc(t,u)
- local x,y,z;
+ local x,y,z,i;
  x := [sin(t) + 2*sin(2*t),cos(t) - 2 * cos(2*t),-sin(3*t)];
  y := [72*sin(2*t)+3*sin(8*t)-13*sin(4*t)+3*sin(7*t)-14*sin(5*t)+3*sin(t),
        3*cos(t)-3*cos(8*t)+3*cos(7*t)-72*cos(2*t)+14*cos(5*t)-13*cos(4*t),

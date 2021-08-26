@@ -71,7 +71,7 @@ end:
 ######################################################################
 
 `u1/hurewicz` := (A::set) -> (d::posint) -> proc(x)
- local JJ;
+ local JJ,J,j;
  if nops(A) <= d then return 0; fi;
  JJ := combinat[choose](A,nops(A) - d);
  return min(seq(max(seq(x[j],j in J)),J in JJ));

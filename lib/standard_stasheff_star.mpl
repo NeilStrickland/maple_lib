@@ -1,7 +1,7 @@
 ######################################################################
 
 `is_element/standard_stasheff_star` := (n::posint) -> proc(t)
- local JJ,TT,J,T,u;
+ local JJ,TT,J,T,u,i,j,k;
  global reason;
 
  if not(type(t,table)) then
@@ -43,7 +43,7 @@
 end;
 
 `is_equal/standard_stasheff_star` := (n::posint) -> proc(t,u)
- local JJ,J;
+ local JJ,J,i,j,k;
 
  JJ := {seq(seq({seq(k,k=i..j)},j=i..n),i=1..n)};
 
@@ -58,7 +58,7 @@ end:
 `is_leq/standard_stasheff_star` := NULL;
 
 `random_element/standard_stasheff_star` := (n::posint) -> proc()
- local JJ,TT,T,t,i,d;
+ local JJ,TT,T,t,i,j,k,d;
 
  d := 12;
  

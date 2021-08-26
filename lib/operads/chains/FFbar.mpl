@@ -69,7 +69,7 @@ end;
 ######################################################################
 
 `build/FFbar` := (N::posint) -> (A::set) -> proc(RTTu)
- local R,TT,i,j,k,n,m,ij,A0,C,TT1,TTS,TTc,T,Q,Q0,D,u,v,M,L,M0,M1,RT,BS,UU,U;
+ local R,TT,i,j,k,n,m,ij,A0,C,TT1,TTS,TTc,T,Q,Q0,D,u,v,M,L,M0,M1,RT,BS,UU,U,a,b;
  R,TT,u := op(RTTu);
  n := nops(A);
  A0 := {seq(i,i=1..n)};
@@ -225,7 +225,7 @@ end:
 ##################################################
 
 `random_element/FFbar` := (N::posint) -> (A::set) -> proc()
- local n,R,TT,u;
+ local n,R,TT,u,i;
  
  n := nops(A);
  R := `random_element/ord`(A)();
@@ -235,7 +235,7 @@ end:
 end:
 
 `list_elements/FFbar` := (N::posint) -> proc(A::set)
- local n,RR,U,i,TTT;
+ local n,RR,R,U,u,i,j,TTT,TT;
  
  n := nops(A);
  RR := `list_elements/ord`(A);
@@ -257,7 +257,7 @@ end:
  `count_elements/standard_stasheff_trees`(nops(A)); 
 
 `list_ordered_elements/FFbar` := (N::posint) -> proc(A::{set,list})
- local n,A0,R,U,i,TTT;
+ local n,A0,R,U,u,i,j,TTT,TT;
  
  n := nops(A);
  A0 := {op(A)};
@@ -286,7 +286,7 @@ end:
 ######################################################################
 
 `gamma/FFbar` := (N::posint) -> (A::set,B::set) -> (p) -> proc(Q,P) 
- local R,TT,T,U,M;
+ local R,TT,T,U,M,i;
 
  R := table();
  TT := `list_elements/big_subsets`(A);

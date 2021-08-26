@@ -113,15 +113,17 @@ end:
 end;
 
 `edges/raw_simplicial_complex` := proc(K)
+ local i,j,s;
  {seq(seq(seq({s[i],s[j]},j=i+1..nops(s)),i=1..nops(s)),s in K)};
 end:
 
 `faces/raw_simplicial_complex` := proc(K)
+ local i,j,k,s;
  {seq(seq(seq(seq({s[i],s[j],s[k]},k=j+1..nops(s)),j=i+1..nops(s)),i=1..nops(s)),s in K)};
 end:
 
 `components/simplicial_complex` := proc(T)
- local P,Q,R,s;
+ local P,Q,R,s,v;
  
  P := {seq({v},v in T["vertices"])};
  for s in T["max_simplices"] do
@@ -239,7 +241,7 @@ end:
 # which the vertex set has the form {1,...,n} for some n.
 
 `is_condensed/raw_simplicial_complex` := proc(K)
- local V,n;
+ local V,n,i;
  V := `vertices/raw_simplicial_complex`(K);
  n := nops(V);
  return evalb(V = {seq(i,i=1..n)});
@@ -257,7 +259,7 @@ end;
 end:
 
 `is_condensed/simplicial_complex` := proc(T)
- local V,n;
+ local V,n,i;
  V := {op(T["vertices"])};
  n := nops(V);
  return evalb(V = {seq(i,i=1..n)});
@@ -385,7 +387,7 @@ end:
 end:
 
 `join/simplicial_complex` := proc(T,U)
- local n,m,U0,TU,v;
+ local n,m,U0,TU,s,t,v;
  
  if `is_condensed/simplicial_complex`(T) and
     `is_condensed/simplicial_complex`(U) then
@@ -814,7 +816,7 @@ end:
 end:
 
 `star_subdivide/simplicial_complex` := proc(T,s)
- local n,V,K,K1,S0,S1,S2,s0,s1,s2,u,P,d,x,v;
+ local n,V,K,K1,S0,S1,S2,s0,s1,s2,u,P,d,x,v,i;
 
  if nops(s) = 1 then return; fi;
  
@@ -856,7 +858,7 @@ end:
 # joining v to the corners of the square.  It returns a new vertex
 # w', so that the process can be repeated using v and w'.
 `square_refine/simplicial_complex` := proc(T,v,w)
- local n,K,L,W,P,old_faces,new_faces;
+ local n,K,L,W,P,old_faces,new_faces,i;
  if not(`is_condensed/simplicial_complex`(T)) then
   error "Complex is not condensed";
  fi;
@@ -937,7 +939,7 @@ end:
 
 
 `normalise_embedding/simplicial_complex` := proc(T)
- local d,P,v,x;
+ local d,P,v,x,i;
  
  d := T["embedding_dim"];
  P := T["embedding"];
@@ -968,7 +970,7 @@ end:
 end:
 
 `plot/raw_simplicial_complex` := proc(K,d,a)
- local V,E,F,e,f,P;
+ local V,E,F,v,e,f,P;
 
  V := `vertices/raw_simplicial_complex`(K);
  E := `edges/raw_simplicial_complex`(K);
@@ -983,7 +985,7 @@ end:
 end:
 
 `plot/simplicial_complex` := proc(T,a_)
- local V,E,F,a;
+ local V,E,F,v,e,f,a;
  
  `set_edges/simplicial_complex`(T);
  `set_faces/simplicial_complex`(T);
@@ -1000,7 +1002,7 @@ end:
 end:
 
 `surface_plot/simplicial_complex` := proc(T,a_)
- local V,E,F,a;
+ local V,E,F,f,a;
  
  `set_faces/simplicial_complex`(T);
  F := T["faces"];
@@ -1012,6 +1014,7 @@ end:
 end:
 
 `vertex_labels/simplicial_complex` := proc(T)
+ local v;
  if T["embedding_dim"] = 2 then
   display(seq(textplot([op(T["embedding"][v]),sprintf("%A",v)]),v in T["vertices"]),
           axes=none,scaling=constrained);
@@ -1024,7 +1027,7 @@ end:
 end:
 
 `set_javascript/simplicial_complex` := proc(T,format_)
- local format,format3,V,F,F1,P,N,V_string,N_string,F_string,T_string,f,f1,n1,n2;
+ local format,format3,V,F,F1,P,N,V_string,N_string,F_string,T_string,f,f1,n1,n2,v,i;
 
  format := `if`(nargs > 1,format_,"%f");
  format3 := sprintf("[%s,%s,%s]",format,format,format);

@@ -1,7 +1,7 @@
 ######################################################################
 
 `is_element/PP` := (N::posint) -> (A::set) -> proc(R)
- local E,i;
+ local E,i,a,b;
  global reason;
  
  if not(type(R,list) and nops(R) = N) then
@@ -57,7 +57,7 @@ end:
 end:
 
 `mu/F/PP` := (N::posint) -> (A::set) -> proc(x)
- local AA;
+ local AA,a,b,i;
  
  AA := {seq(seq([a,b],b in A),a in A)};
  
@@ -80,7 +80,7 @@ end:
 end;
 
 `random_element/PP` := (N::posint) -> (A::set) -> proc()
- local R,ok;
+ local R,ok,i;
 
  ok := false;
  while not(ok) do
@@ -92,7 +92,7 @@ end;
 end;
 
 `list_elements/PP` := (N::posint) -> proc(A::set)
- local RR,QQ,R,i;
+ local RR,QQ,R,Q,i;
 
  RR := `list_elements/preord`(A);
  QQ := [[]];

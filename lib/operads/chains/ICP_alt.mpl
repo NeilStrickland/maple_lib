@@ -55,7 +55,7 @@ end:
 end:
 
 `random_element/ICP_alt` := (N::posint) -> (A::set) -> proc()
- local R,u;
+ local R,u,i;
 
  R := `random_element/ord`(A)();
  u := [seq(rand(1..N)(),i=1..nops(A)-1)];

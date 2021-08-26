@@ -1,6 +1,6 @@
 make_octahedron_complex := proc()
  global octahedron_complex,cube_complex;
- local OC,CC,vO,vC,vOi,vCi,i,j,k,dp,CF,f,G,G0,G1,r,g,eqs,sol,sc,OS,s,t;
+ local OC,CC,vO,vC,vOi,vCi,i,j,k,dp,CF,f,G,G0,G1,r,g,h,eqs,sol,sc,OS,s,t;
 
  CC := table():
  OC := table():
@@ -181,7 +181,7 @@ end:
 make_octahedron_complex():
 
 octosphere_complex := proc(n::nonnegint)
- local T,T0,E,v,x,i;
+ local T,T0,E,v,x,i,j;
  
  T := eval(octahedron_complex);
 

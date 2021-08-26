@@ -21,7 +21,7 @@ end:
 
 `analyse/PQ` := (N::posint) -> (A::set,a) -> proc(PQ)
  local B,P,Q,T,Pt,Qt,Pr,Qr,Ps,Qs,F,U,m,sigma,Y,Z,zeta,B0,F0,FR0,U0,UR0,
-  i,j,k,b;
+  i,j,k,n,b,e;
  B := A minus {a};
  P,Q := op(PQ);
  T := table():
@@ -125,7 +125,7 @@ end:
 
 `check/prop_part_is_sphere/PQ` := proc(T)
  global reason;
- local N,A,B,B0,P,Q,U,m,Y,Z,zeta,sigma,b,c,V;
+ local N,A,B,B0,P,Q,U,m,Y,Z,zeta,sigma,b,c,V,i,e;
 
  N := T["N"];
  A := T["A"];
@@ -173,7 +173,7 @@ end:
 
 `check/cor_Ub_union/PQ` := proc(T)
  global reason;
- local N,A,B,B0,P,Q,U,UU0,UU1;
+ local N,A,B,B0,P,Q,U,UU0,UU1,b;
 
  N := T["N"];
  A := T["A"];
@@ -228,7 +228,7 @@ end:
 `check/lem_buc/PQ` := proc(T)
  global reason;
  local N,A,B,B0,Qs,Qt,m,sigma,zeta,
-  n,n0,I0,ib,ic,b,c,k,ju,u;
+  n,n0,I0,ib,ic,b,c,k,ju,u,i;
 
  N := T["N"];
  A := T["A"];
@@ -284,7 +284,7 @@ end:
 `check/lem_buvc/PQ` := proc(T)
  global reason;
  local N,A,B,B0,Qs,Qt,m,sigma,zeta,
-  n,n0,I0,ib,ic,b,c,k,ju,u,jv,v;
+  n,n0,I0,ib,ic,b,c,k,ju,u,jv,v,i;
 
  N := T["N"];
  A := T["A"];
@@ -336,7 +336,7 @@ end:
 `check/prop_U_step/PQ` := proc(T)
  global reason;
  local N,A,B,B0,Qs,Qt,U,
-  n,n0,I0,ib,ic,b,c,r,V,V0,V1,M0;
+  n,n0,I0,ib,ic,b,c,r,V,V0,V1,M0,i;
 
  N := T["N"];
  A := T["A"];

@@ -32,7 +32,7 @@ end;
 ######################################################################
 
 `bottom_normalise/W` := (N::posint) -> (A::set) -> proc(x)
- local x0,u,a;
+ local x0,u,a,i;
 
  u := [seq(min(seq(x[a][i],a in A)),i=1..N)];
  x0 := table():
@@ -77,7 +77,8 @@ end;
 
 ######################################################################
 
-`width/W` := (N::posint) -> (A::set) -> proc(x) 
+`width/W` := (N::posint) -> (A::set) -> proc(x)
+ local i,a;
  max(seq(max(seq(x[a][i],a in A)) -  min(seq(x[a][i],a in A)),i=1..N));
 end;
 

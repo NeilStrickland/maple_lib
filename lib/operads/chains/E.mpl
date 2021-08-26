@@ -48,8 +48,10 @@ end:
 
 ######################################################################
 
-`list_elements/E` := (N::posint) ->
- [seq(-epsilon^i,i=0..N-1),0,seq(epsilon^(N-1-i),i=0..N-1)];
+`list_elements/E` := proc(N::posint)
+ local i;
+ return [seq(-epsilon^i,i=0..N-1),0,seq(epsilon^(N-1-i),i=0..N-1)];
+end:
 
 `random_element/E` := (N::posint) -> proc()
  local L;

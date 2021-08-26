@@ -64,7 +64,7 @@ end:
 end:
 
 `d1/Lambda` := proc(u)
- local K,n,v,i,x,y,z;
+ local K,n,v,i,j,x,y,z;
  option remember;
  
  if not(type(u,specfunc(nonnegint,lambda))) then
@@ -116,6 +116,8 @@ end:
 end:
 
 `vec/Lambda` := (s,t) -> proc(u)
+ local m;
+ 
  [seq(modp(coeff(u,m,1),2),m in `basis/Lambda`(s,t))]; 
 end:
 

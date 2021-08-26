@@ -130,10 +130,10 @@ fibres := (A::set,B::set) -> proc(p)
 end;
 
 # `id/maps`(A) is the identity map A -> A
-`id/maps` := (A::set) -> table({seq(a=a,a in A)});
+`id/maps` := proc(A::set) local a; table({seq(a=a,a in A)}); end:
 
 # `compose/maps`(A,B,C)(p,q) assumes that p : A -> B and q : B -> C,
 # and it returns the composite q o p : A -> C.
-`compose/maps` := (A::set,B::set,C::set) -> (p,q) ->
-  table({seq(a = q[p[a]],a in A)});
+`compose/maps` := (A::set,B::set,C::set) -> proc(p,q) local a;
+  table({seq(a = q[p[a]],a in A)}); end:
 

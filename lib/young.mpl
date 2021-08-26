@@ -22,7 +22,10 @@
  return true;
 end:
 
-`young_partition/from_set` := (n,k) -> (P) -> [seq(n-k+i-P[i],i=1..k)];
+`young_partition/from_set` := (n,k) -> proc(P)
+ local i;
+ return [seq(n-k+i-P[i],i=1..k)];
+end:
 
 `list_elements/young_partitions` := proc(n,k)
  map(`young_partition/from_set`(n,k),combinat[choose](n,k));
@@ -61,7 +64,7 @@ end:
 end:
 
 `giambelli_matrix/young_partitions` := proc(lambda)
- local k,f;
+ local i,j,k,f;
  k := nops(lambda);
  f := (i) -> `if`(i < 0,0,`if`(i = 0,1,c[i]));
  Matrix([seq([seq(f(lambda[i]-i+j),j=1..k)],i=1..k)]);

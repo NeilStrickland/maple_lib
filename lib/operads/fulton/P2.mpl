@@ -1,7 +1,7 @@
 ######################################################################
 
 `is_element/P2` := (N::posint) -> (A::set) -> proc(u)
- local n,A2,ab,ba,v;
+ local n,A2,ab,ba,v,i;
  global reason;
 
  if not(type(u,table)) then

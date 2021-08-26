@@ -1,5 +1,5 @@
 RP2_net_complex := proc()
- local T,rt,tau;
+ local T,rt,tau,i;
 
  T["vertices"] := {seq(i,i=1..9)};
  T["faces"] := {{1,2,3},{1,2,5},{1,3,9},{1,4,5},{1,4,9},{2,3,7},{2,5,6},{2,6,7},{3,7,8},{3,8,9}};
@@ -42,7 +42,7 @@ RP2_net_complex := proc()
 end:
 
 RP2_complex := proc()
- local T0,T;
+ local T0,T,i;
 
  T0 := RP2_net_complex();
  T["vertices"] := {seq(i,i=1..6)};

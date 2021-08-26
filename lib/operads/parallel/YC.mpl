@@ -1,5 +1,5 @@
 `is_element/YC` := (N::posint) -> (A::set) -> proc(x)
- local a,i,j,t,G,J,E,B;
+ local a,b,i,j,k,t,G,J,E,B;
  global reason;
 
  if not(type(x,table)) then

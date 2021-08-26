@@ -17,7 +17,7 @@ end:
 `is_leq/graphs` := (V::set) -> (E0,E1) -> evalb(E0 minus E1 = {}):
 
 `list_elements/graphs` := proc(V::set)
- local n,E0,EE;
+ local n,E0,EE,i,j;
  
  n := nops(V);
  E0 := {seq(seq([V[i],V[j]],j=i+1..n),i=1..n-1)};
@@ -29,7 +29,7 @@ end:
 `count_elements/graphs` := (V::set) -> 2^(nops(V)*(nops(V)-1)/2);
 
 `random_element/graphs` := (V::set) -> proc()
- local n,E0,E;
+ local n,E0,E,i,j;
  
  n := nops(V);
  E0 := {seq(seq([V[i],V[j]],j=i+1..n),i=1..n-1)};
@@ -146,7 +146,7 @@ end:
 
 `list_small_elements/paths` := (V) -> (E) -> proc(n::nonnegint)
  option remember;
- local P,Q,p,v,F;
+ local P,Q,p,v,F,e;
  
  if n = 0 then
   return map(v -> [v],V);
@@ -169,14 +169,14 @@ end:
 `length/paths` := (V) -> (E) -> (p) -> nops(p) - 1;
 
 `is_trail/paths` := proc(p)
- local n,e;
+ local n,e,i;
  n := nops(p) - 1;
  e := {seq([p[i],p[i+1]],i=1..n)};
  return evalb(nops(e) = n);
 end:
 
 `is_cycle/paths` := proc(p)
- local n;
+ local n,i;
  n := nops(p) - 1;
  return evalb(p[1] = p[n+1] and nops({seq(p[i],i=1..n)}) = n);
 end:
@@ -199,7 +199,7 @@ end:
 
 `list_small_elements/trails` := (V) -> (E) -> proc(n)
  option remember;
- local E0,E1,P,Q,p,v,F;
+ local E0,E1,P,Q,p,v,F,i,e;
 
  if n = 0 then
   return map(v -> [v],V);
@@ -218,7 +218,7 @@ end:
 end:
 
 `random_small_element/trails` := (V) -> (E) -> (n) -> proc(num_tries := 10)
- local k,p,E0,E1,v,F,e;
+ local k,p,E0,E1,v,F,e,i;
  
  k := num_tries;
 

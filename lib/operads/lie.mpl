@@ -112,6 +112,8 @@ end:
 
 `alt_basis/lie_operad` := proc(n::nonnegint)
  option remember;
+ local i,u;
+ 
  if n = 0 then
   return [];
  elif n = 1 then

@@ -30,7 +30,7 @@ end;
 ######################################################################
 
 `op/linord` := (A::set) -> proc(L)
- local n;
+ local n,i;
  n := nops(A);
  return [seq(L[n-i],i=0..n-1)];
 end;

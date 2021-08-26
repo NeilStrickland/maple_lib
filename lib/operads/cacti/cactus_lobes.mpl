@@ -156,6 +156,8 @@ end:
 end:
 
 `full_plot/cactus_lobes` := proc(cT)
+ local x;
+ 
  display(
   `plot/cactus_lobes`(cT),
   seq(line([x,0],[x,1],colour=red),x in [0,1]),

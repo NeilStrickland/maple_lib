@@ -2,7 +2,7 @@
 # We truncate powers d+1 and higher
 
 make_fgl_Morava := proc(p,n,d)
- local T,ld,x,y,u;
+ local T,ld,x,y,u,i;
 
  T := table();
  T["p"] := p;
@@ -10,6 +10,7 @@ make_fgl_Morava := proc(p,n,d)
  T["d"] := d;
  T["height"] := n;
  T["degree"] := d;
+ T["modulus"] := 0;
 
  ld := 0;
  while p^ld <= d/p do ld := ld+1; od;

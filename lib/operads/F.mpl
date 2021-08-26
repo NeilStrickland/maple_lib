@@ -182,7 +182,7 @@ end;
 ######################################################################
 
 `inc/F/Fbar` := (N::posint) -> (A::set) -> proc(x)
- local y,P,T;
+ local y,P,T,t;
 
  y := table();
 
@@ -198,7 +198,7 @@ end;
 ######################################################################
 
 `gaps/F` := (N::posint) -> (A::set) -> proc(x)
- local G,V,W,m,i;
+ local G,V,W,m,i,j,a;
  
  G := NULL;
  m := nops(A);
@@ -222,7 +222,7 @@ end;
 ######################################################################
 
 `normalise_gap/F` := (N::posint) -> (A::set) -> proc(x)
- local m,g,x0,a;
+ local m,g,x0,a,i;
  
  m := [seq(min(seq(x[a][i],a in A)),i=1..N)];
  g := `gap/F`(N)(A)(x);
@@ -238,7 +238,7 @@ end;
 ######################################################################
 
 `delta/F` := (N::posint) -> (A::set) -> (a,b) -> proc(x)
- local u,n;
+ local u,n,i;
  u := x[b] -~ x[a];
  n := sqrt(add(u[i]^2,i=1..N));
  return u /~ n;
@@ -247,6 +247,7 @@ end:
 ######################################################################
 
 `draw_unnormalised/F` := (A::set) -> proc(x)
+ local a;
  display(seq(point(x[a]),a in A),scaling=constrained,axes=none);
 end;
 

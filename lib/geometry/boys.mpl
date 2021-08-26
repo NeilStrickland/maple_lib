@@ -1,7 +1,7 @@
 # The Boys embedding, as a map from the Riemann sphere to R^3
  
 complex_boys_embedding := proc(z)
- local a,V,M,B,rM;
+ local a,V,M,B,rM,i;
 
  if z = 0 then return [0,0,2]; fi;
  
@@ -33,7 +33,7 @@ end:
 # The map boys_embedding() is the Boys embedding, as a map from the
 # round sphere S^2 to R^3.
 make_boys_embedding := proc()
- local x,Z,B,BN,dB;
+ local x,Z,B,BN,dB,i;
  global boys_embedding0,boys_normal0;
  
  assume(x[1] > 0, x[2] > 0, x[3] > 0);
@@ -61,7 +61,7 @@ boys_embedding := proc(x)
 end:
 
 boys_normal := proc(x)
- local n,M;
+ local n,M,i;
  if x = [0,0,1] then return [0,0,1]; fi;
  M := evalf(boys_jacobian_matrix(x));
  n := convert((1/Transpose(Matrix(M))) . Vector(x),list);
@@ -70,7 +70,7 @@ boys_normal := proc(x)
 end:
 
 make_boys_jacobian := proc()
- local x,p,xred,B,BJM,BJN,BJNP,DBJNP,p_rule,x0,rot;
+ local x,p,xred,B,BJM,BJN,BJNP,DBJNP,p_rule,x0,rot,i,j;
  global boys_jacobian_matrix,boys_jacobian_square_norm,boys_poly,boys_p0,boys_corners;
  
  B := boys_embedding(x);
@@ -111,7 +111,7 @@ end:
 
 make_boys_embedding_alt := proc()
  global boys_M0,boys_M1,boys_a1,boys_embedding_alt;
- local u,a,x,M,M0,be0,F,F0,rels,sol;
+ local u,a,x,M,M0,be0,F,F0,rels,sol,i;
  
  if not(type(boys_corners,list(list))) then
   make_boys_jacobian():

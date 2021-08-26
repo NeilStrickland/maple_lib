@@ -39,7 +39,7 @@
 end:
 
 `D/holder_graph` := proc(A::set)
- local V,E;
+ local V,E,v,w;
  
  if nops(A) <> 6 then
   error("A does not have size six");
@@ -52,7 +52,7 @@ end:
 end:
 
 `T/holder_graph` := (V::set) -> proc(E)
- local T,F;
+ local T,F,t,u;
  
  T := combinat[choose](V,3);
  T := select(t -> member([t[1],t[2]],E) and
@@ -79,6 +79,7 @@ end:
 end:
 
 `alpha/holder_graph` := (A) -> proc(a)
+ local b;
  {seq({a,b},b in A minus {a})};
 end:
 

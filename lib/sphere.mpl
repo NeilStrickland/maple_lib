@@ -1,5 +1,5 @@
 `is_element/sphere` := (N::nonnegint) -> proc(x)
- local err;
+ local err,i;
 
  if not `is_element/R`(N+1)(x) then
   return false;
@@ -16,7 +16,7 @@ end:
 `count_elements/sphere` := NULL;
 
 `random_element/sphere` := (N::nonnegint) -> proc(d::posint := 5)
- local r,x,n,k,e;
+ local r,x,n,k,e,i;
 
  r := rand(-d..d);
  x := [seq(r(),i=1..N)];

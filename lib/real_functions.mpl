@@ -156,7 +156,7 @@ end:
 ######################################################################
 
 `gap/real_functions` := (A::set) -> proc(x)
- local V,n;
+ local V,n,i;
  V := sort([op(map(a -> x[a],A))]);
  n := nops(V);
  return max(0,seq(V[i+1]-V[i],i=1..n-1));

@@ -21,7 +21,7 @@ end:
 
 `analyse/PQQ` := (N::posint) -> (A::set,a) -> proc(PQQ)
  local B,P0,Q0,Q1,P0r,Q0r,Q1r,L1,n1,T,M,RR,SS,US,PN,PS,U,nU,U0,UR0,
-  Q1B,AQ1B,RT,Bm,Bo,Bp,Bmr,Bpr,NB,NU,VV,b,i,k,beta,kk,ee;
+  Q1B,AQ1B,RT,Bm,Bo,Bp,Bmr,Bpr,NB,NU,VV,b,i,j,k,l,beta,kk,ee;
  B := A minus {a};
  P0,Q0,Q1 := op(PQQ);
  T := table():
@@ -134,7 +134,7 @@ end:
 ######################################################################
 
 `f/PQQ/U/V` := (T) -> proc(M)
- local a,j,k,beta,beta0,gamma,rt,r;
+ local a,b,j,k,beta,beta0,gamma,rt,r;
  k := 1:
  beta := T["B"]:
  a := T["a"]:
@@ -156,7 +156,7 @@ end:
 ######################################################################
 
 `g/PQQ/V/U` := (T) -> proc(x)
- local i,k,N,a,B,MT,QQ,MM,M,beta,r,b0,L,U,rt;
+ local i,k,N,a,b,B,MT,QQ,MM,M,beta,r,b0,L,U,rt;
  k,beta,r := op(x);
  N := T["N"];
  a := T["a"];
@@ -306,7 +306,7 @@ end:
 
 `check_UL/PQQ` := proc(T)
  global reason;
- local N,A,B,a,b,Q,kk,k,L,U,S;
+ local N,A,B,a,b,Q,kk,k,L,U,S,i,e;
  N := T["N"];
  a := T["a"];
  A := T["A"];
@@ -435,7 +435,7 @@ end:
 ######################################################################
 
 `check_nonempty_interval/PQQ` := proc(T)
- local L,J,j,j0,j1;
+ local L,J,i,j,j0,j1;
  L := T["part_is_nonempty_list"];
  if not(`or`(op(L))) then return false; fi;
  J := select(i -> L[i],[seq(i,i=1..nops(L))]);

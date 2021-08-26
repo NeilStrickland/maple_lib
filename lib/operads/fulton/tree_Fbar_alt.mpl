@@ -128,7 +128,7 @@ end;
 # From tree_Fbar to tree_Fbar_alt
 
 `phi/tree_Fbar` := (N::posint) -> (A::set) -> (TT) -> proc(x)
- local TT1,children,x1,t,y0,y,ty,C,C1,n,m,T,U;
+ local TT1,children,x1,t,y0,y,ty,C,C1,n,m,T,U,a;
 
  TT1 := select(T -> nops(T) > 1,TT);
  children := children_map(A)(TT);

@@ -2,7 +2,7 @@
 # Partitions of the set {1,...,n} into intervals
 
 `is_element/interval_partitions` := (n::posint) -> proc(pi)
- local A,U;
+ local A,U,i;
  global reason;
 
  A := {seq(i,i=1..n)};
@@ -23,14 +23,14 @@
 end:
 
 `is_equal/interval_partitions` := (n::posint) -> proc(pi,rho)
- local A;
+ local A,i;
 
  A := {seq(i,i=1..n)};
  return `is_equal/partitions`(A)(pi,rho);
 end:
 
 `is_leq/interval_partitions` := (n::posint) -> proc(pi,rho)
- local A;
+ local A,i;
 
  A := {seq(i,i=1..n)};
  return `is_leq/partitions`(A)(pi,rho);
@@ -41,7 +41,7 @@ end:
 # of C.
 
 `cut_partition` := proc(n::posint,C)
- local m,C0,C1;
+ local m,C0,C1,i,j;
 
  m := 1 + nops(C);
  C0 := sort([1,op(map(c->c+1/2,C))]);
@@ -50,14 +50,14 @@ end:
 end;
 
 `random_element/interval_partitions` := (n::posint) -> proc()
- local C;
+ local C,i;
 
  C := `random_element/subsets`({seq(i+1/2,i=1..n-1)})();
  return cut_partition(n,C);
 end;
 
 `list_elements/interval_partitions` := proc(n)
- local G,P;
+ local G,P,i;
 
  G := {seq(i+1/2,i=1..n-1)};
  P := `list_elements/subsets`(G);

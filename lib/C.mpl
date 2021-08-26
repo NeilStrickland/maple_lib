@@ -58,13 +58,13 @@ end:
 
 `is_zero/C` := (N::posint) -> (x) -> evalb(simplify(x) = [0$N]);
 
-`norm_2/C` := (N::posint) -> (x) -> sqrt(add(abs(x[i])^2,i=1..N));
+`norm_2/C` := (N::posint) -> proc(x) local i; sqrt(add(abs(x[i])^2,i=1..N)); end:
 
-`dot/C` := (N::posint) -> (x,y) -> add(x[i]*conjugate(y[i]),i=1..N);
+`dot/C` := (N::posint) -> proc(x,y) local i; add(x[i]*conjugate(y[i]),i=1..N); end:
 
 `d_2/C` := (N::posint) -> (x,y) -> `norm_2/C`(N)(x -~ y);
 
-`random_element/C` := (N::posint) -> proc() [seq(`random_element/CC`(),i=1..N)] end;
+`random_element/C` := (N::posint) -> proc() local i; [seq(`random_element/CC`(),i=1..N)] end;
 
 `list_elements/C` := NULL;
 `count_elements/C` := NULL;

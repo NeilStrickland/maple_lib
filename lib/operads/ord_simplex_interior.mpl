@@ -7,7 +7,7 @@
 end;
 
 `gamma/ord_simplex_interior` := (A::set,B::set) -> (p) -> proc(U,V)
- local RU,RV,xU,xV;
+ local RU,RV,xU,xV,b;
 
  RU := U[1];
  RV := table([seq(b = eval(V[b][1]),b in B)]);

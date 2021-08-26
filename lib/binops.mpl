@@ -2,7 +2,7 @@
 # Binary operations on finite sets
 
 `is_element/binops` := (A::set,B::set,C::set) -> proc(p)
- local AB,dom,cod;
+ local AB,dom,cod,a,b;
  global reason;
 
  if not(type(p,table)) then
@@ -70,7 +70,7 @@ end;
 end;
 
 `list_elements/binops` := proc(A::set,B::set,C::set)
- local nA,nB,nC,J,L,i;
+ local nA,nB,nC,J,L,i,j,k,u;
 
  nA := nops(A);
  nB := nops(B);

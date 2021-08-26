@@ -5,6 +5,7 @@
 with(Groebner):
 
 `vars/poisson` := proc(A::set)
+ local a,b;
  [seq(seq(u[a,b],b in A),a in A)];
 end:
 
@@ -28,7 +29,7 @@ end:
 end:
 
 `basis/poisson` := proc(A::set)
- local n,a,B,U,V;
+ local n,a,x,v,B,U,V;
  
  n := nops(A);
  if n <= 1 then

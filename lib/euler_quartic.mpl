@@ -2,7 +2,7 @@
 # w+x+y+z = wxyz + a = 0.  The formula here is similar to Euler's
 # but simpler, and is taken from slides of Elkies
 
-`f/euler_quartic` := (a,x) -> [add(x[i],i=1..4),mul(x[i],i=1..4)+a];
+`f/euler_quartic` := proc(a,x) local i; [add(x[i],i=1..4),mul(x[i],i=1..4)+a]; end:
 
 `g/euler_quartic` := (a,s) -> [
  1/2*s^(-3)*(s^4-4*a)^( 2)*(s^4+12*a)^(-1),

@@ -1,8 +1,9 @@
 with(Groebner):
 with(Ore_algebra):
 
+
 find_koszul_homology := proc(rels,vars_,p_)
- local vars,char,A,T,P,ix_P,S,B0,B1,d,i,k,e_K,e_Z,e_B,de_K,ee_K,dd,K,
+ local vars,char,A,T,P,ix_P,S,B0,B1,d,i,j,k,u,e_K,e_Z,e_B,de_K,ee_K,dd,K,
   K_basis,K_rank,Z_basis,Z_rank,B_basis,B_rank,BZ_basis,BZ_rank;
 
  if nargs > 1 then
@@ -20,19 +21,29 @@ find_koszul_homology := proc(rels,vars_,p_)
  A := poly_algebra(op(vars),e_K,e_Z,e_B,char);
  T := MonomialOrder(A,lexdeg([e_K,e_B],vars,[e_Z]),{e_K,e_Z,e_B});
 
- d := nops(rels); 
+ d := nops(rels);
+ # P = list of all subsets of 1,..,d
  P := combinat[powerset]([seq(i,i=1..d)]);
- ix_P := table():
 
+ # Now build index for P e.g. if {1,4,6} appears as 10th
+ # element of P then if_P[{1,4,6}] should be 10.
+ ix_P := table():
  for i from 1 to 2^d do ix_P[P[i]] := i; od:
+
+ # de_K[i] will be the differential applied to the i'th basis
+ # element of the exterior algebra (for 1 <= i <= 2^d).
  de_K := table():
  for i from 1 to 2^d do
   S := P[i];
   de_K[i] := add((-1)^(j-1) * e_K^ix_P[subsop(j=NULL,S)] * rels[S[j]],j=1..nops(S));
   ee_K[i] := e_K^i + e_K^(2^d+1) * de_K[i];
  od:
+
+ # dd = the differential = linear extension of the map
+ # sending e_K^i to de_K[i]
  dd := (u) -> add(coeff(u,e_K,i) * de_K[i],i=1..2^d);
 
+ # Basis() calculates Groebner basis
  B0 := Basis([seq(ee_K[i],i=1..2^d)],T,char);
  K_basis := [seq(e_K^i,i=1..2^d)];
  K_rank  := 2^d;

@@ -1,5 +1,5 @@
 A_infinity_rel := (m) -> proc(n::posint)
- local p,r,s,t,u;
+ local p,r,s,t,u,i;
  p := 0;
  for r from 0 to n do
   for s from 1 to n-r do
@@ -16,13 +16,14 @@ end:
 
 A_infinity_deg := (n) -> n - 2;
 
-twisted_complex_rel := (d) -> (u) -> 
+twisted_complex_rel := (d) -> proc(u) local i; 
  unapply(add((-1)^i * d(i)(d(u-i)(x)),i=0..u),x);
+end:
 
 twisted_complex_bideg := (i) -> [i,i-1];
 
 DA_infinity_rel := (mm) -> proc(i::nonnegint,n::posint) 
- local p,r,s,t,u,j,k,x;
+ local p,r,s,t,u,j,k,l,x;
  p := 0;
  for r from 0 to n do
   for s from 1 to n-r do

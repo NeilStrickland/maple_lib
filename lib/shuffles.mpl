@@ -20,7 +20,7 @@ end:
 
 `from_subset/shuffles` := (n::nonnegint,m::nonnegint) -> proc(A)
  option remember;
- local X,B;
+ local X,B,i;
  
  X := {seq(i,i=1..n+m)};
  if A minus X <> {} then return FAIL; fi;
@@ -31,6 +31,7 @@ end:
 end:
 
 `to_subset/shuffles` := (n::nonnegint,m::nonnegint) -> proc(s)
+ local i;
  {seq(s[i],i=1..n)};
 end:
 
@@ -48,14 +49,14 @@ end:
 end:
 
 `from_grid_path/shuffles` := (n::nonnegint,m::nonnegint) -> proc(t)
- local A;
+ local A,i;
 
  A := select(i -> t[i][1] > t[i-1][1],{seq(i,i=1..n+m)});
  return `from_subset/shuffles`(n,m)(A);
 end:
 
 `random_element/shuffles` := (n::nonnegint,m::nonnegint) -> proc()
- local u,A;
+ local u,A,i;
  u := combinat[randperm](n+m);
  A := {seq(u[i],i=1..n)};
  return `from_subset/shuffles`(n,m)(A);
@@ -75,5 +76,7 @@ end:
 
 `count_elements/shuffles` := (n::nonnegint,m::nonnegint) -> binomial(n+m,n);
 
-`sgn/shuffles` := (n::nonnegint,m::nonnegint) -> (s) ->
- signum(mul(mul(s[j]-s[i],j=i+1..n+m),i=1..n+m-1));
+`sgn/shuffles` := (n::nonnegint,m::nonnegint) -> proc(s)
+ local i,j;
+ return signum(mul(mul(s[j]-s[i],j=i+1..n+m),i=1..n+m-1));
+end:

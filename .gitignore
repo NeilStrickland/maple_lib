@@ -1,0 +1,14 @@
+*.aux
+*.bbl
+*.blg
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+data
+downloads
+html
+monks
+toda
+

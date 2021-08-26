@@ -1,7 +1,7 @@
 ######################################################################
 
 `is_element/stasheff_star` := (A::set) -> proc(Rt)
- local R,t,n,JJ,TT,J,u;
+ local R,t,n,JJ,TT,J,u,i,j,k;
  global reason;
 
  if not(type(Rt,list) and nops(Rt) = 2) then 
@@ -65,7 +65,7 @@ end;
 ######################################################################
 
 `is_equal/stasheff_star` := (A::set) -> proc(Rt1,Rt2)
- local R1,R2,t1,t2,n,JJ,J;
+ local R1,R2,t1,t2,n,JJ,J,i,j,k;
 
  R1,t1 := op(Rt1);
  R2,t2 := op(Rt2);
@@ -131,7 +131,7 @@ end:
 ######################################################################
 
 `phi/stasheff_trees/stasheff_star` := (A::set) -> proc(RTT)
- local R,TT,n,JJ,J,t;
+ local R,TT,n,JJ,J,t,i,j,k;
 
  R,TT := op(RTT);
 
@@ -148,7 +148,7 @@ end;
 ######################################################################
 
 `phi/realisation/stasheff_trees/stasheff_star` := (A::set) -> proc(x)
- local y,C,R,n,JJ,J,RTT,t,TT,z;
+ local y,C,R,n,JJ,J,RTT,t,TT,z,i,j,k;
 
  y := table();
  C := map(op,[indices(x)]);
@@ -171,7 +171,7 @@ end:
 ######################################################################
 
 `phi/stasheff_star/ord_simplex_interior` := (A::set) -> proc(Rt)
- local R,t,JJ,JS,Ja,J,lambda,mu,a,children;
+ local R,t,JJ,JS,Ja,J,K,lambda,mu,a,children;
 
  R,t := op(Rt);
  JJ := select(J -> t[J] > 0, map(op,{indices(t)}));

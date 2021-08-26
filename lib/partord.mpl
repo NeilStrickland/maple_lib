@@ -39,7 +39,7 @@ end;
 ######################################################################
 
 `random_element/partord` := (A::set) -> proc()
- local M,B,E,RB,RA,DS,xy,x,y,d,m;
+ local M,B,E,RB,RA,DS,xy,x,y,d,m,a,e;
  if nops(A) <= 1 then return {seq([a,a],a in A)}; fi;
 
  M := `random_element/nonempty_subsets`(A)();
@@ -179,7 +179,7 @@ end:
 ######################################################################
 
 `partord/from_comparator` := (A::set) -> proc(C)
- local R;
+ local R,a,b;
  
  R := {seq(seq([a,b],b in A),a in A)};
  R := select(ab -> C(op(ab)),R);
@@ -190,7 +190,7 @@ end:
 ######################################################################
 
 `skeleton/partord/from_comparator` := (A::{set,list}) -> proc(C)
- local n,i,A0,R0;
+ local n,i,j,A0,R0;
 
  n := nops(A);
  A0 := {seq(i,i=1..n)};
@@ -268,11 +268,12 @@ end:
 ######################################################################
 
 `simplex/partord` := proc(n)
+ local i,j;
  return [{seq(i,i=0..n)},{seq(seq([i,j],j=i..n),i=0..n)}];
 end:
 
 `crown/partord` := proc(n)
- local A,R;
+ local A,R,i;
  A := {seq(i,i=1..2*n)};
  R := {seq([i,i],i=1..2*n),
        seq([2*i-1,2*i],i=1..n),
@@ -282,7 +283,7 @@ end:
 end:
 
 `saw/partord` := proc(n)
- local A,R;
+ local A,R,i;
  A := {seq(i,i=1..n)};
  R := {seq([i,i],i=1..n),
        seq([2*i-1,2*i],i=1..floor(n/2)),
@@ -291,7 +292,7 @@ end:
 end:
 
 `diamond/partord` := proc(n)
- local A,R;
+ local A,R,i,j;
 
  A := {seq(i,i=1..2*n)};
  R := {seq([i,i],i=1..2*n),

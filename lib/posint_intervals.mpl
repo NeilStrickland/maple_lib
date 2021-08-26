@@ -22,7 +22,7 @@ end;
 `is_leq/posint_intervals` := (J,K) -> evalb({op(J)} minus {op(K)} = {});
 
 `random_element/posint_intervals` := proc()
- local a,b;
+ local a,b,i;
  a := rand(1..10)();
  b := rand(0..9)();
  [seq(i,i=a..a+b)];

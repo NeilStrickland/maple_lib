@@ -1,5 +1,7 @@
-grassmann_count := (q) -> (n::nonnegint,d::nonnegint) ->
- factor(mul(q^(n-i)-1,i=0..d-1)/mul(q^(d-i)-1,i=0..d-1));
+grassmann_count := (q) -> proc(n::nonnegint,d::nonnegint)
+ local i;
+ return factor(mul(q^(n-i)-1,i=0..d-1)/mul(q^(d-i)-1,i=0..d-1));
+end:
 
 splitting_count := (q) -> (n::nonnegint,m::nonnegint) ->
  grassmann_count(q)(n+m,n) * q^(n*m);
@@ -42,43 +44,57 @@ end:
  return true;
 end:
 
-`to_list/twisted_product/A` := (r::nonnegint) -> (f) -> [seq(f[op(u)],u in `indices/twisted_product/A`(r))];
-`from_symbol/twisted_product/A` := (r::nonnegint) -> (f) -> table([seq(op(u)=f[op(u)],u in `indices/twisted_product/A`(r))]);
+`to_list/twisted_product/A` := (r::nonnegint) -> proc(f)
+ local u;
+ return [seq(f[op(u)],u in `indices/twisted_product/A`(r))];
+end:
+
+`from_symbol/twisted_product/A` := (r::nonnegint) -> proc(f)
+ local u;
+ return table([seq(op(u)=f[op(u)],u in `indices/twisted_product/A`(r))]);
+end:
 
 `zero/twisted_product/A` := proc(r::nonnegint)
  option remember;
- table([seq(op(u)=0,u in `indices/twisted_product/A`(r))]);
+ local u;
+ return table([seq(op(u)=0,u in `indices/twisted_product/A`(r))]);
 end:
 
 `one/twisted_product/A` := proc(r::nonnegint)
  option remember;
- table([seq(op(u)=1,u in `indices/twisted_product/A`(r))]);
+ local u;
+ return table([seq(op(u)=1,u in `indices/twisted_product/A`(r))]);
 end:
 
 `delta/twisted_product/A` := proc(r::nonnegint)
  option remember;
- table([seq(op(u)=`if`(u=[0$r],1,0),u in `indices/twisted_product/A`(r))]);
+ local u;
+ return table([seq(op(u)=`if`(u=[0$r],1,0),u in `indices/twisted_product/A`(r))]);
 end:
 
 `plus/twisted_product/A` := (r::nonnegint) -> proc(f,g)
- table([seq(op(u) = f[op(u)] + g[op(u)],u in `indices/twisted_product/A`(r))]);
+ local u;
+ return table([seq(op(u) = f[op(u)] + g[op(u)],u in `indices/twisted_product/A`(r))]);
 end:
 
 `minus/twisted_product/A` := (r::nonnegint) -> proc(f,g)
- table([seq(op(u) = f[op(u)] - g[op(u)],u in `indices/twisted_product/A`(r))]);
+ local u;
+ return table([seq(op(u) = f[op(u)] - g[op(u)],u in `indices/twisted_product/A`(r))]);
 end:
 
 `dot/twisted_product/A` := (r::nonnegint) -> proc(f,g)
- table([seq(op(u) = f[op(u)] * g[op(u)],u in `indices/twisted_product/A`(r))]);
+ local u;
+ return table([seq(op(u) = f[op(u)] * g[op(u)],u in `indices/twisted_product/A`(r))]);
 end:
 
 `scalar_times/twisted_product/A` := (r::nonnegint) -> proc(c,f)
- table([seq(op(u) = c * f[op(u)],u in `indices/twisted_product/A`(r))]);
+ local u;
+ return table([seq(op(u) = c * f[op(u)],u in `indices/twisted_product/A`(r))]);
 end:
 
 `mu/twisted_product/A` := (r::nonnegint) -> proc(u,v)
  option remember;
- 
+ local i,j;
  mul(splitting_count(q)(u[i],v[i]),i=1..r) *
  q^add(add(u[i]*v[j]+2*u[j]*v[i],j=i+1..r),i=1..r-1);
 end:

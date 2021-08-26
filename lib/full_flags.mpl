@@ -8,7 +8,7 @@
 `count_elements/vectors` := (p,d) -> p^d;
 
 `list_elements/vectors` := proc(p,d)
- local L,i;
+ local L,i,j,u;
  
  L := [[]];
  for i from 1 to d do
@@ -28,10 +28,12 @@ end:
 `count_elements/monic_vectors` := (p,d) -> (p^d - 1)/(p - 1);
 
 `list_elements/monic_vectors` := proc(p,d)
+ local i,u;
+ 
  [seq(seq([op(u),1,0$(d-1-i)],u in `list_elements/vectors`(p,i)),i=0..d-1)];
 end:
 
-`count_elements/full_flags` := (p,d) -> mul((p^i-1)/(p-1),i=1..d);
+`count_elements/full_flags` := proc(p,d) local i; mul((p^i-1)/(p-1),i=1..d); end:
 
 `list_elements/full_flags` := proc(p,d)
  local L,L1,nL,H,V,i,j,k,u,v,q;
@@ -113,11 +115,12 @@ end:
  return true;
 end:
 
-`count_elements/full_flags` := (p,d) -> mul((p^i-1)/(p-1),i = 1..d);
+`count_elements/full_flags` := proc(p,d) local i; mul((p^i-1)/(p-1),i = 1..d); end:
 
 `basepoint/full_flags` := (p,d) -> convert(IdentityMatrix(d),listlist);
 
 `to_subspace_list/full_flags` := (p,d) -> proc(W)
+ local i;
  [seq(`span/subspaces`(p,d)([op(1..i,W)]),i=1..d)];
 end:
 
@@ -149,13 +152,13 @@ end:
 # It would be better to do this directly and use it in the
 # `from_subspace/full_flags` procedure.
 `from_generators/full_flags` := (p,d) -> proc(U)
- local V;
+ local V,i;
  V := [seq(`span/subspaces`(p,d)([op(1..i,U)]),i=1..d)];
  return `from_subspace_list/full_flags`(p,d)(V);
 end:
 
 `matrix_act/full_flags` := (p,d) -> proc(g,W)
- local gW,V;
+ local gW,V,i;
 
  gW := convert(Transpose(Matrix(g) . Transpose(Matrix(W))),listlist);
  V := [seq(`span/subspaces`(p,d)([op(1..i,gW)]),i=1..d)];

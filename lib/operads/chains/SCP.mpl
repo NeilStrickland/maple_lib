@@ -49,7 +49,10 @@ end:
  return X;
 end:
 
-`count_elements/SCP` := (N::posint) -> (A::set) -> add(Stirling2(nops(A),d)*d!*N^(d-1),d=2..nops(A)); 
+`count_elements/SCP` := (N::posint) -> proc(A::set)
+ local d;
+ return add(Stirling2(nops(A),d)*d!*N^(d-1),d=2..nops(A)); 
+end:
 
 `random_element/SCP` := (N::posint) -> (A::set) -> proc()
  local i,n,pi,Q,R,S,B,C,ok;
@@ -78,6 +81,7 @@ end:
 ######################################################################
 
 `gamma/SCP` := (N::posint) -> (A::set) -> proc(Q)
+ local i;
  [seq(`op/autorel`(A)(Q[i]) minus Q[i],i=1..N)];
 end:
 

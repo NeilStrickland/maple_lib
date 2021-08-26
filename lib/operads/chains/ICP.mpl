@@ -44,7 +44,7 @@ end:
 ######################################################################
 
 `random_element/ICP` := (N::posint) -> (A::set) -> proc()
- local i,n,pi,Q,R,S,B,C;
+ local i,j,n,pi,Q,R,S,B,C;
 
  if nops(A) = 0 then
   return FAIL;
@@ -75,7 +75,7 @@ end:
 ######################################################################
 
 `build/ICP` := (N::posint) -> (A::set) -> proc(Ru)
- local R,u,n,i,p,a,b,aa,bb,Q;
+ local R,u,n,i,j,p,a,b,aa,bb,Q;
  R,u := op(Ru);
  n := nops(A);
  aa := table():
@@ -100,7 +100,7 @@ end:
 ######################################################################
 
 `list_elements/ICP` := (N::posint) -> proc(A::set)
- local U,n,i,RR;
+ local U,u,n,i,j,RR,R;
  
  U := [[]];
  n := nops(A);
@@ -119,7 +119,7 @@ end:
 ######################################################################
 
 `list_ordered_elements/ICP` := (N::posint) -> proc(A::{set,list})
- local U,n,i,R,A0;
+ local U,u,n,i,j,R,A0;
  
  U := [[]];
  n := nops(A);
@@ -141,6 +141,7 @@ end:
 # Note that we omit the rank of Q[N], because it is always equal to N here.
 
 `rank_vector/ICP` := (N) -> (A) -> proc(Q)
+ local i;
  return [seq(`rank/preord`(A)(Q[i])-1,i=1..N-1)];
 end;
 
@@ -151,7 +152,7 @@ end;
 ######################################################################
 
 `phi/SEM/ICP` := (N::posint) -> (A::set) -> proc(eta)
- local A2;
+ local A2,a,b,i;
 
  A2 := {seq(seq([a,b],b in A),a in A)};
 

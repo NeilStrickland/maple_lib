@@ -51,7 +51,7 @@ end;
 `count_elements/ord_simplex_interior` := NULL;
 
 `phi/ord_simplex_interior/one_cubes_prime` := (A::set) -> proc(Rx)
- local R,x,y,n,i,p,q;
+ local R,x,y,n,i,j,p,q;
 
  R,x := op(Rx);
  y := table();

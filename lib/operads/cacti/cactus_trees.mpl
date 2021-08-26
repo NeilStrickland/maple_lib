@@ -1,6 +1,6 @@
 `is_element/cactus_trees` := (A::set) -> proc(J)
  global reason;
- local tag,B,C,E;
+ local tag,B,C,E,a,j;
 
  tag := "is_element/cactus_trees";
 
@@ -124,7 +124,7 @@ end:
 
 `list_elements/cactus_trees` := proc(A::set)
  option remember;
- local n,a,B,PP,pp,L,m,M,P,Q,i,f;
+ local n,a,b,u,v,B,PP,pp,K,L,m,M,P,Q,i,k,f;
 
  n := nops(A);
  if n = 0 then
@@ -159,7 +159,7 @@ end:
 # This is A030019 in OEIS
 
 `count_elements/cactus_trees` := proc(A::set)
- local n;
+ local n,i;
  n := nops(A);
  add(Stirling2(n-1, i)*n^(i-1),i=0..n-1);
 end:

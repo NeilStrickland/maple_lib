@@ -2,7 +2,7 @@ with(plots):
 with(plottools):
 
 great_arc := proc(u,v,hue)
- local w,r,s,t,d;
+ local w,r,s,t,d,i;
  w := [u[2]*v[3]-u[3]*v[2],u[3]*v[1]-u[1]*v[3],u[1]*v[2]-u[2]*v[1]];
  r := evalf(sqrt(u[1]^2+u[2]^2+u[3]^2));
  d := u[1]*v[1]+u[2]*v[2]+u[3]*v[3];

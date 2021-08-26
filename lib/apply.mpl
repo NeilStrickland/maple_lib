@@ -5,7 +5,7 @@ apply_linear := proc(f,T := rational)
 
     if u = 0 then
      return 0;
-    elif type(u,`+`) then
+    elif type(u,`+`) or type(u,list) or type(u,set) then
      return map(apply_linear(f,T),u);
     elif type(u,`*`) then
      c,v := selectremove(type,u,T);
@@ -23,7 +23,7 @@ apply_linear_mod := (f,m::posint) -> proc(u)
  
  if u = 0 then
   return 0;
- elif type(u,`+`) then
+ elif type(u,`+`) or type(u,list) or type(u,set) then
   return modp(map(apply_linear(f),u),m);
  elif type(u,`*`) then
   c,v := selectremove(type,u,integer);
@@ -148,6 +148,18 @@ apply_assoc := (f,e) -> proc()
  fi;
 end:
 
+apply_linear_assoc := (f,e) -> proc()
+ if nargs = 0 then
+  return e;
+ elif nargs = 1 then
+  return args[1];
+ elif args = 2 then
+  return apply_bilinear(f)(args[1],args[2]);
+ else
+  return apply_bilinear(f)(args[1],apply_linear_assoc(f,e)(args[2..-1]));
+ fi;
+end:
+
 apply_linear_assoc_mod := (f,e,m::posint) -> proc()
  if nargs = 0 then
   return e;
@@ -235,7 +247,7 @@ apply_max_deg := (f) -> proc(u)
 end:
 
 apply_leibniz := (f) -> proc(u)
- local n,v,uu;
+ local n,v,uu,i;
  
  if type(u,`+`) or type(u,list) or type(u,set) then
   return map(apply_leibniz(f),u);
@@ -253,7 +265,7 @@ apply_leibniz := (f) -> proc(u)
 end:
 
 apply_leibniz_mod := (f,m::posint) -> proc(u)
- local n,v,uu;
+ local n,v,uu,i;
  
  if type(u,`+`) or type(u,list) or type(u,set) then
   return map(apply_leibniz(f),u);

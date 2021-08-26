@@ -244,7 +244,7 @@ end:
 `count_elements/D_zero/F3` := NULL;
 
 `random_element/D_zero/F3` := (N::posint) -> proc()
- local x,y,w,z,r;
+ local x,y,w,z,r,i;
  x := `random_element/sphere`(N-1)();
  y := -~ x;
 

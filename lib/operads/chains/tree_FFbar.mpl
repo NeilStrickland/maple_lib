@@ -122,7 +122,7 @@ end:
 ######################################################################
 
 `ext/tree_FFbar/FFbar` := (N::posint) -> (A::set) -> (TT) -> proc(Q)
- local TT1,UU,TU,T,U,m,Q1;
+ local TT1,UU,TU,T,U,m,Q1,i;
 
  TT1 := select(T -> nops(T) > 1,TT);
  UU := `list_elements/big_subsets`(A);
@@ -146,7 +146,7 @@ end:
 ######################################################################
 
 `C/tree_FFbar` := (N::posint) -> (A::set) -> (TT) -> proc(Q)
- local L,TT1,T,G;
+ local L,TT1,T,G,i,ab;
  L := NULL;
  TT1 := select(T -> nops(T) > 1,TT);
  for T in TT1 do

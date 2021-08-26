@@ -42,6 +42,7 @@
 end:
 
 `is_equal/cacti` := (A::set) -> proc(C0,C1)
+ local a;
  `and`(seq(evalb(C0[a]=C1[a]),a in A));
 end:
 
@@ -50,7 +51,7 @@ end:
 ######################################################################
 
 `random_element/cacti` := (A) -> proc()
- local J,s,s1,n,l,m,c,T,i,a,C;
+ local J,s,s1,n,l,m,c,T,i,j,a,C;
 
  if nops(A) = 0 then return FAIL; fi;
 
@@ -122,7 +123,7 @@ end:
 # its image under the transposition (m,m+1).
 
 `omega/cacti` := (n::posint) -> (m::posint) -> proc(t)
- local A,C,k;
+ local A,C,i,k;
  if m >= n then error("m is out of range"); fi;
  A := {seq(i,i=1..n)};
  C := table():
@@ -280,7 +281,7 @@ end:
 ######################################################################
 
 `phi/ord_simplex_interior/cacti` := (A::set) -> proc(Rx)
- local R,x,n,C,y,i;
+ local R,x,n,C,y,i,j;
  R,x := op(Rx);
  n := nops(R);
  C := table():
@@ -305,7 +306,7 @@ end:
 ######################################################################
 
 `plot/cacti` := (A::set) -> proc(C,r := 1,c := [0,0])
- local n,z;
+ local n,z,i;
  n := nops(A);
  z := table([seq(i = `centroid_R2/RZ_set`(C[A[i]][2]),i=1..n)]);
  display(

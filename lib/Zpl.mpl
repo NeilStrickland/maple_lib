@@ -18,7 +18,7 @@
 # of p^v in position (i,j). 
 
 Zpl_reduce := proc(M,p)
- local L,L1,P,P1,r,c,i,j,k,h,m,J,K,v,v_min,v_min_pos,pivots,cmp;
+ local L,L1,P,P1,r,c,i,j,k,h,m,J,K,v,v_min,v_min_pos,pivots,cmp,x;
  L := Copy(M);
  r,c := Dimension(M);
  P := Matrix(r,r);

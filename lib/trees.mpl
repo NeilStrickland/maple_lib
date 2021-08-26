@@ -65,8 +65,10 @@ end;
 
 ######################################################################
 
-`is_separated/trees` := (A::set) -> (TT) -> 
- evalb({seq({a},a in A)} minus TT = {});
+`is_separated/trees` := (A::set) -> proc(TT)
+ local a;
+ return evalb({seq({a},a in A)} minus TT = {});
+end:
 
 ######################################################################
 # Suppose we have a set A, a tree TT on A, a set T in TT, and a point a that
@@ -201,5 +203,8 @@ end;
 
 ######################################################################
 
-corolla := (A::set) -> {A,seq({a},a in A)};
+corolla := proc(A::set)
+ local a;
+ return {A,seq({a},a in A)};
+end:
 

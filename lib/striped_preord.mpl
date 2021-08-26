@@ -87,7 +87,7 @@ end:
 # (or FAIL if R is already maximal).
 
 `bump/striped_preord` := (A::set) -> proc(R)
- local pi,B,a,B0,R0;
+ local pi,B,a,b,B0,R0;
 
  pi := `block_partition/preord`(A)(R);
 

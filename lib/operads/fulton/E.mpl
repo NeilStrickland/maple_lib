@@ -47,7 +47,7 @@ end:
 ######################################################################
 
 `random_element/E/Fbar` := (N::posint) -> (A::set,B::set) -> proc()
- local t,p,q,x,n,t0,r;
+ local t,p,q,x,n,t0,r,i,b;
 
  n := nops(A);
  t0 := map(abs,`random_element/sphere`(n-1)());

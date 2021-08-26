@@ -43,7 +43,10 @@ end;
 end;
 
 `bot/rel` := (A::set,B::set) -> {};
-`top/rel` := (A::set,B::set) -> {seq(seq([a,b],b in B),a in A)};
+`top/rel` := proc(A::set,B::set)
+ local a,b;
+ return {seq(seq([a,b],b in B),a in A)};
+end:
 
 `is_a_function/rel` := (A::set,B::set) -> proc(R)
  local r,N;
@@ -71,10 +74,14 @@ end;
 end:
 
 `unhash/rel` := (A::set,B::set) -> proc(r)
+ local a,b;
  {seq(seq([a,b],b in r[a]),a in A)};
 end;
 
-`id/rel` := (A::set) -> {seq([a,a],a in A)};
+`id/rel` := proc(A::set)
+ local a;
+ return {seq([a,a],a in A)};
+end:
 
 `o/rel` := (A::set,B::set,C::set) -> proc(S,R)
  local r,s,sr,a;
@@ -86,7 +93,7 @@ end;
 end;
 
 `list_elements/rel` := proc(A::set,B::set)
- local AB;
+ local AB,a,b;
  AB := {seq(seq([a,b],b in B),a in A)};
  `list_elements/subsets`(AB);
 end:
@@ -94,7 +101,7 @@ end:
 `count_elements/rel` := (A::set,B::set) -> 2^(nops(A)*nops(B));
 
 `random_element/rel` := (A::set,B::set) -> proc(p_)
- local AB,p,R,r,ab;
+ local AB,p,R,r,ab,a,b;
  p := `if`(nargs > 0,p_,0.5);
  r := rand(0..10^6-1);
  AB := {seq(seq([a,b],b in B),a in A)};

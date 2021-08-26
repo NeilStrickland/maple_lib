@@ -33,7 +33,7 @@
 end:
 
 `is_element/ranked_hasse_diagrams` := (A::set) -> proc(Gr)
- local G,r,AA,rA,d,A1,r1,a,AA1,G1,M1,M2,Aa,A0,Ma,rMa;
+ local G,r,AA,rA,d,A1,r1,a,b,AA1,G1,M1,M2,Aa,A0,Ma,rMa,i;
  global reason;
 
  if not(type(Gr,list) and nops(Gr) = 2) then

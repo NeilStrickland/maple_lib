@@ -24,7 +24,7 @@ end:
 ######################################################################
 
 `subcritical_tree/F1bar` := (A::set) -> proc(x)
- local x0,R,n,SS,i,j,J,J1,g1,g2,is_subcritical;
+ local x0,R,n,SS,i,j,J,J1,g1,g2,is_subcritical,a,k;
 
  x0 := `trim/F1bar`(A)(x);
 
@@ -65,7 +65,7 @@ end:
 ######################################################################
 
 `theta/F1bar/K` := (A::set) -> proc(x)
- local x0,R,n,SS,i,j,J,J1,t,parent;
+ local x0,R,n,SS,i,j,k,J,J1,t,parent;
 
  x0 := `trim/F1bar`(A)(x);
  R := `phi/F1bar/ord`(A)(x);
@@ -95,7 +95,7 @@ end:
 ######################################################################
 
 `phi/K/F1bar` := (A::set) -> proc(Rt)
- local R,t,n,r,i,j,k,l,x,P,Q,Q1,J,M,M1,m,T;
+ local R,t,n,r,i,j,k,l,x,P,Q,Q1,J,M,M1,m,T,U;
 
  R,t := op(Rt);
  

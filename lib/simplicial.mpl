@@ -9,6 +9,7 @@ end:
 `is_leq/simplicial_interval` := (n::nonnegint) -> (a,b) -> evalb(a <= b);
 
 `list_elements/simplicial_interval` := proc(n::nonnegint)
+ local i;
  [seq(i,i=0..n)];
 end:
 
@@ -42,7 +43,10 @@ end:
  return true;
 end:
 
-`to_list/simplicial_maps` := (n::nonnegint,m::nonnegint) -> (f) -> [seq(f[i],i=0..n)];
+`to_list/simplicial_maps` := (n::nonnegint,m::nonnegint) -> proc(f)
+ local i;
+ return [seq(f[i],i=0..n)];
+end:
 
 `is_equal/simplicial_maps` := (n::nonnegint,m::nonnegint) -> proc(f,g)
  evalb(`to_list/simplicial_maps`(n,m)(f) = `to_list/simplicial_maps`(n,m)(g));
@@ -86,7 +90,8 @@ end:
 
 `list_elements/simplicial_maps` := proc(n::nonnegint,m::nonnegint)
  option remember;
-
+ local i;
+ 
  if n = 0 then
   return [seq(`C/simplicial_maps`(0,i),i=0..m)];
  else
@@ -103,37 +108,46 @@ end:
 
 # Constant maps
 `C/simplicial_maps` := proc(n::nonnegint,k::nonnegint)
+ local i;
  table([seq(i=k,i=0..n)]);
 end:
 
 # Inclusion Delta(n,m) -> Delta(n,m+1)
 `I/simplicial_maps` := (n::nonnegint,m::nonnegint) -> proc(f)
+ local i;
  table([seq(i=f[i],i=0..n)]);
 end:
 
 # Map Delta(n,m) -> Delta(n+1,m): extend by sending n+1 to m
 `T/simplicial_maps` := (n::nonnegint,m::nonnegint) -> proc(f)
+ local i;
  table([seq(i=f[i],i=0..n),n+1=m]);
 end:
 
 # `delta/simplicial_maps`(n)(i) : [n] >-> [n+1]; image omits i 
 `delta/simplicial_maps` := proc(n::nonnegint,i::nonnegint)
+ local j;
  if i > n+1 then return FAIL; fi;
  return table([seq(j=j,j=0..i-1),seq(j=j+1,j=i..n)]);
 end:
 
 # `sigma/simplicial_maps`(n)(i) : [n] ->> [n-1]; takes the value i twice 
 `sigma/simplicial_maps` := proc(n::nonnegint,i::nonnegint)
+ local j;
  if i > n-1 then return FAIL; fi;
  return table([seq(j=j,j=0..i),seq(j=j-1,j=i+1..n)]);
 end:
 
-`id/simplicial_maps` := (n::nonnegint) -> table([seq(i=i,i=0..n)]);
+`id/simplicial_maps` := proc(n::nonnegint)
+ local i;
+ return table([seq(i=i,i=0..n)]);
+end:
 
 # `compose/simplicial_maps`(n,m,p)(f,g) assumes that f:[n] -> [m] and g:[m] -> [p],
 # and it returns the composite g o f : [n] -> [p].
 
 `compose/simplicial_maps` := (n::nonnegint,m::nonnegint,p::nonnegint) -> proc(f,g)
+ local i;
  table([seq(i = g[f[i]],i=0..n)]);
 end:
 
@@ -184,6 +198,7 @@ end:
 end:
 
 `describe/simplicial_maps` := (n::nonnegint) -> proc(f)
+ local i;
  cat(seq(nat_code[f[i]],i=0..n));
 end:
 
@@ -209,7 +224,7 @@ end:
 end:
 
 `random_element/simplicial_epi` := (n::nonnegint,m::nonnegint) -> proc()
- local p,q,k,f;
+ local p,q,k,f,i;
 
  if n < m then return FAIL; fi;
 

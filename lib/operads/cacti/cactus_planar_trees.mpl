@@ -2,7 +2,7 @@
 
 `is_element/cactus_planar_trees` := (A::set) -> proc(Js)
  global reason;
- local tag,J,s,sss,B,C,E,i0,i1,i2,e0,e1,e2,m;
+ local tag,J,s,sss,B,C,E,i0,i1,i2,e0,e1,e2,m,j,a;
 
  tag := "is_element/cactus_planar_trees";
 
@@ -123,7 +123,7 @@ end:
 ######################################################################
 
 `list_elements/cactus_planar_trees` := proc(A::set)
- local L,M,J,JJ,a,j,SA,SJ,V,W,v,w;
+ local L,M,J,JJ,a,j,SA,SJ,sA,sJ,V,W,u,v,w;
 
  if nops(A) = 0 then
   return [];

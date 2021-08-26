@@ -31,7 +31,7 @@ end;
 `is_separated/equiv` := eval(`is_separated/autorel`);
 
 `is_total/equiv`     := (A::set) -> proc(R)
- local U;
+ local U,a,b;
 
  U := {seq(seq([a,b],b in A),a in A)} minus R;
 

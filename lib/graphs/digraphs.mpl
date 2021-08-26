@@ -13,7 +13,7 @@ end:
 `is_leq/digraphs` := (V::set) -> (E0,E1) -> evalb(E0 minus E1 = {}):
 
 `list_elements/digraphs` := proc(V::set)
- local n,EE,i,j,a,b;
+ local n,EE,E,i,j,a,b;
  
  n := nops(V);
  EE := [{}];
@@ -178,7 +178,7 @@ end:
 
 `list_small_elements/dipaths` := (V) -> (E) -> proc(n::nonnegint)
  option remember;
- local P,Q,p,v,F;
+ local P,Q,p,v,F,e;
  
  if n = 0 then
   return map(v -> [v],V);
@@ -201,14 +201,14 @@ end:
 `length/dipaths` := (V) -> (E) -> (p) -> nops(p) - 1;
 
 `is_trail/dipaths` := proc(p)
- local n,e;
+ local n,e,i;
  n := nops(p) - 1;
  e := {seq([p[i],p[i+1]],i=1..n)};
  return evalb(nops(e) = n);
 end:
 
 `is_cycle/dipaths` := proc(p)
- local n;
+ local n,i;
  n := nops(p) - 1;
  return evalb(p[1] = p[n+1] and nops({seq(p[i],i=1..n)}) = n);
 end:
@@ -231,7 +231,7 @@ end:
 
 `list_small_elements/ditrails` := (V) -> (E) -> proc(n)
  option remember;
- local E0,E1,P,Q,p,v,F;
+ local E0,E1,P,Q,p,v,F,i,e;
 
  if n = 0 then
   return map(v -> [v],V);
@@ -250,7 +250,7 @@ end:
 end:
 
 `random_small_element/ditrails` := (V) -> (E) -> (n) -> proc(num_tries := 10)
- local k,p,E0,E1,v,F,e;
+ local i,k,p,E0,E1,v,F,e;
  
  k := num_tries;
 
@@ -358,7 +358,7 @@ end:
 end:
 
 `shadow_table/forest_digraphs` := (V) -> proc(E)
- local X,Y,Z,S,x,z,N;
+ local X,Y,Z,S,x,z,N,u;
 
  X := `leaves/digraphs`(V)(E);
  Y := V minus X;
@@ -379,7 +379,7 @@ end:
 end:
 
 `shadow_set/forest_digraphs` := (V) -> proc(E)
- local S;
+ local S,v;
  S := `shadow_table/forest_digraphs`(V)(E);
  return {seq(S[v],v in V)};
 end:

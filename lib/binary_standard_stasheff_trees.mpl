@@ -22,7 +22,7 @@ end:
 
 `list_elements/binary_standard_stasheff_trees` := proc(n::posint) 
  option remember;
- local L,A,UUU,VVV,p;
+ local L,A,UUU,VVV,UU,VV,p,i;
 
  if n = 0 then
   return [];

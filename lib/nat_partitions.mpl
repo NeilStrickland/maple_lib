@@ -35,7 +35,7 @@ end:
  binomial(total+num_parts-1,total);
 
 `random_element/nat_partitions` := (total::nonnegint,num_parts::nonnegint) -> proc()
- local X;
+ local X,i;
  if total = 0 and num_parts = 0 then
   return [];
  fi;

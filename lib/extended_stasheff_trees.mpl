@@ -79,7 +79,7 @@ end:
 end:
 
 `random_element/extended_stasheff_trees` := (n::posint,k::nonnegint) -> proc()
- local TT,m,P,UU;
+ local TT,m,P,UU,i;
 
  TT := `random_element/standard_stasheff_trees`(n)();
  while (nops(TT) > n + k + 1) do 
@@ -96,6 +96,7 @@ end:
  binomial(n+k,n)*binomial(n+k,n-1)/(n+k);
 
 `node_count/extended_stasheff_trees` := proc(UU)
+ local U;
  return add(U[2],U in UU);
 end:
 
@@ -134,7 +135,7 @@ end:
 # joining the roots, taking the root of the first one as the root
 # of the combined tree.
 `splice/extended_stasheff_tree` := (n0,k0) -> (n1,k1) -> proc(UU0,UU1)
- local UU2,R2,m;
+ local UU2,R2,m,i;
 
  UU2 := map(U -> [U[1] +~ n0,U[2]],UU1);
  R2 := select(U -> nops(U[1]) = n1,UU2)[1];
@@ -155,7 +156,7 @@ end:
 # the usual effect of splicing on the leaf count.
 
 `sprout/extended_stasheff_tree` := (n,k) -> proc(UU)
- local UU2,R2,m;
+ local UU2,R2,m,i;
 
  UU2 := map(U -> [U[1] +~ 1,U[2]],UU);
  R2 := select(U -> nops(U[1]) = n,UU2)[1];

@@ -1,12 +1,17 @@
 DV := NumberTheory[Divisors]:
 
-ghost_coeff := (n) -> (x) -> 
- add(d * x[d]^(n/d), d in DV(n));
+ghost_coeff := (n) -> proc(x)
+ local d;
+ return add(d * x[d]^(n/d), d in DV(n));
+end:
 
-ghost_vector := (n::posint) -> (x) -> [seq(ghost_coeff(m)(x),m=1..n)];
+ghost_vector := (n::posint) -> proc(x)
+ local m;
+ return [seq(ghost_coeff(m)(x),m=1..n)];
+end:
 
 unghost_vector := (n::posint) -> proc(w)
- local x,m;
+ local x,m,d;
  x := []:
  for m from 1 to n do 
   x := [op(x),expand((w[m] - add(d*x[d]^(m/d),d in DV(m) minus {m}))/m)];
@@ -27,7 +32,10 @@ witt_add_term := proc(n::posint)
  return unapply(u[n],x,y);
 end:
 
-witt_add := (n::posint) -> (x,y) -> [seq(witt_add_term(m)(x,y),m=1..n)];
+witt_add := (n::posint) -> proc(x,y)
+ local m;
+ return [seq(witt_add_term(m)(x,y),m=1..n)];
+end:
 
 witt_mult_term := proc(n::posint) 
  option remember;
@@ -42,9 +50,15 @@ witt_mult_term := proc(n::posint)
  return unapply(u[n],x,y);
 end:
 
-witt_mult := (n::posint) -> (x,y) -> [seq(witt_mult_term(m)(x,y),m=1..n)];
+witt_mult := (n::posint) -> proc(x,y)
+ local m;
+ return [seq(witt_mult_term(m)(x,y),m=1..n)];
+end:
 
-witt_series := (n::posint) -> (x) -> expand(rem(mul(1 - x[m]*t^m,m=1..n),t^(n+1),t));
+witt_series := (n::posint) -> proc(x)
+ local m;
+ return expand(rem(mul(1 - x[m]*t^m,m=1..n),t^(n+1),t));
+end:
 
 witt_unseries := (n::posint) -> proc(f)
  local c,g,d;
@@ -57,21 +71,38 @@ witt_unseries := (n::posint) -> proc(f)
  return c; 
 end:
 
-ghost_p_coeff := (n) -> (x) -> 
- add(p^i * x[i]^(p^(n-i)), i=0..n);
-ghost_p_vector := (n::nonnegint) -> (x) -> 
- table([seq(i = ghost_p_coeff(i)(x),i=0..n-1)]);
-ghost_p_add := (n::nonnegint) -> (a,b) ->
- table([seq(i=expand(a[i]+b[i]),i=0..n-1)]);
-ghost_p_sub := (n::nonnegint) -> (a,b) ->
- table([seq(i=expand(a[i]-b[i]),i=0..n-1)]);
-ghost_p_mult := (n::nonnegint) -> (a,b) ->
- table([seq(i=expand(a[i]*b[i]),i=0..n-1)]);
-ghost_p_is_equal := (n::nonnegint) -> (a,b) ->
- `and`(seq(evalb(simplify(a[i]-b[i])=0),i=0..n-1));
+ghost_p_coeff := (n) -> proc(x)
+ local i;
+ return add(p^i * x[i]^(p^(n-i)), i=0..n);
+end:
+
+ghost_p_vector := (n::nonnegint) -> proc(x)
+ local i;
+ return table([seq(i = ghost_p_coeff(i)(x),i=0..n-1)]);
+end:
+
+ghost_p_add := (n::nonnegint) -> proc(a,b)
+ local i;
+ return table([seq(i=expand(a[i]+b[i]),i=0..n-1)]);
+end:
+
+ghost_p_sub := (n::nonnegint) -> proc(a,b)
+ local i;
+ return table([seq(i=expand(a[i]-b[i]),i=0..n-1)]);
+end:
+
+ghost_p_mult := (n::nonnegint) -> proc(a,b)
+ local i;
+ return table([seq(i=expand(a[i]*b[i]),i=0..n-1)]);
+end:
+
+ghost_p_is_equal := (n::nonnegint) -> proc(a,b)
+ local i;
+ return `and`(seq(evalb(simplify(a[i]-b[i])=0),i=0..n-1));
+end:
 
 unghost_p_vector := (n::nonnegint) -> proc(w)
- local x,m;
+ local x,m,k;
  x := table:
  for m from 0 to n-1 do 
   x[m] := expand((w[m] - add(p^k*x[k]^(p^(m-k)),k=0..m-1))/p^m);
@@ -92,7 +123,10 @@ witt_p_add_term := proc(n::nonnegint)
  return unapply(u[n],x,y);
 end:
 
-witt_p_add := (n::posint) -> (x,y) -> table([seq(m=witt_p_add_term(m)(x,y),m=0..n-1)]);
+witt_p_add := (n::posint) -> proc(x,y)
+ local m;
+ return table([seq(m=witt_p_add_term(m)(x,y),m=0..n-1)]);
+end:
 
 witt_p_mult_term := proc(n::nonnegint) 
  option remember;
@@ -107,4 +141,7 @@ witt_p_mult_term := proc(n::nonnegint)
  return unapply(u[n],x,y);
 end:
 
-witt_p_mult := (n::posint) -> (x,y) -> table([seq(m=witt_p_mult_term(m)(x,y),m=0..n-1)]);
+witt_p_mult := (n::posint) -> proc(x,y)
+ local m;
+ return table([seq(m=witt_p_mult_term(m)(x,y),m=0..n-1)]);
+end:

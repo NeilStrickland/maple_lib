@@ -1,4 +1,4 @@
-sgn := (s) -> signum(mul(mul(s[j] - s[i],j=i+1..nops(s)),i=1..nops(s))):
+sgn := proc(s) local i,j; signum(mul(mul(s[j] - s[i],j=i+1..nops(s)),i=1..nops(s))); end:
 
 ######################################################################
 
@@ -63,6 +63,22 @@ random_subset_of := proc(A,size_::nonnegint)
   return V;
  fi;
 end:
+
+random_nonempty_subset_of := proc(A)
+ local n,k,B;
+ 
+ if not type(A,list) and not type(A,set) then
+  error("A is not a list or set");
+ fi;
+
+ n := nops(A);
+ if n = 0 then error("A is empty"); fi;
+ k := rand(1..n)();
+ B := combinat[randcomb](A,k);
+ return B;
+end:
+
+
 
 ######################################################################
 
@@ -346,3 +362,25 @@ make_index := proc(L::{list,Vector})
 
  return eval(T);
 end:
+
+######################################################################
+
+sum_terms := proc(x)
+ if x = 0 then
+  return [];
+ elif type(x,`+`) then
+  return [op(x)];
+ else
+  return [x];
+ fi;
+end;
+
+coeff_split := proc(x,T := integer)
+ if type(x,T) then
+  return [x,1];
+ elif type(x,`*`) then
+  return [selectremove(type,x,T)];
+ else
+  return [1,x];
+ fi;
+end;

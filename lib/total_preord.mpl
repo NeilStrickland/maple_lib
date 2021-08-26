@@ -78,7 +78,7 @@ end;
 ######################################################################
 
 `count_elements/total_preord` := proc(A::set)
- local n;
+ local n,k;
  n := nops(A);
  add(k! * Stirling2(n,k),k=1..n);
 end;

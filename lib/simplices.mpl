@@ -36,7 +36,7 @@ end:
 `count_elements/simplices` := NULL;
 
 `random_element/simplices` := (d::posint) -> (n::nonnegint) -> proc(m := 100)
- local indep,a,A;
+ local indep,a,A,i,j;
 
  if n > d then
   error "n cannot be bigger than d";
@@ -63,7 +63,7 @@ end:
 end:
 
 `radius/simplex` := (d::posint)  -> proc(a)
- local u,r;
+ local u,r,i;
  
  u := `barycentre/simplex`(d)(a);
  r := max(map(v -> add((v[i]-u[i])^2,i=1..d),a));
@@ -95,7 +95,7 @@ end:
 # we require in addition that c = c_.
 
 `intersect_nicely/simplices` := (d::posint) -> proc(a,b,c_)
- local c,aa,bb,cc,ab,n,m,p,q,e,W_cand,W_new,W_inc,W,WA,WB,A,B,r,C;
+ local c,aa,bb,cc,ab,n,m,p,q,e,W_cand,W_new,W_inc,W,WA,WB,A,B,r,C,w,z,i,k;
 
  c := {op(a)} intersect {op(b)};
  if nargs > 2 and c <> {op(c_)} then

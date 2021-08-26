@@ -211,7 +211,7 @@ end:
 
 check_map_generic := proc(fs::string,X::string,Y::string,params_f,params_X,params_Y)
  global reason;
- local P_f,P_X,P_Y,list_elements_X,random_element_X,is_element_X,is_element_Y,p,x,y,L,f,ok;
+ local P_f,P_X,P_Y,list_elements_X,random_element_X,is_element_X,is_element_Y,p,x,y,L,f,ok,i;
 
  printf("Checking %s : %s -> %s\n",fs,X,Y);
 
@@ -277,7 +277,7 @@ check_binop_generic :=
  local P_f,P_X,P_Y,P_Z,
        list_elements_X,random_element_X,is_element_X,
        list_elements_Y,random_element_Y,is_element_Y,
-       is_element_Z,p,x,y,z,L_X,L_Y,f,ok,ns,curry;
+       is_element_Z,p,x,y,z,L_X,L_Y,f,ok,ns,curry,i;
 
  printf("Checking %s : %s x %s -> %s\n",fs,X,Y,Z);
 
@@ -382,7 +382,7 @@ end:
 check_operad := proc(O::string,params,A,B,C)
  global reason;
  local is_element,is_equal,random_element,eta,gamma,
-       x,i,p,q,qp,Fp,Fq,Fqp,U,V,W,ok;
+       x,i,p,q,qp,Fp,Fq,Fqp,U,V,W,ok,c,b;
 
  printf("Checking operad structure for %s: ",O);
 
@@ -428,7 +428,7 @@ check_operad_morphism := proc(f::string,f_params,
  global reason;
  local is_el_CC,is_equal_CC,gamma_CC,
        is_el_DD,is_equal_DD,gamma_DD,
-       rand_CC,phi,x,i,p,Fp,U,V,ok;
+       rand_CC,phi,x,i,p,Fp,U,V,ok,b;
 
  printf("Checking operad morphism %s : %s -> %s\n",f,C,D);
 
@@ -483,7 +483,7 @@ end:
 check_semioperad := proc(O::string,params,L)
  global reason;
  local is_element,is_equal,random_element,gamma,
-       x,J,L_,i,k,jj,ii,H,U,V,W,ok;
+       x,J,L_,i,k,jj,ii,H,U,V,W,ok,j0,k0;
 
  printf("Checking operad structure for %s: ",O);
 

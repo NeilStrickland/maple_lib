@@ -28,7 +28,7 @@ end:
 
 `is_leq/CP` := NULL;
 
-`random_element/CP` := (N::posint) -> proc() [seq(`random_element/CC`(),i=1..N+1)] end;
+`random_element/CP` := (N::posint) -> proc() local i; [seq(`random_element/CC`(),i=1..N+1)] end;
 
 `list_elements/CP` := NULL;
 `count_elements/CP` := NULL;

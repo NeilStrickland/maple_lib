@@ -32,7 +32,7 @@ end:
 end:
 
 `mu0/EA` := proc(u,v)
- local n,m,uv,c,L;
+ local n,m,uv,c,L,s,i;
  n := nops(u)-1;
  m := nops(v)-1;
  uv := [op(2..n+1,u),op(2..m+1,v)];
@@ -52,7 +52,7 @@ end:
 # a subcomplex concentrated in degrees 0 and 1.
 
 `s0/EA` := (a) -> proc(u)
- local n,k;
+ local n,k,s,i;
  if type(u,specfunc(anything,`bar/EA`)) then
   n := nops(u);
   if n <= 1 then return 0; fi;
@@ -73,7 +73,7 @@ end:
 `s/EA` := (a) -> apply_linear(`s0/EA`(a));
 
 `p0/EA` := (a) -> proc(u)
- local n,k;
+ local n,i,k;
  if type(u,specfunc(anything,`bar/EA`)) then
   n := nops(u);
   if n <= 1 then
@@ -137,7 +137,7 @@ end:
 end:
 
 `mu0/BA` := proc(u,v)
- local n,m,uv,L;
+ local n,m,uv,L,s,i;
  n := nops(u);
  m := nops(v);
  uv := [op(u),op(v)];
@@ -160,10 +160,12 @@ end:
 # Thus, if a^n = 1 then u is a 2-cycle modulo n.
 
 `tau/BA` := proc(n,a)
+ local k;
  add(-`bar/BA`(a^k,a),k=0..n-1);
 end:
 
 `zeta/BA` := proc(n,m,a)
+ local i,j;
  - add(add(`bar/BA`(a^(m*i),a^j,a),j=0..m-1),i=0..n-1);
 end:
 
@@ -190,6 +192,8 @@ end:
 end:
 
 `xi/BA` := proc(n,m,a)
+ local i,j;
+ 
  add(add(-`bar/BA`(a^i,a,a^j,a),i=1..m-1),j=1..n*m-1) +
  add(add(-`bar/BA`(a^m,a^(i*m),a^j,a),j=1..m-1),i=1..n-1);
 end:
@@ -202,6 +206,8 @@ end:
 end:
 
 `omega/BA` := proc (n,a,b)
+ local i,j;
+ 
  -add(add(`bar/BA`(a^i*b^j,b,a), j = i .. n-1), i = 0 .. n-1) +
   add(add(`bar/BA`(a^i*b^j,a,b), j = i+1 .. n-1), i = 0 .. n-2);
 end:
@@ -213,6 +219,8 @@ end:
 # `e/EC`(n)(k,0).  The orbit of this consists of elements `e/EC`(n)(k,i).
 
 `de/EC` := (n::posint) -> proc(k::nonnegint,i::nonnegint)
+ local j;
+ 
  if k = 0 then
   return 0;
  elif modp(k,2) = 0 then
@@ -298,7 +306,7 @@ end:
 ######################################################################
 
 check_homology_BA := proc()
- local i,j,k,n,a,b,c,u,v,w,T,ok,err,exp_rel,diff_rel;
+ local i,j,k,n,m,a,b,c,t,u,v,w,T,ok,err,exp_rel,diff_rel;
 
  ok := true;
  for i from 0 to 4 do
@@ -505,7 +513,7 @@ end:
 ######################################################################
 
 check_homology_BZ := proc()
- local U,i,u,du,sdu,su,dsu,pu,ok,err;
+ local U,i,j,u,du,sdu,su,dsu,pu,ok,err;
  
  U := [seq(`bar/EA`(a^j),j=-2..2)]:
  for i from 1 to 4 do

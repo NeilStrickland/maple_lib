@@ -6,7 +6,7 @@
 end;
 
 `gamma/stasheff_star` := (A::set,B::set) -> (p) -> proc(U,V)
- local R,S,T,r,s,t,b,n,JJ,J,pJ,J1;
+ local R,S,T,r,s,t,b,n,JJ,J,pJ,J1,i,j,k;
 
  S,s := op(U);
  R := table();

@@ -121,7 +121,7 @@ end:
 
 `list_elements/SEM` := (N::posint) -> proc(A::set)
  option remember;
- local S,U,s,u,m,i;
+ local S,U,s,u,m,i,j;
 
  S := `list_elements/ord`(A);
  U := [[]];

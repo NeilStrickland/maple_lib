@@ -4,7 +4,7 @@
 # {1,...,n} with its standard ordering.
 
 `is_element/standard_stasheff_trees` := (n::posint) -> proc(TT)
- local A,T;
+ local A,T,i;
  global reason;
 
  A := {seq(i,i=1..n)};
@@ -27,7 +27,7 @@ end;
 ######################################################################
 
 `is_equal/standard_stasheff_trees` := (n::posint) -> proc(TT,UU)
- local A;
+ local A,i;
 
  A := {seq(i,i=1..n)};
  return `is_equal/trees`(A)(TT,UU);
@@ -36,7 +36,7 @@ end;
 ######################################################################
 
 `is_leq/standard_stasheff_trees` := (n::posint) -> proc(TT,UU)
- local A;
+ local A,i;
 
  A := {seq(i,i=1..n)};
  return `is_leq/trees`(A)(TT,UU);
@@ -45,7 +45,7 @@ end;
 ######################################################################
 
 `random_element/standard_stasheff_trees` := (n::posint) -> proc()
- local N,pi,TT,UU,U;
+ local N,pi,TT,UU,U,i;
 
  if n = 0 then return FAIL; fi;
  if n = 1 then return {{1}}; fi;
@@ -76,7 +76,7 @@ end;
 `list_elements/standard_stasheff_trees` := proc(n::posint)
  option remember;
 
- local TTT,UUU,TT,UU,N,IP,pi,pi_list,P,B,b;
+ local TTT,UUU,TT,UU,N,IP,pi,pi_list,P,B,b,i;
  if n = 0 then return []; fi;
  if n = 1 then return [{{1}}]; fi;
 
@@ -135,7 +135,7 @@ end:
 ######################################################################
 
 `draw/standard_stasheff_trees` := (n::posint) -> proc(TT)
- local p,P,T,U,m;
+ local p,P,T,U,m,i;
  p := table();
  P := NULL;
  for T in TT do 
@@ -201,8 +201,10 @@ end:
 
 ######################################################################
 
-`p/loday` := (n::posint) -> (pq,u) ->
- add(u[i],i=pq[1]..pq[2]-1) - `m/loday`(n)(pq);
+`p/loday` := (n::posint) -> proc(pq,u)
+ local i;
+ return add(u[i],i=pq[1]..pq[2]-1) - `m/loday`(n)(pq);
+end:
 
 ######################################################################
 
@@ -235,7 +237,7 @@ end;
 ######################################################################
 
 `tau/loday` := (n::posint) -> proc(u)
- local TT,p,q;
+ local TT,p,q,i;
  TT := NULL;
  for p from 1 to n do
   for q from p to n do
@@ -253,7 +255,7 @@ end;
 
 `is_element/Sigma0_loday` := (n::posint) -> proc(sigma)
  global reason;
- local JJ,J,g;
+ local JJ,J,g,i,j,k;
  
  if not type(sigma,table) then
   reason := [convert(procname,string),"sigma is not a table",sigma];
@@ -285,7 +287,7 @@ end;
 ######################################################################
 
 `w0/loday` := (n::posint) -> proc(sigma)
- local v,JJ,J,i;
+ local v,JJ,J,i,j,k;
  
  v := Vector(n-1);
  JJ := {seq(seq({seq(k,k=i..j)},j=i+1..n),i=1..n)};
@@ -311,7 +313,7 @@ end;
 ######################################################################
 
 `w/loday` := (n::posint) -> proc(TT)
- local v,JJ,J,P,G,T,S,g,m,i,j;
+ local v,JJ,J,P,G,T,S,g,m,i,j,k;
  
  v := Vector(n-1);
  JJ := {seq(seq({seq(k,k=i..j)},j=i+1..n),i=1..n)};
@@ -354,6 +356,7 @@ end:
 ######################################################################
 
 `T/loday` := (n::posint) -> proc(i)
+ local j,k;
  {seq({j},j=1..n),{seq(j,j=1..n)},
   seq({seq(k,k=1..j)},j=2..i),
   seq({seq(k,k=j..n)},j=i+1..n-1)

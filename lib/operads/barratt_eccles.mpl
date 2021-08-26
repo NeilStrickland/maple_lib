@@ -1,3 +1,9 @@
+# This defines the chain complex version of the Barratt-Eccles operad.
+# Basis elements of E(A) are represented by expressions T(...), where
+# there is at least one argument, each argument is a list containing
+# each element of A precisely once, and no two adjacent arguments are
+# the same.
+
 `is_element/barratt_eccles` := (A::set) -> proc(x)
  local y,z,i;
  
@@ -23,11 +29,13 @@
  od;
 
  for i from 1 to nops(x) - 1 do
-  if x[i] = x[i+1] then return false; fi;
+  if op(i,x) = op(i+1,x) then return false; fi;
  od;
 
  return true;
 end:
+
+# Auxiliary function feeding into `diff/barratt_eccles`
 
 `diff0/barratt_eccles` := (A::set) -> proc(x)
  local y,n,i;
@@ -46,9 +54,13 @@ end:
  return y;
 end:
 
+# Differential on the chain complex
 `diff/barratt_eccles` := (A::set) -> apply_linear(`diff0/barratt_eccles`(A));
 
+# Auxiliary function feeding into `deg/barratt_eccles`
 `deg0/barratt_eccles` := (A) -> (x) -> nops(x) - 1;
+
+# Degree function
 `deg/barratt_eccles` := (A) -> apply_deg(`deg0/barratt_eccles`(A));
 
 # This is the circle product for the operad structure.
@@ -81,6 +93,8 @@ end:
 
 `o/barratt_eccles` := (A,B) -> apply_bilinear(`o0/barratt_eccles`(A,B));
 
+# We now have various functions related to an interesting filtration
+# of the operad.
 `flip_count/barratt_eccles` := (A::set) -> proc(x)
  local m,a,b,k,rr,i,r0,r1;
  

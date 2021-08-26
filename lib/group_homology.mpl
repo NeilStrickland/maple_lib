@@ -33,7 +33,7 @@ end:
 end:
 
 `mu_aux0/BA` := proc(u,v)
- local r,s,i,ii;
+ local r,s,i,ii,j;
  r := nops(u);
  s := nops(v);
  if r = 0 then return v; fi;
@@ -46,6 +46,7 @@ end:
 end:
 
 `ext/BA` := proc (i, r)
+ local j;
  seq([op(i), j], j = i[nops(i)]+1 .. r);
 end:
 
@@ -77,10 +78,12 @@ end:
 # Thus, if a^n = 1 then u is a 2-cycle modulo n.
 
 `tau/BA` := proc(n,a)
+ local k;
  add(-`bar/BA`(a^k,a),k=0..n-1);
 end:
 
 `zeta/BA` := proc(n,m,a)
+ local i,j;
  - add(add(`bar/BA`(a^(m*i),a^j,a),j=0..m-1),i=0..n-1);
 end:
 
@@ -114,6 +117,7 @@ end:
 end:
 
 `omega/BA` := proc (n,a,b)
+ local i,j;
  -add(add(`bar/BA`(a^i*b^j,b,a), j = i .. n-1), i = 0 .. n-1) +
   add(add(`bar/BA`(a^i*b^j,a,b), j = i+1 .. n-1), i = 0 .. n-2);
 end:
@@ -129,6 +133,7 @@ end:
 end:
 
 `de/EC` := proc(n::posint,k::nonnegint,i::nonnegint)
+ local j;
  if k = 0 then
   return 0;
  elif modp(k,2) = 0 then
@@ -263,7 +268,7 @@ end:
 ######################################################################
 
 check_abelian_group_homology := proc()
- local i,j,k,n,a,b,c,u,v,w,T,ok,err,exp_rel,diff_rel;
+ local i,j,k,n,m,a,b,c,t,u,v,w,T,ok,err,exp_rel,diff_rel;
 
  ok := true;
  for i from 0 to 4 do

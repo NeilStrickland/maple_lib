@@ -1,7 +1,7 @@
 make_alternating_five := proc()
  global alternating_five;
  local G,x2,y2,z2,x3,x5,y5,id,o,oo,inv,idm,om,oom,E,ccl,
-       t0,t1,i,g,h,w,m,x,u0,u1,u2,u3,M,theta;
+       t0,t1,i,j,k,l,g,h,w,m,x,u0,u1,u2,u3,u,v,M,theta;
  
  G := table():
 

@@ -89,7 +89,10 @@ end:
  return [Y];
 end:
 
-`count_elements/ACP` := (N::posint) -> (A::set) -> add(Stirling2(nops(A),d)*d!*N^(d-1),d=1..nops(A)); 
+`count_elements/ACP` := (N::posint) -> proc(A::set)
+ local d;
+ add(Stirling2(nops(A),d)*d!*N^(d-1),d=1..nops(A)); 
+end:
 
 `random_element/ACP` := (N::posint) -> (A::set) -> proc()
  local i,n,pi,Q,R,S,B,C;
@@ -114,10 +117,12 @@ end:
 end:
 
 `rank_vector/ACP` := (N::posint) -> (A::set) -> proc(Q)
+ local i;
  [seq(`rank/preord`(N)(A)(Q[i]),i=1..N)];
 end:
 
 `rank/ACP` := (N::posint) -> (A::set) -> proc(Q)
+ local i;
  add(`rank/preord`(N)(A)(Q[i]),i=1..N);
 end:
 
@@ -138,7 +143,7 @@ end;
 ######################################################################
 
 `mu/W/ACP` := (N::posint) -> (A::set) -> proc(x) 
- local QT,ET,AA,i;
+ local QT,ET,AA,i,a,b;
 
  QT := table():
  ET := table():
@@ -154,7 +159,7 @@ end;
 end:
 
 `sigma/ACP/W` := (N::posint) -> (A::set) -> proc(Q)
- local u,x,a;
+ local u,x,a,i;
 
  u := [seq(`rank_table/preord`(A)(Q[i]),i=1..N)];
  x := table():
@@ -234,6 +239,7 @@ end;
 ######################################################################
 
 `rank_vector/ACP` := (N) -> (A) -> proc(Q)
+ local i;
  return [seq(`rank/preord`(A)(Q[i])-1,i=1..N)];
 end;
 
@@ -303,7 +309,7 @@ end:
 ######################################################################
 
 `list_elements/split_spots/ACP` := (N::posint) -> (A::set) -> proc(Q)
- local E,L,i,B,m,UU,U,CC,C;
+ local E,L,i,B,m,UU,U,CC,C,a;
 
  E := [seq(`block_partition/preord`(A)(Q[i]),i=1..N),{seq({a},a in A)}];
  L := NULL;
@@ -322,7 +328,7 @@ end:
 ######################################################################
 
 `split/ACP` := (N::posint) -> (A::set) -> (Q) -> proc(iCD)
- local i,C,D,CD,DC;
+ local i,j,C,D,CD,DC,c,d;
 
  i,C,D := op(iCD);
  CD := {seq(seq([c,d],d in D),c in C)};
@@ -419,7 +425,7 @@ end:
 ######################################################################
 
 `list_elements/glue_spots/ACP` := (N::posint) -> (A::set) -> proc(Q)
- local L,i,Qi,Qis,E,E0,E1,B,U,C,a,b,r0,nn,SS;
+ local L,i,j,Qi,Qis,E,E0,E1,B,U,C,a,b,r0,nn,SS,S;
 
  L := NULL;
  for i from 1 to N do
@@ -465,7 +471,7 @@ end:
 ######################################################################
 
 `glue/ACP` := (N::posint) -> (A::set) -> (Q) -> proc(iCDS)
- local i,C,D,S,CD,DC,P,j,k,rc,rd,nc,nd,ic,id,n,Cn,Dn,BB;
+ local i,C,D,S,CD,DC,c,d,P,j,k,rc,rd,nc,nd,ic,id,n,Cn,Dn,BB,x,y;
 
  i,C,D,S := op(iCDS);
  CD := {seq(seq([c,d],d in D),c in C)};

@@ -28,7 +28,7 @@ end;
 ######################################################################
 
 `normalise/prime_W` := (N::posint) -> (A::set) -> proc(x) 
- local r;
+ local r,a;
  r := `norm/vector_functions`(N)(A)(x);
  if r = 0 then return FAIL; fi;
  return table([seq(a = simplify(x[a] /~ r),a in A)]);

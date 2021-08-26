@@ -25,7 +25,9 @@ end;
  return B;
 end;
 
-`list_elements/pair_subsets` := (A::set) ->
- [seq(seq({A[i],A[j]},j=i+1..nops(A)),i=1..nops(A)-1)];
+`list_elements/pair_subsets` := proc(A::set)
+ local i,j;
+ return [seq(seq({A[i],A[j]},j=i+1..nops(A)),i=1..nops(A)-1)];
+end:
 
 `count_elements/pair_subsets` := (A::set) -> nops(A) * (nops(A) - 1)/2;

@@ -68,7 +68,7 @@ end:
 # A000311 from OEIS
 
 `count_elements/full_trees` := proc(A::set)
- local n;
+ local n,i,j,k;
  n := nops(A);
  if n = 0 then
   return 0;

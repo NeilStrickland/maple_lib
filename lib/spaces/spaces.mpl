@@ -29,7 +29,7 @@ end:
 
 
 make_product_space := proc(T0,T1)
- local T,d0,d1,B0,B1,B,i0,i1,x,i;
+ local T,d0,d1,B0,B1,B,i0,i1,u0,u1,x,i;
  T := table():
  
  T["name"] := sprintf("%s x %s",T0["name"],T1["name"]);

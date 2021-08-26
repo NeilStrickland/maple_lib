@@ -44,7 +44,8 @@ end:
 
 `list_elements/simplicial_maps_alt` := proc(n::nonnegint,m::nonnegint)
  option remember;
-
+ local i;
+ 
  if n = 0 then
   return [seq(`C/simplicial_maps_alt`(0,i),i=0..m)];
  else
@@ -78,17 +79,22 @@ end:
 
 # `delta/simplicial_maps_alt`(n)(i) : [n] >-> [n+1]; image omits i 
 `delta/simplicial_maps_alt` := proc(n::nonnegint,i::nonnegint)
+ local j;
  if i > n+1 then return FAIL; fi;
  return [seq(j,j=0..i-1),seq(j+1,j=i..n)];
 end:
 
 # `sigma/simplicial_maps_alt`(n)(i) : [n] ->> [n-1]; takes the value i twice 
 `sigma/simplicial_maps_alt` := proc(n::nonnegint,i::nonnegint)
+ local j;
  if i > n-1 then return FAIL; fi;
  return [seq(j,j=0..i),seq(j-1,j=i+1..n)];
 end:
 
-`id/simplicial_maps_alt` := (n::nonnegint) -> [seq(i=i,i=0..n)];
+`id/simplicial_maps_alt` := proc(n::nonnegint)
+ local i;
+ return [seq(i=i,i=0..n)];
+end:
 
 `eval/simplicial_maps_alt` := (n::nonnegint,m::nonnegint) -> (f) -> (i) -> f[i+1];
 
@@ -96,6 +102,7 @@ end:
 # and it returns the composite g o f : [n] -> [p].
 
 `compose/simplicial_maps_alt` := (n::nonnegint,m::nonnegint,p::nonnegint) -> proc(f,g)
+ local i;
  [seq(g[f[i+1]+1],i=0..n)];
 end:
 
@@ -108,6 +115,7 @@ end:
 end:
 
 `is_epi/simplicial_maps_alt` := (n::nonnegint,m::nonnegint) -> proc(f)
+ local j;
  evalb({op(f)} = {seq(j,j=0..m)});
 end:
 
@@ -126,6 +134,7 @@ end:
 end:
 
 `describe/simplicial_maps_alt` := (n::nonnegint) -> proc(f)
+ local i;
  cat(seq(nat_code[f[i]],i=1..n+1));
 end:
 
@@ -147,7 +156,7 @@ end:
 end:
 
 `random_element/simplicial_epi_alt` := (n::nonnegint,m::nonnegint) -> proc()
- local p,q,k,f;
+ local p,q,k,f,i;
 
  if n < m then return FAIL; fi;
 
@@ -158,7 +167,7 @@ end:
 end:
 
 `list_elements/simplicial_epi_alt` := proc(n::nonnegint,m::nonnegint) 
- local P,L,S;
+ local P,L,S,i,j;
 
  P := combinat[choose]([seq(i,i=1..n)],m);
  L := map(S -> [0$S[1],seq(j$(S[j+1]-S[j]),j=1..m-1),m$(n+1-S[m])],P);

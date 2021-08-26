@@ -5,7 +5,7 @@ end:
 `is_equal/colour_profiles` := (C::set) -> (n::nonnegint) -> (c,b) -> evalb(c = b);
 
 `list_elements/colour_profiles` := (C::set) -> proc(n::nonnegint)
- local L,i;
+ local L,i,x,c;
  L := [[]];
  for i from 1 to n do
   L := [seq(seq([op(c),x],x in C),c in L)];
@@ -16,6 +16,7 @@ end:
 `count_elements/colour_profiles` := (C::set) -> (n::nonnegint) -> nops(C)^n;
 
 `random_element/colour_profiles` := (C::set) -> (n::nonnegint) -> proc()
+ local i;
  [seq(random_element_of(C),i=1..n)];
 end:
 

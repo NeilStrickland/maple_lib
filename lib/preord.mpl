@@ -39,7 +39,7 @@ end;
 ######################################################################
 
 `random_element/preord` := (A::set) -> proc(R)
- local pi,n,r,i,a,N,RN,A2,RA;
+ local pi,n,r,i,a,b,N,RN,A2,RA;
 
  pi := `random_element/partitions`(A)();
  n := nops(pi);
@@ -60,7 +60,7 @@ end:
 ######################################################################
 
 `is_total/preord` := (A::set) -> proc(R)
- local U;
+ local U,a,b;
 
  U := R union `op/preord`(A)(R);
  U := {seq(seq([a,b],b in A),a in A)} minus U;
@@ -112,7 +112,7 @@ end:
 ######################################################################
 
 `bump/preord` := (A::set) -> proc(R)
- local pi,B,a,B0,R0;
+ local pi,B,a,b,B0,R0;
 
  pi := `block_partition/preord`(A)(R);
 

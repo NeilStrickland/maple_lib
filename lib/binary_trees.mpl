@@ -24,7 +24,7 @@ end:
 
 `list_elements/binary_trees` := proc(A::set) 
  option remember;
- local n,L,P,B,C,UUU,VVV;
+ local n,L,P,B,C,UUU,VVV,UU,VV;
 
  n := nops(A);
 
@@ -63,5 +63,5 @@ end:
 
 ######################################################################
 # OEIS: A001147
-`count_elements/binary_trees` := (A::set) -> mul(2*k-1,k=1..nops(A)-1);
+`count_elements/binary_trees` := proc(A::set) local k; mul(2*k-1,k=1..nops(A)-1); end:
 

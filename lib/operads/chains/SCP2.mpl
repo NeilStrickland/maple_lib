@@ -74,7 +74,7 @@ end:
 end:
 
 `random_element/SCP2` := (N::posint) -> (A::set,B::set) -> proc(p := 0.5)
- local A0,p0,a,Q0,AA,Q,P;
+ local A0,p0,a,Q0,AA,Q,P,i;
  if rand(1..10000)() < evalf(10000 * p) then
   A0 := (A minus B) union {b0};
   p0 := table();
