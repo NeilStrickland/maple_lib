@@ -1081,3 +1081,38 @@ end:
  
  return T_string;
 end:
+
+`make_chains/simplicial_complex` := proc(T)
+ local S,H,d_max,cn,ix,d,i,j,k,dM;
+ 
+ H := table():
+ d_max := T["dim"];
+ H["dim"] := d_max;
+ S := table():
+ cn := table():
+ ix := table():
+ for d from 0 to d_max do
+  S[d] := select(s -> nops(s) = d+1, T["all_simplices"]);
+  cn[d] := nops(S[d]);
+  ix[d] := table():
+  for i from 1 to cn[d] do
+   ix[d][S[d][i]] := i;
+  od:
+ od:
+ 
+ H["chain_number"] := eval(cn):
+
+ dM := table():
+ for d from 1 to d_max do 
+  dM[d] := Matrix(cn[d-1],cn[d]);
+  for i from 1 to cn[d] do 
+   for j from 0 to d do 
+    k := ix[d-1][S[d][i] minus {S[d][i][j+1]}];
+    dM[d][k,i] := (-1)^j;
+   od:
+  od:
+ od:
+ H["differential_matrix"] := eval(dM):
+ T["chain_complex"] := eval(H);
+ return eval(H);
+end:
