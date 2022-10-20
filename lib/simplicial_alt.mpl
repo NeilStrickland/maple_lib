@@ -1,3 +1,4 @@
+######################################################################
 # This file sets up the theory of the simplicial category, with simplicial
 # maps encoded as lists of values.  This is an alternative to simplicial.mpl,
 # where simplicial maps are encoded as tables.  This version is more efficient,
@@ -5,11 +6,11 @@
 # lot of extra +1's.
 
 `is_element/simplicial_maps_alt` := (n::nonnegint,m::nonnegint) -> proc(f)
- evalb(type(f,list(nonnegint)) and nops(f) = n+1 and max(op(f)) <= m) 
+ evalb(type(f,specfunc(nonnegint,s)) and nops(f) = n+1 and max(op(f)) <= m) 
 end:
 
 `is_leq/simplicial_maps_alt` := (n::nonnegint,m::nonnegint) -> proc(f,g)
- evalb( min(op(g -~ f)) >= 0 );
+ evalb( min(op([op(g)] -~ [op(f)])) >= 0 );
 end:
 
 # This assumes that 
@@ -30,7 +31,7 @@ end:
   od;
  od;
 
- return [f];
+ return s(f);
 end:
 
 `random_element/simplicial_maps_alt` := (n::nonnegint,m::nonnegint) -> proc()
@@ -64,7 +65,7 @@ end:
 
 # Constant maps
 `C/simplicial_maps_alt` := proc(n::nonnegint,k::nonnegint)
- [k$(n+1)]
+ s(k$(n+1))
 end:
 
 # Inclusion Delta(n,m) -> Delta(n,m+1)
@@ -74,40 +75,40 @@ end:
 
 # Map Delta(n,m) -> Delta(n+1,m): extend by sending n+1 to m
 `T/simplicial_maps_alt` := (n::nonnegint,m::nonnegint) -> proc(f)
- [op(f),m];
+ s(op(f),m);
 end:
 
 # `delta/simplicial_maps_alt`(n)(i) : [n] >-> [n+1]; image omits i 
 `delta/simplicial_maps_alt` := proc(n::nonnegint,i::nonnegint)
  local j;
  if i > n+1 then return FAIL; fi;
- return [seq(j,j=0..i-1),seq(j+1,j=i..n)];
+ return s(seq(j,j=0..i-1),seq(j+1,j=i..n));
 end:
 
-# `sigma/simplicial_maps_alt`(n)(i) : [n] ->> [n-1]; takes the value i twice 
+# `sigma/simplicial_maps_alt`(n)(i) : [n+1] ->> [n]; takes the value i twice 
 `sigma/simplicial_maps_alt` := proc(n::nonnegint,i::nonnegint)
  local j;
- if i > n-1 then return FAIL; fi;
- return [seq(j,j=0..i),seq(j-1,j=i+1..n)];
+ if i > n then return FAIL; fi;
+ return s(seq(j,j=0..i),seq(j-1,j=i+1..n+1));
 end:
 
 `id/simplicial_maps_alt` := proc(n::nonnegint)
  local i;
- return [seq(i=i,i=0..n)];
+ return s(seq(i,i=0..n));
 end:
 
-`eval/simplicial_maps_alt` := (n::nonnegint,m::nonnegint) -> (f) -> (i) -> f[i+1];
+`eval/simplicial_maps_alt` := (n::nonnegint,m::nonnegint) -> (f) -> (i) -> op(i+1,f);
 
 # `compose/simplicial_maps`(n,m,p)(f,g) assumes that f:[n] -> [m] and g:[m] -> [p],
 # and it returns the composite g o f : [n] -> [p].
 
 `compose/simplicial_maps_alt` := (n::nonnegint,m::nonnegint,p::nonnegint) -> proc(f,g)
  local i;
- [seq(g[f[i+1]+1],i=0..n)];
+ s(seq(op(op(i+1,f)+1,g),i=0..n));
 end:
 
 `is_wide/simplicial_maps_alt` := (n::nonnegint,m::nonnegint) -> proc(f)
- return evalb(f[1] = 0 and f[n+1] = m);
+ return evalb(op(1,f) = 0 and op(n+1,f) = m);
 end:
 
 `is_mono/simplicial_maps_alt` := (n::nonnegint,m::nonnegint) -> proc(f)
@@ -129,13 +130,13 @@ end:
  k := nops(h) - 1;
  hi := table();
  for i from 0 to k do hi[h[i+1]] := i; od;
- g := [seq(hi[f[i+1]],i=0..n)];
- return [k,g,h];
+ g := s(seq(hi[f[i+1]],i=0..n));
+ return [k,g,s(op(h))];
 end:
 
 `describe/simplicial_maps_alt` := (n::nonnegint) -> proc(f)
  local i;
- cat(seq(nat_code[f[i]],i=1..n+1));
+ cat(seq(nat_code[op(i,f)],i=1..n+1));
 end:
 
 ######################################################################
@@ -170,7 +171,7 @@ end:
  local P,L,S,i,j;
 
  P := combinat[choose]([seq(i,i=1..n)],m);
- L := map(S -> [0$S[1],seq(j$(S[j+1]-S[j]),j=1..m-1),m$(n+1-S[m])],P);
+ L := map(S -> s(0$S[1],seq(j$(S[j+1]-S[j]),j=1..m-1),m$(n+1-S[m])),P);
 
  return L;
 end:
@@ -200,15 +201,24 @@ end:
  if n > m then return FAIL; fi;
 
  q := combinat[randcomb](m+1,n+1) -~ 1;
- q := sort([op(q)]);
+ q := s(op(sort([op(q)])));
  return q;
 end:
 
 `list_elements/simplicial_mono_alt` := proc(n::nonnegint,m::nonnegint) 
- map(q -> q -~ 1,combinat[choose](m+1,n+1));
+ map(q -> s(op(q -~ 1)),combinat[choose](m+1,n+1));
 end:
 
 `count_elements/simplicial_mono_alt` := (n::nonnegint,m::nonnegint) -> binomial(m+1,n+1);
 
+`hash/simplicial_maps_alt` := (n,m) -> proc(u)
+ local i,j,N;
+ N := {seq(i,i=0..n)};
+ s(seq(min(op(select(i->op(i+1,u)>=j,N))),j=0..m));
+end:
 
-
+`dag/simplicial_maps_alt` := (n,m) -> proc(u)
+ local i,j,N;
+ N := {seq(i,i=0..n)};
+ s(seq(max(op(select(i->op(i+1,u)<=j,N))),j=0..m));
+end:
