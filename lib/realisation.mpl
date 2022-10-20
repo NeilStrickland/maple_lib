@@ -1,5 +1,4 @@
 ######################################################################
-
 # General framework for geometric realisations of finite posets.
 
 `is_element/realisation/generic` :=
