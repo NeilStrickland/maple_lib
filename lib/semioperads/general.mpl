@@ -1,6 +1,5 @@
 ######################################################################
-#
-# General operad framework.
+# General semioperad framework.
 
 `check_semi_gamma_args` := proc(J,U,V,is_el_CC)
  local i,k,jj;

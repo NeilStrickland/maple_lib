@@ -1,5 +1,4 @@
 ######################################################################
-
 # A standard Stasheff tree for n is a Stasheff tree for the set
 # {1,...,n} with its standard ordering.
 

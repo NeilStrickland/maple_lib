@@ -1,5 +1,4 @@
 ######################################################################
-#
 # General circle operad framework.
 
 `check_semi_circ_args` := proc(i,m,n,U,V,is_el_CC)

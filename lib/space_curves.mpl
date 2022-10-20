@@ -1,3 +1,4 @@
+######################################################################
 # Differential geometry of curves in R^3
 
 analyse_curve := proc(x,t)

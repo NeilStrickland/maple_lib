@@ -1,3 +1,4 @@
+######################################################################
 # An n-simplex in R^d is represented as a length (n+1) list of
 # length d lists of real numbers.
 
