@@ -1,3 +1,7 @@
+######################################################################
+# (n,m) shuffles, i.e. permutations of {1,..,n+m} that are increasing
+# on {1,..,n} and on {n+1,..,m}
+
 `is_element/shuffles` := (n::nonnegint,m::nonnegint) -> proc(s)
  local i;
 
