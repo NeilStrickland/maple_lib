@@ -6,7 +6,7 @@
  global reason;
 
  if not `is_element/ACP`(N)(A)(Q) then
-  reason := [convert(procname,string),"Q in ACP(N)(A)",reason];
+  reason := [convert(procname,string),"Q is not in ACP(N)(A)",reason];
   return false;
  fi;
 
