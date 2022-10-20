@@ -1,3 +1,6 @@
+######################################################################
+# The set of functions A -> R
+
 `is_element/real_functions` := (A::set) -> proc(x)
  local a;
  global reason;
