@@ -1,5 +1,5 @@
 # A (p,q)-Steiner system on a set A is a family of subsets of A (called blocks),
-# each of size q, such that each subset of size p in A is contained ina unique
+# each of size q, such that each subset of size p in A is contained in a unique
 # block.
 
 steiner_number_test := proc(p::posint,q::posint,n::posint)
