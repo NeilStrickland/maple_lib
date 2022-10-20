@@ -5,7 +5,9 @@ bar := proc()
   u := seq(args[j],j=1..i-1);
   a := args[i];
   v := seq(args[j],j=i+1..n);
-  if type(a,`+`) then
+  if a = 0 then
+   return 0;
+  elif type(a,`+`) then
    return map(t -> bar(u,t,v),a);
   elif type(a,`*`) then
    ac,av := selectremove(type,a,rational);
