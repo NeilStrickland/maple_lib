@@ -118,6 +118,13 @@ end:
 
 trefoil_b := (t) -> [(2+cos(3*t))*cos(2*t),(2+cos(3*t))*sin(2*t),sin(3*t)];
 
+
+# The Klein bottle K can be thought of as the quotient of RR^2 by the relation
+# [t,u] ~ [1+t,1-u] ~ [t,1+u].  The klein_embedding map gives an immersion
+# of K in RR^3.  The map
+# klein_seam = klein_embedding o klein_seam_a = klein_embedding o klein_seam_b
+# parametrises the curve of double points.
+
 klein_embedding := (t,u) -> 
 [(0.1*sin(3*Pi*t)+0.1*sin(Pi*t)+0.4*cos(Pi*t))*sin(2*Pi*u)-0.5*sin(4*Pi*t)+sin(2*Pi*t), 
   0.2*sin(2*Pi*u)*sin(3*Pi*t)+2.*cos(2*Pi*t)+0.5, 
@@ -129,6 +136,21 @@ klein_seam_b := (t) -> [0.1179+0.0031*cos(4*Pi*t)-0.0385*sin(2*Pi*t)+0.0005*sin(
 klein_seam := (t) -> [-0.2811+0.0051*cos(4*Pi*t)-0.1401*sin(2*Pi*t)+0.0005*sin(6*Pi*t), 
                       1.7871-0.0061*cos(4*Pi*t)+0.3532*sin(2*Pi*t)-0.0005*sin(6*Pi*t), 
                       0.2090*cos(2*Pi*t)-0.0010*cos(6*Pi*t)+0.0086*sin(4*Pi*t)];
+
+# The map klein_embedding_S1S2 is a more canonical embedding of K in S^1 x S^2.
+# There is also an embedding [a,b,u,v,w] -> [(2+u)a,(2+u)b,v,w] of
+# S^1 x S^2 in RR^4, and by composing with this we get the map
+# klein_embedding_R4 of K in RR^4.  However, I think that one cannot get an
+# immersion K -> RR^3 of the usual type by composing klein_embedding_R4 with
+# a linear projection RR^4 -> RR^3.
+
+klein_embedding_S1S2 := (t,u) -> [
+ [cos(2*Pi*t),sin(2*Pi*t),cos(2*Pi*u),sin(2*Pi*u)*cos(Pi*t),sin(2*Pi*u)*sin(Pi*t)]
+];
+
+klein_embedding_R4 := (t,u) -> [
+ [(2+cos(2*Pi*u))*cos(2*Pi*t),(2+cos(2*Pi*u))*sin(2*Pi*t),sin(2*Pi*u)*cos(Pi*t),sin(2*Pi*u)*sin(Pi*t)]
+];
 
 orient_face := proc(ii,v)
  local dp,u0,u1,u2,vv,i;
