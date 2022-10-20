@@ -3,7 +3,7 @@
 with(LinearAlgebra):
 
 p := 2;
-chromatic_n_max := 4;  # NB degree(v[4]) = 30, degree(v[5]) = 62
+chromatic_n_max := 5;  # NB degree(v[4]) = 30, degree(v[5]) = 62
 chromatic_s_max := 20;
 
 unprotect('v','m','t');
@@ -124,7 +124,7 @@ end:
 # Basis for the s-fold tensor power of Z[t_1,t_2,...] in degree d
 # The copy of t[i] in the j'th tensor factor is represented by t[i,j]
 T_power_basis := proc(s::nonnegint,d::integer)
- local B,m,R1,R2,u,v;
+ local B,m,R1,R2,u,v,n,i;
  if s = 0 then return `if`(d = 0,[1],[]); fi;
 
  R1 := {seq(t[n] = t[n,1],n=1..chromatic_n_max)};
@@ -143,7 +143,7 @@ end:
 # Basis for the s-fold tensor power of the augmentation ideal in
 # Z[t_1,t_2,...] in degree d
 T_reduced_power_basis := proc(s::nonnegint,d::integer)
- local B,m,R1,R2,u,v;
+ local B,m,R1,R2,u,v,n,i;
  if s = 0 then return `if`(d = 0,[1],[]); fi;
 
  R1 := {seq(t[n] = t[n,1],n=1..chromatic_n_max)};
@@ -161,11 +161,14 @@ T_reduced_power_basis := proc(s::nonnegint,d::integer)
  return [B];
 end:
 
-BP_cobar_basis := (s,d) ->
- [seq(seq(seq(a*b,a in BP_basis(i)),b in T_reduced_power_basis(s,d-i)),i=0..d)];
+BP_cobar_basis := proc(s,d)
+ local i,a,b;
+ return [seq(seq(seq(a*b,a in BP_basis(i)),b in T_reduced_power_basis(s,d-i)),i=0..d)];
+end:
 
 # Hazewinkel generators in terms of log coefficients
 vm := proc(n::nonnegint)
+ local k;
  option remember;
  if n = 0 then
   return p;
@@ -177,7 +180,7 @@ end:
 # Log coefficients in terms of Hazewinkel generators
 # This is inefficient; should use Ravenel's formulae instead
 mv := proc(n::nonnegint)
- local err;
+ local err,i;
  option remember;
 
  if n = 0 then return 1; fi;
@@ -189,12 +192,16 @@ mv := proc(n::nonnegint)
 end:
 
 # Right unit map on the log coefficients
-eta_m := (k) -> add(m[i] * t[k-i]^(p^i),i=0..k);
+eta_m := proc(k)
+ local i;
+ 
+ return add(m[i] * t[k-i]^(p^i),i=0..k);
+end:
 
 # Right unit map on the Hazewinkel generators
 eta_v := proc(k::posint,s::nonnegint)
  option remember;
- local u,R;
+ local u,R,i,j;
 
  if nargs = 1 then
   u := expand(subs({seq(m[i] = eta_m(i),i=1..k)},vm(k)));
@@ -220,7 +227,7 @@ end:
 
 # Hopf algebroid coproduct on the generators t[n]
 psi_t := proc(n)
- local a,b;
+ local a,b,i,j;
  option remember;
  if n = 0 then return 1; fi;
 
@@ -232,7 +239,7 @@ psi_t := proc(n)
 end:
 
 d_BP_cobar_rule := proc(s,i)
- local R0,R1,R2,R3;
+ local R0,R1,R2,R3,j,k;
  if i = 0 then
   R0 := {seq(t[j]=t[j,1],j=1..chromatic_n_max)};
   R1 := {seq(t[j]=t[j,2],j=1..chromatic_n_max)};
@@ -254,16 +261,17 @@ d_BP_cobar_rule := proc(s,i)
  fi;
 end:
 
-d_BP_cobar := (s) -> (u) ->
- expand(add((-1)^i * subs(d_BP_cobar_rule(s,i),u),i=0..s+1));
-
+d_BP_cobar := (s) -> proc(u)
+ local i;
+ return expand(add((-1)^i * subs(d_BP_cobar_rule(s,i),u),i=0..s+1));
+end:
 
 d_BP_cobar_matrix := proc(s,d)
  local B1,B2,cf;
  B1 := BP_cobar_basis(s,d);
  B2 := BP_cobar_basis(s+1,d);
  cf := proc(u)
-  local sol;
+  local sol,i;
   sol := solve({coeffs(u - add(c[i]*B2[i],i=1..nops(B2)),indets(B2))});
   subs(sol,[seq(c[i],i=1..nops(B2))]);
  end;
@@ -412,7 +420,7 @@ analyse_BP_cobar := proc(s::nonnegint,d::integer)
 end:
 
 BP_set_p := proc(p_)
- global p,v,BP_degree_rule,BP_basis,BP_lower_basis,vm,mv,eta_v,psi_t;
+ global p,v,BP_degree_rule,BP_basis,BP_lower_basis,vm,mv,eta_v,psi_t,n,i;
 
  p := p_;
  unprotect('v');
