@@ -1,3 +1,4 @@
+######################################################################
 # simplicial_interval(n) is just the set [n] = {0,1,...,n}
 
 `is_element/simplicial_interval` := (n::nonnegint) -> proc(k)
@@ -131,11 +132,11 @@ end:
  return table([seq(j=j,j=0..i-1),seq(j=j+1,j=i..n)]);
 end:
 
-# `sigma/simplicial_maps`(n)(i) : [n] ->> [n-1]; takes the value i twice 
+# `sigma/simplicial_maps`(n)(i) : [n+1] ->> [n]; takes the value i twice 
 `sigma/simplicial_maps` := proc(n::nonnegint,i::nonnegint)
  local j;
- if i > n-1 then return FAIL; fi;
- return table([seq(j=j,j=0..i),seq(j=j-1,j=i+1..n)]);
+ if i > n then return FAIL; fi;
+ return table([seq(j=j,j=0..i),seq(j=j-1,j=i+1..n+1)]);
 end:
 
 `id/simplicial_maps` := proc(n::nonnegint)
