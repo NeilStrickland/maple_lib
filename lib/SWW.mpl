@@ -1,5 +1,5 @@
 ######################################################################
-# Here B is assumed to be a subset of A, and SWW(A,B,N) is the space
+# Here B is assumed to be a subset of A, and SWW(N)(A,B) is the space
 # denoted by S(NWA,NWB) in the LaTeX document.
 
 `is_element/SWW` := (N::posint) -> (A::set,B::set) -> proc(xy)
