@@ -1,5 +1,5 @@
 ######################################################################
-# simplex_interior(A) is the set of maps x : A -> (0,1] with sum = 1.
+# simplex_interior(A) is the set of maps x : A -> (0,1] with sum = 1. 
 
 `is_element/simplex_interior` := (A::set) -> proc(x)
  local a,u;
