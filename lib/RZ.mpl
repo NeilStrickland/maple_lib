@@ -1,5 +1,4 @@
 ######################################################################
-
 # Real numbers mod integers
 
 `is_element/RZ` := (x) -> type(x,realcons):
