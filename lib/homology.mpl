@@ -2,9 +2,9 @@
  local dM,dZM,nC,nZ,nB,nH,d,d_max,i,j,r,LM,ZM,BZM,BM,HZM,HM,
   S,M0,M1,M2,M3,pivots,non_pivots;
 
- dM := H[differential_matrix]:
- nC := eval(H['chain_number']);
- d_max := H['dim'];
+ dM := H["differential_matrix"]:
+ nC := eval(H["chain_number"]);
+ d_max := H["dim"];
  for d from 0 to d_max do
   if d = 0 then
    LM[0] := Matrix(nC[0],0):
@@ -53,16 +53,16 @@
   fi;
  od:
 
- H['cycle_matrix'] := eval(ZM);
- H['boundary_matrix'] := eval(BM);
- H['boundary_cycle_matrix'] := eval(BZM);
- H['boundary_lift_matrix'] := eval(LM);
- H['homology_matrix'] := eval(HM);
- H['homology_cycle_matrix'] := eval(HZM);
+ H["cycle_matrix"] := eval(ZM);
+ H["boundary_matrix"] := eval(BM);
+ H["boundary_cycle_matrix"] := eval(BZM);
+ H["boundary_lift_matrix"] := eval(LM);
+ H["homology_matrix"] := eval(HM);
+ H["homology_cycle_matrix"] := eval(HZM);
  
- H['cycle_number'] := eval(nZ);
- H['boundary_number'] := eval(nB);
- H['homology_number'] := eval(nH);
+ H["cycle_number"] := eval(nZ);
+ H["boundary_number"] := eval(nB);
+ H["homology_number"] := eval(nH);
 
  return NULL;
 end:
@@ -73,18 +73,18 @@ end:
  local dM,dZM,nC,nZ,nB,nH,d,d_max,i,j,r,LM,ZM,BZM,BM,HZM,HM,
   checks;
 
- nC  := eval(H['chain_number']);
- nZ  := eval(H['cycle_number']);
- nB  := eval(H['boundary_number']);
- nH  := eval(H['homology_number']);
- ZM  := eval(H['cycle_matrix']);
- BM  := eval(H['boundary_matrix']);
- BZM := eval(H['boundary_cycle_matrix']);
- LM  := eval(H['boundary_lift_matrix']);
- HM  := eval(H['homology_matrix']);
- HZM := eval(H['homology_cycle_matrix']);
- d_max := H['dim'];
- dM := eval(H['differential_matrix']):
+ nC  := eval(H["chain_number"]);
+ nZ  := eval(H["cycle_number"]);
+ nB  := eval(H["boundary_number"]);
+ nH  := eval(H["homology_number"]);
+ ZM  := eval(H["cycle_matrix"]);
+ BM  := eval(H["boundary_matrix"]);
+ BZM := eval(H["boundary_cycle_matrix"]);
+ LM  := eval(H["boundary_lift_matrix"]);
+ HM  := eval(H["homology_matrix"]);
+ HZM := eval(H["homology_cycle_matrix"]);
+ d_max := H["dim"];
+ dM := eval(H["differential_matrix"]):
 
  for d from 0 to d_max do 
   checks := [
@@ -95,7 +95,7 @@ end:
    [Dimension( HM[d])] = [nC[d],nH[d]],
    [Dimension(HZM[d])] = [nZ[d],nH[d]],
    nC[d] = nH[d] + nB[d] + `if`(d>0,nB[d-1],0),
-   nH[d] = H['betti_number'][d]
+   nH[d] = H["betti_number"][d]
   ];
 
   if not(`and`(op(map(evalb,checks)))) then
@@ -130,7 +130,7 @@ end:
  local v,i,uc,uv;
 
  if u = 0 then 
-  return Vector(H['chain_number'][d]);
+  return Vector(H["chain_number"][d]);
  elif type(u,`+`) then
   # Slightly convoluted because of funny behaviour of + on vectors
   return `+`(op(map(`vec/chains`(H)(d),[op(u)])));
@@ -140,8 +140,8 @@ end:
    return uc * `vec/chains`(H)(d)(uv);
   fi;
  elif type(u,specfunc(chain)) then
-  v := Vector(H['chain_number'][d]);
-  i := H['chain_index'][d][u];
+  v := Vector(H["chain_number"][d]);
+  i := H["chain_index"][d][u];
   v[i] := 1;
   return v;
  fi;
@@ -149,7 +149,7 @@ end:
 end:
 
 `vec/cycles/vec` := (H) -> (d::nonnegint) -> proc(v)
- LinearSolve(H['cycle_matrix'][d],v);
+ LinearSolve(H["cycle_matrix"][d],v);
 end:
 
 `vec/cycles` := (H) -> (d::nonnegint) -> proc(u)
@@ -157,7 +157,7 @@ end:
 end:
 
 `vec/homology/vec` := (H) -> (d::nonnegint) -> proc(v)
- SubVector(LinearSolve(H['cycle_matrix'][d],v),1..H['homology_number'][d]);
+ SubVector(LinearSolve(H["cycle_matrix"][d],v),1..H["homology_number"][d]);
 end:
 
 `vec/homology` := (H) -> (d::nonnegint) -> proc(u)
@@ -165,20 +165,20 @@ end:
 end:
 
 `basis/homology` := (H) -> proc(d::nonnegint)
- convert(Transpose(H['homology_matrix'][d]) . Vector(H['chains'][d]),list);
+ convert(Transpose(H["homology_matrix"][d]) . Vector(H["chains"][d]),list);
 end:
 
 ######################################################################
 
 is_homology_sphere := proc(H,d_)
  local d,d1,b,i;
- d1 := H['dim'];
+ d1 := H["dim"];
  if nargs > 1 then 
   d := d_;
  else 
   d := d1;
  fi;
- b := eval(H['betti_number']);
+ b := eval(H["betti_number"]);
  
  if d = -1 then # The -1 sphere is empty
   return evalb(d1 = -1);
@@ -201,8 +201,8 @@ end:
 
 is_homology_bouquet := proc(H,d,r)
  local d1,b,i;
- d1 := H['dim'];
- b := eval(H['betti_number']);
+ d1 := H["dim"];
+ b := eval(H["betti_number"]);
  
  for i from 0 to d1 do 
   if i <> 0 and i <> d and b[i] <> 0 then
@@ -221,10 +221,10 @@ end:
 
 is_homology_acyclic := proc(H)
  local d1,b,i;
- d1 := H['dim'];
+ d1 := H["dim"];
  if d1 = -1 then return false; fi;
  
- b := eval(H['betti_number']);
+ b := eval(H["betti_number"]);
  if b[0] <> 1 then return false; fi;
  
  for i from 1 to d1 do 
