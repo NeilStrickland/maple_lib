@@ -1,3 +1,8 @@
+# This follows "On lexicographically shellable posets" (Bjorner and Wachs)
+
+######################################################################
+# Shellings of a finite poset
+
 `is_element/shellings` := (A::set) -> (R) -> proc(S)
  global reason;
  local S0,S1,d,n,i,j,k,c,N,K;
