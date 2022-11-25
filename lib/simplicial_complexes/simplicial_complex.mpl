@@ -4,6 +4,14 @@
 #
 # A (cooked) simplicial complex is a table with various fields which
 # gives a more structured representation of the data.
+#
+# In particular, a cooked simplicial complex T will often have fields
+# T["embedding_dim"] and T["embedding"].  The latter is a table indexed by
+# vertices with values in R^d, where d = T["embedding_dim"].  This should
+# give rise to an embedding of the geometric realisation of T in R^d.
+# Most functions that construct new simplicial complexes will attempt
+# to construct an embedding if that can easily be done using the
+# input ingredients.
 
 `is_element/raw_simplicial_complexes` := proc(K)
  global reason;
@@ -71,6 +79,36 @@ end:
  return `is_simplex/raw_simplicial_complex`(T["max_simplices"],s);
 end:
 
+`is_morphism/simplicial_complex` := (K,L) -> proc(f)
+ global reason;
+ local V,W,v,s,fs;
+
+ V := {op(K["vertices"])};
+ W := {op(L["vertices"])};
+ 
+ if not(is_table_on(V)(f)) then
+  reason := ["not a table indexed by vertices of K"];
+  return false;
+ fi;
+
+ for v in V do
+  if not(member(f[v],W)) then
+   reason := ["vertex not sent to vertex",v,w,W];
+   return false;
+  fi;
+ od:
+
+ for s in K["max_simplices"] do
+  fs := {seq(f[v],v in s)};
+  if not(`is_simplex/simplicial_complex`(L,fs)) then
+   reason := ["simplex not sent to simplex",s,fs,L["max_simplices"]];
+   return false;
+  fi;
+ od:
+
+ return true;
+end:
+
 `all_simplices/raw_simplicial_complex` := proc(K)
  local V,K0;
  V := `vertices/raw_simplicial_complex`(K);
@@ -80,6 +118,8 @@ end:
  return K0;
 end;
 
+# This expects K to be a set/list of set/lists.  It returns a sorted list of sorted
+# lists, from which any non-maximal simplices have been removed.
 `normalise/raw_simplicial_complex` := proc(K)
  local K0,K1,n,i,j,ok;
  K0 := [op(K)];
@@ -122,6 +162,8 @@ end:
  {seq(seq(seq(seq({s[i],s[j],s[k]},k=j+1..nops(s)),j=i+1..nops(s)),i=1..nops(s)),s in K)};
 end:
 
+# This returns the set of connected components of a simplicial complex T,
+# represented as a set of nonempty disjoint sets of vertices.
 `components/simplicial_complex` := proc(T)
  local P,Q,R,s,v;
  
@@ -134,6 +176,9 @@ end:
  return P;
 end:
 
+# Here f is a function that is assumed to be defined and injective on the set of
+# vertices of T.  The function returns a new simplicial complex which is the same
+# as T except that each vertex v has been replaced by f(v).
 `reindex/simplicial_complex` := proc(T,f)
  local T0,v;
  
@@ -325,6 +370,9 @@ end:
  return eval(T0);
 end:
 
+# Given a subset V0 of the set of vertices865 of T, this returns a new simplicial
+# complex whose vertices are the elements of V0, and whose simplices are the
+# simplices of T that are contained in V0.
 `restrict/simplicial_complex` := proc(T,V0)
  local V1,T0,K0,P0,P,v;
  
@@ -351,6 +399,11 @@ end:
 
  return eval(T0);
 end:
+
+# This constructs the coproduct of two simplicial complexes.
+# If T has vertices {1,..,p} and U has vertices {1,..,q} then things are
+# reindexed to have vertices {1,..,p+q}.  In other cases, the vertex sets
+# of T and U are required to be disjoint.
 
 `disjoint_union/simplicial_complex` := proc(T,U)
  local n,U0,TU,v;
@@ -385,6 +438,11 @@ end:
 
  return eval(TU);
 end:
+
+# This constructs the join of two simplicial complexes.
+# If T has vertices {1,..,p} and U has vertices {1,..,q} then things are
+# reindexed to have vertices {1,..,p+q}.  In other cases, the vertex sets
+# of T and U are required to be disjoint.
 
 `join/simplicial_complex` := proc(T,U)
  local n,m,U0,TU,s,t,v;
@@ -620,7 +678,7 @@ end:
  for s in K do
   d := nops(s);
   for p in P[d] do
-   t := {seq(sort([seq(s[p[i]],i=1..j)]),j=1..d)};
+   t := {seq(b(op(sort([seq(s[p[i]],i=1..j)]))),j=1..d)};
    L := L,t
   od;
  od;
@@ -645,13 +703,15 @@ end:
   E0 := table();
   for s in V0 do
    x := [0$d];
-   for v in s do x := x +~ E[v]; od;
+   for v in [op(s)] do x := x +~ E[v]; od;
    x := x /~ nops(s);
    E0[s] := x;
   od;
   T0["embedding"] := eval(E0);
  fi;
 
+ T0["to_original"] := table([seq(v -> op(-1,v),v in T0["simplices"])]);
+ 
  return eval(T0);
 end:
 
@@ -815,6 +875,8 @@ end:
  return eval(T0);
 end:
 
+# This seems to be a special case of `stellate/simplicial_complex`()
+# which is defined later.
 `star_subdivide/simplicial_complex` := proc(T,s)
  local n,V,K,K1,S0,S1,S2,s0,s1,s2,u,P,d,x,v,i;
 
@@ -1115,4 +1177,356 @@ end:
  H["differential_matrix"] := eval(dM):
  T["chain_complex"] := eval(H);
  return eval(H);
+end:
+
+# 
+`is_real/simplicial_complex` := (T) -> proc(x)
+ global reason;
+ local V,v,x0,x1,supp;
+ V := T["vertices"];
+ V := {op(V)};
+ if not(is_table_on(V)(x)) then 
+  reason := ["not a table indexed by vertices"];
+  return false;
+ fi;
+ x0 := 0;
+ supp := NULL;
+ for v in T["vertices"] do
+  x1 := x[v];
+  if not(type(x1,realcons) and x1 >= 0) then 
+   reason := ["entry is not a nonnegative real",v,x1];
+   return false;
+  fi;
+  if x1 > 0 then
+   supp := supp,v;
+  fi; 
+  x0 := x0 + x1;
+ od:
+ if simplify(x0 - 1) <> 0 then 
+  reason := ["total is not one",x0];
+  return false;
+ fi;
+ supp := {supp};
+ if not(`is_simplex/simplicial_complex`(T,supp)) then
+  reason := ["support is not a simplex",supp];
+ fi;
+ return true;
+end:
+
+`random_real/simplicial_complex` := (T) -> proc()
+ local K,s,x0,x,i,v;
+ K := `set_all_simplices/simplicial_complex`(T);
+ s := random_element_of(K);
+ x0 := [seq(rand(1..12)(),i=1..nops(s))];
+ x0 := x0 /~ `+`(op(x0));
+ x := table([seq(v = 0, v in T["vertices"])]):
+ for i from 1 to nops(s) do
+  x[s[i]] := x0[i];
+ od: 
+ return eval(x);
+end:
+
+`real_embed/simplicial_complex` := (T) -> proc(x)
+ local u,P,v;
+ u := [0 $ T["embedding_dim"]];
+ P := eval(T["embedding"]);
+ for v in T["vertices"] do 
+  u := u +~ x[v] *~ P[v];
+ od:
+ return u;
+end:
+
+`is_real_equal/simplicial_complex` := (T) -> proc(x,y)
+ local v;
+ for v in T["vertices"] do 
+  if simplify(x[v] - y[v]) <> 0 then 
+   return false;
+  fi;
+ od:
+
+ return true;
+end:
+
+`apply_real/simplicial_complex` := (K,L) -> (f) -> proc(x)
+ local v,w,y;
+ 
+ y := table([seq(w = 0, w in L["vertices"])]);
+ for v in K["vertices"] do
+  w := f[v];
+  y[w] := y[w] + x[v]; 
+ od:
+
+ return eval(y);
+end:
+
+`barycentric_split/simplicial_complex` := (T,T1) -> proc(x)
+ local vl,vt,v,w,x0,x1,t,i,bt;
+ vl := [];
+ vt := table():
+ for v in T["vertices"] do 
+  x0 := x[v];
+  if x0 > 0 then 
+   if type(vt[x0],indexed) then 
+    vt[x0] := {v};
+   else
+    vt[x0] := {op(vt[x0]),v};
+   fi;
+  fi;
+ od:
+ vl := map(op,[indices(vt)]);
+ vl := [op(ListTools[Reverse](sort(vl))),0];
+ x1 := table([seq(w = 0, w in T1["vertices"])]);
+ t := {};
+ for i from 1 to nops(vl) - 1 do 
+  t := {op(t),op(vt[vl[i]])};
+  bt := b(op(sort([op(t)])));
+  x1[bt] := (vl[i] - vl[i+1]) * nops(t);
+ od:
+
+ return(eval(x1));
+end:
+
+`barycentric_merge/simplicial_complex` := (T,T1) -> proc(x1)
+ local x,v,v1,t1;
+ x := table([seq(v = 0, v in T["vertices"])]);
+ for v1 in T1["vertices"] do 
+  t1 := x1[v1] / nops(v1);
+  if t1 > 0 then 
+   for v in v1 do x[v] := x[v] + t1; od;
+  fi;
+ od:
+
+ return eval(x);
+end:
+
+# This function subdivides a raw simplicial complex by adjoining a new vertex
+# (to be thought of as the barycentre of the simplex t) and joining it to other
+# vertices in an appropriate way to ensure that the homeomorphism type is
+# unchanged.
+`stellate/raw_simplicial_complex` := proc(K,t)
+ local t0,bt,S0,s,v;
+ t0 := {op(t)};
+ bt := b(op(sort([op(t)])));
+ if not(`is_simplex/raw_simplicial_complex`(K,t0)) then 
+  error("Stellation centre is not a simplex");
+ fi;
+ S0 := NULL;
+ for s in K do 
+  if t0 minus {op(s)} = {} then
+   for v in t do 
+    S0 := S0,[op(select(w -> w <> v,s)),bt];
+   od: 
+  else
+   S0 := S0,s;
+  fi
+ od:
+ S0 := sort(`normalise/raw_simplicial_complex`([S0]));
+ return S0;
+end:
+
+# This function subdivides a raw simplicial complex by adjoining a new vertex
+# (to be thought of as the barycentre of the simplex t) and joining it to other
+# vertices in an appropriate way to ensure that the homeomorphism type is
+# unchanged.
+`stellate/simplicial_complex` := proc(T,t)
+ local T0,P,P0,R,v,u,bt;
+ bt := b(op(sort([op(t)])));
+ T0 := `cook/raw_simplicial_complex`(`stellate/raw_simplicial_complex`(T["max_simplices"],t));
+ if nops(t) = 1 then 
+  T0["old_vertices"] := select(v -> v <> op(t),T["vertices"]);
+ else
+  T0["old_vertices"] := T["vertices"];
+ fi;
+ T0["new_vertex"] := bt;
+ 
+ P := T["embedding"];
+ if type(P,table) then
+  T0["embedding_dim"] := T["embedding_dim"];
+  P0 := table():
+  for v in T0["vertices"] do
+   if {op(t)} <> {v} then 
+    P0[v] := P[v];
+   fi;
+  od:
+  u := [0$T["embedding_dim"]];
+  for v in t do 
+   u := u +~ P[v];
+  od:
+  u := u /~ nops(t);
+  P0[b(op(t))] := u;
+  T0["embedding"] := eval(P0);
+ fi;
+
+ R := table([bt = op(-1,bt)]):
+ for v in T["vertices"] do
+  if {op(t)} <> {v} then
+   R[v] := v;
+  fi;
+ od:
+ T["to_original"] := eval(R);
+ 
+ return eval(T0);
+end:
+
+`stellate_split/simplicial_complex` := (T,t,T1) -> proc(x) 
+ local bt,m,x1,v;
+ bt := T1["new_vertex"];
+ m := min(seq(x[v],v in t));
+ x1 := table():
+ for v in T1["old_vertices"] do 
+  if member(v,t) then 
+   x1[v] := x[v] - m;
+  else
+   x1[v] := x[v];
+  fi;
+ end:
+ x1[bt] := nops(bt) * m;
+ return eval(x1);
+end:
+
+`stellate_merge/simplicial_complex` := (T,t,T1) -> proc(x1)
+ local bt,c,x,v;
+ bt := T1["new_vertex"];
+ c := x1[bt] / nops(bt);
+ x := table();
+ for v in T["vertices"] do 
+  if {op(t)} = {v} then 
+   x[v] := x1[bt];
+  elif member(v,t) then
+   x[v] := x1[v] + c;
+  else
+   x[v] := x1[v];
+  fi;
+ od:
+ return eval(x);
+end:
+
+`morse_stellate/raw_simplicial_complex` := proc(K,s,a)
+ local s0,t0,t1,r,R0,r0,r1,r2,r3,r4,P,p,q,m,v,S,S0;
+ s0 := {op(s)};
+ t0 := s0 minus {a};
+ t1 := sort([op(t0)]);
+ if not(`is_simplex/raw_simplicial_complex`(K,s0)) then 
+  error("Collapsing simplex is not a simplex");
+ fi;
+ if not(member(a,s0)) then
+  error("Cone point is not in the collapsing simplex");
+ fi; 
+ if nops(s) < 2 then 
+  error("Collapsing simplex is a single point");
+ fi;
+ S0 := NULL;
+ for r in K do
+  if t0 minus {op(r)} = {} then
+   r0 := {op(r)} minus s0;
+   for r1 in combinat[powerset](r0) do 
+    for v in t0 do
+     r2 := {op(t0),op(r1)};
+     r3 := r2 minus {v};
+     r4 := {op(r)} minus {a,op(r2)};
+     if member(a,r) then r3 := r3 union {a}; fi;
+     r2 := sort([op(r2)]);
+     r3 := sort([op(r3)]);
+     r4 := sort([op(r4)]);
+     for p in combinat[permute](r4) do
+      q := [op(r3),seq(b(op(sort([op(r2),op(1..m,p)]))),m=0..nops(p))];
+      S0 := S0,q;
+     od:
+    od:
+   od:
+  else
+   S0 := S0,r;
+  fi
+ od:
+ S0 := [S0];
+ return S0;
+end:
+
+`morse_stellate/simplicial_complex` := proc(T,s,a)
+ local T0,P,P0,v,u,w,bt;
+ T0 := `cook/raw_simplicial_complex`(`morse_stellate/raw_simplicial_complex`(T["max_simplices"],s,a));
+ T0["old_vertices"] := {op(T0["vertices"])} intersect {op(T["vertices"])};
+ T0["new_vertices"] := {op(T0["vertices"])} minus {op(T["vertices"])};
+ bt := b(op(sort([op({op(s)} minus {a})])));
+ P := T["embedding"];
+ if type(P,table) then
+  T0["embedding_dim"] := T["embedding_dim"];
+  for v in T0["vertices"] do
+   if type(v,specfunc(anything,b)) then
+    u := [0$T["embedding_dim"]];
+    for w in v do 
+     u := u +~ P[w];
+    od:
+    u := u /~ nops(v);
+    P0[v] := u;
+   else 
+    P0[v] := P[v];
+   fi;
+  od:
+  T0["embedding"] := eval(P0);
+ fi;
+
+ T0["stellation"] := `stellate/simplicial_complex`(T,{op(s)} minus {a}):
+ 
+ T0["flow"] := table():
+ for v in T0["old_vertices"] do 
+  T0["flow"][v] := v;
+ od;
+ for v in T0["new_vertices"] do
+  if v = bt then
+   T0["flow"][v] := a;
+  else
+   T0["flow"][v] := bt;
+  fi:
+ od:
+ 
+ return eval(T0);
+end:
+
+`morse_stellate_split/simplicial_complex` := (T,s,a,T1,T2) -> proc(x)
+ local x0,x1,t,y,y2,v,v1,v2;
+ 
+ x1 := table([seq(v1 = 0, v1 in T1["vertices"])]);
+ if x[a] = 1 then 
+  x1[a] := 1;
+  return eval(x1);
+ fi;
+
+ t := x[a];
+ y := table([seq(v = x[v]/(1-t), v in T["vertices"])]):
+ y[a] := 0;
+ y2 := `barycentric_split/simplicial_complex`(T,T2)(y);
+ 
+ for v2 in T2["vertices"] do
+  x0 := (1-t)*y2[v2];
+  if x0 > 0 then 
+   if {op(s)} minus {a,op(v2)} = {} then
+    x1[v2] := x0; 
+   else
+    for v in [op(v2)] do 
+     x1[v] := x1[v] + x0/nops(v2);
+    od:
+   fi;
+  fi;
+ od:
+
+ x1[a] := x1[a] + t;
+ return(eval(x1));
+end:
+
+`morse_stellate_merge/simplicial_complex` := (T,s,a,T1) -> proc(x1)
+ local x,v,v1,t1;
+ x := table([seq(v = 0, v in T["vertices"])]);
+ for v1 in T1["vertices"] do 
+  if type(v1,specfunc(anything,b)) then 
+   t1 := x1[v1] / nops(v1);
+   if t1 > 0 then 
+    for v in v1 do x[v] := x[v] + t1; od;
+   fi;
+  else
+   x[v1] := x[v1] + x1[v1];
+  fi;
+ od:
+
+ return eval(x);
 end:
