@@ -68,6 +68,8 @@ lib_read("graphs/digraphs.mpl"):
 lib_read("graphs/graphs.mpl"):
 lib_read("groebner.mpl"):
 lib_read("group_homology.mpl"):
+lib_read("groups/dihedral.mpl"):
+lib_read("groups/general_linear.mpl"):
 lib_read("groups/alternating_five.mpl"):
 lib_read("groups/Out_SL2.mpl"):
 lib_read("groups/SL2_11.mpl"):
