@@ -9,6 +9,27 @@
   return g;
 end:
 
+`reduced_permutation_matrix` := proc(s)
+  local n,g,i,j,k,l;
+  
+  n := nops(s);
+  g := Matrix(n-1,n-1);
+  for i from 1 to n-1 do
+   j := s[i];
+   k := s[i+1];
+   if j < k then
+    for l from j to k-1 do
+     g[l,i] := 1;
+    od:
+   else
+    for l from k to j-1 do
+     g[l,i] := -1;
+    od:
+   fi;
+  od:
+  return g;
+end:
+
 `elementary_matrix/D` := (n) -> proc(i,a)
   local g,k;
   g := Matrix(n,n);
@@ -35,7 +56,7 @@ end:
 end:
 
 make_general_linear := proc(n,p)
-  local G,i,j,k,m,g,L,f;
+  local G,i,j,k,m,g,L,f,u;
   
   m := n^2;
   
