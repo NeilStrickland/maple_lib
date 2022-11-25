@@ -1,5 +1,5 @@
 cube_complex := proc()
- local T,V,E,F,G0,G1,G,S,r,v,f,i,j,k,s,s1,t,g,eqs,sol;
+ local T,V,E,F,G0,G1,G,S,r,v,f,i,j,k,s,s1,t,g,h,eqs,sol;
 
  V := [seq(i,i=1..8)];
 
